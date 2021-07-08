@@ -3,17 +3,36 @@
   justify-content: center;
   align-items: center;
   margin-top: 2em;
+  flex-wrap: wrap;
 }
 .grid {
   display: grid;
-  grid-template-columns: repeat(50, 20px);
+  grid-template-columns: repeat(80, 15px);
 }
 .grid__node {
-  height: 20px;
-  width: 20px;
-  border: 1px solid hsl(220, 13%, 74%);
+  height: 15px;
+  width: 15px;
+  border: 1px dotted hsl(217, 19%, 20%);
+  background-color: #374151;
 }
 
 .startNode {
-  background-color: #3730a3;
+  background-color: #3b82f6;
+}
+.endNode {
+  background-color: #ec4899;
+}
+
+.walls {
+  background-color: #111827;
+  border: 1px dotted #111827;
+}
+
+.route {
+  border: 1px solid #ef4444;
+  background-color: #ef4444;
+}
+
+.visitedNode {
+  background-color: #10b981;
 }
