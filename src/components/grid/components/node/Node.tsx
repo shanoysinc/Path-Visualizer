@@ -1,30 +1,81 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, memo, useState } from "react";
 
 interface Props {
   row: number;
   col: number;
-  startNodeSelected: boolean;
-  setStartNodeSelected: (value: boolean) => void;
+  startNode: string | null;
+  endNode: string | null;
+  setStartNode: React.Dispatch<React.SetStateAction<string | null>>;
+  setEndNode: React.Dispatch<React.SetStateAction<string | null>>;
+  isMouseDown: boolean;
+  setIsMouseDown: React.Dispatch<React.SetStateAction<boolean>>;
+  walls: string[];
+  setWalls: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-export const Node = ({
-  col,
-  row,
-  setStartNodeSelected,
-  startNodeSelected,
-}: Props) => {
-  let nodeRef = useRef<HTMLDivElement | null>(null);
+export const Node = memo(
+  ({
+    col,
+    row,
+    endNode,
+    setEndNode,
+    setStartNode,
+    startNode,
+    isMouseDown,
+    setIsMouseDown,
+    walls,
+    setWalls,
+  }: Props) => {
+    const nodeRef = useRef<HTMLDivElement | null>(null);
 
-  const handleCurrentNode = () => {
-    if (nodeRef.current?.classList.contains("startNode")) {
-      nodeRef.current.classList.remove("startNode");
-      setStartNodeSelected(false);
-    } else if (!startNodeSelected) {
-      nodeRef.current?.classList.add("startNode");
-      setStartNodeSelected(true);
-    }
-  };
-  return (
-    <div ref={nodeRef} onClick={handleCurrentNode} className="grid__node"></div>
-  );
-};
+    const handleCurrentNode = (node: string) => {
+      const hasStartNode = nodeRef.current?.classList.contains("startNode");
+      const hasEndNode = nodeRef.current?.classList.contains("endNode");
+      if (hasStartNode) {
+        setStartNode(null);
+        return;
+      } else if (!startNode && !hasStartNode && !hasEndNode) {
+        setStartNode(node);
+        return;
+      }
+
+      if (hasEndNode) {
+        setEndNode(null);
+      } else if (!endNode && !hasEndNode && startNode && !hasStartNode) {
+        setEndNode(node);
+      }
+    };
+
+    const mouseDownHandler = () => {
+      setIsMouseDown(true);
+    };
+
+    const mouseOverHandler = () => {
+      const hasStartNode = nodeRef.current?.classList.contains("startNode");
+      const hasEndNode = nodeRef.current?.classList.contains("endNode");
+
+      if (isMouseDown && !hasStartNode && !hasEndNode) {
+        nodeRef.current?.classList.add("walls");
+        // setWalls([...walls, `${row}-${col}`]);
+      }
+    };
+    const mouseUpHandler = () => {
+      setIsMouseDown(false);
+    };
+
+    const node = `${row}-${col}`;
+    const isStartNode = startNode === node ? "startNode" : "";
+    const isEndNode = endNode === node ? "endNode" : "";
+    return (
+      <div
+        id={node}
+        ref={nodeRef}
+        onClick={() => handleCurrentNode(node)}
+        onMouseDown={mouseDownHandler}
+        onMouseOver={mouseOverHandler}
+        onMouseUp={mouseUpHandler}
+        className={`grid__node ${isStartNode} ${isEndNode}`}
+      ></div>
+    );
+  }
+);
