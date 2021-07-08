@@ -1,5 +1,11 @@
+interface GridNode {
+  distance: number;
+  isVisited: boolean;
+  isWall: boolean;
+}
+
 interface Distance {
-  [props: string]: number;
+  [props: string]: GridNode;
 }
 interface Path {
   [props: string]: string;
@@ -10,7 +16,7 @@ export function initGraph(rows: number, cols: number) {
   for (let row = 0; row < rows; row++) {
     let colArr = [];
     for (let col = 0; col < cols; col++) {
-      colArr.push(1);
+      colArr.push(0);
     }
     arr.push(colArr);
   }
@@ -21,21 +27,35 @@ let graph = initGraph(25, 50);
 
 export function dijkstra(
   graph: number[][],
-  source: [number, number],
-  distination: [number, number]
+  source: string,
+  distination: string,
+  walls: string[]
 ) {
+  const visitedOrderArr: string[] = [];
   let distance: Distance = {};
   let previous: Path = {};
 
   let unvisited: Set<string> = new Set();
   for (let row = 0; row < graph.length; row++) {
     for (let col = 0; col < graph[row].length; col++) {
-      distance[`${row}-${col}`] = Infinity;
+      distance[`${row}-${col}`] = {
+        isVisited: false,
+        distance: Infinity,
+        isWall: false,
+      };
       unvisited.add(`${row}-${col}`);
     }
   }
 
-  distance[`${source[0]}-${source[1]}`] = 0;
+  distance[source] = {
+    distance: 0,
+    isVisited: false,
+    isWall: false,
+  };
+
+  walls.forEach((wall) => {
+    distance[wall].isWall = true;
+  });
 
   while (unvisited.size > 0) {
     let currentNode = getSmallestNode(unvisited, distance);
@@ -55,140 +75,64 @@ export function dijkstra(
     const isLeftPosValid = prevCol >= 0 ? true : false;
     const isBottomPosValid = nextRow < graph.length ? true : false;
 
-    const isTopRightPosValid = isTopPosValid && isRightPosValid ? true : false;
-    const isTopLeftPosValid = isTopPosValid && isLeftPosValid ? true : false;
+    let neighbor = [];
+    if (isTopPosValid) neighbor.push(`${prevRow}-${col}`);
+    if (isRightPosValid) neighbor.push(`${row}-${nextCol}`);
 
-    const isBottomRightPosValid =
-      isBottomPosValid && isRightPosValid ? true : false;
+    if (isBottomPosValid) neighbor.push(`${nextRow}-${col}`);
 
-    const isBottomLeftPosValid =
-      isBottomPosValid && isLeftPosValid ? true : false;
+    if (isLeftPosValid) neighbor.push(`${row}-${prevCol}`);
+    distance[currentNode].isVisited = true;
 
-    if (isTopPosValid) {
-      let distancetoNeighor = graph[prevRow][col];
-      let totalDistance = distancetoNeighor + distance[currentNode];
-      let topIndex = `${prevRow}-${col}`;
+    const neighborsNotWall = neighbor.filter(
+      (neighbor) => !distance[neighbor].isWall
+    );
+    updateNeighbors(distance, neighbor, currentNode, previous);
+    visitedOrderArr.push(...neighborsNotWall);
 
-      if (totalDistance < distance[topIndex]) {
-        distance[topIndex] = totalDistance;
-        previous[topIndex] = currentNode;
-      }
-    }
-    if (isTopRightPosValid) {
-      let distancetoNeighor = graph[prevRow][nextCol];
-      let totalDistance = distancetoNeighor + distance[currentNode];
-      let topRightIndex = `${prevRow}-${nextCol}`;
-
-      if (totalDistance < distance[topRightIndex]) {
-        distance[topRightIndex] = totalDistance;
-        previous[topRightIndex] = currentNode;
-      }
-    }
-    if (isTopLeftPosValid) {
-      let distancetoNeighor = graph[prevRow][prevCol];
-      let totalDistance = distancetoNeighor + distance[currentNode];
-      let topLeftIndex = `${prevRow}-${prevCol}`;
-
-      if (totalDistance < distance[topLeftIndex]) {
-        distance[topLeftIndex] = totalDistance;
-        previous[topLeftIndex] = currentNode;
-      }
-    }
-
-    if (isRightPosValid) {
-      let distancetoNeighor = graph[row][nextCol];
-      let rightIndex = `${row}-${nextCol}`;
-      let totalDistance = distancetoNeighor + distance[currentNode];
-
-      if (totalDistance < distance[rightIndex]) {
-        distance[rightIndex] = totalDistance;
-        previous[rightIndex] = currentNode;
-      }
-    }
-
-    if (isBottomPosValid) {
-      let distancetoNeighor = graph[nextRow][col];
-      let totalDistance = distancetoNeighor + distance[currentNode];
-      let bottomIndex = `${nextRow}-${col}`;
-
-      if (totalDistance < distance[bottomIndex]) {
-        distance[bottomIndex] = totalDistance;
-        previous[bottomIndex] = currentNode;
-      }
-    }
-    if (isBottomRightPosValid) {
-      let distancetoNeighor = graph[nextRow][nextCol];
-      let totalDistance = distancetoNeighor + distance[currentNode];
-      let bottomRightIndex = `${nextRow}-${nextCol}`;
-
-      if (totalDistance < distance[bottomRightIndex]) {
-        distance[bottomRightIndex] = totalDistance;
-        previous[bottomRightIndex] = currentNode;
-      }
-    }
-    if (isBottomLeftPosValid) {
-      let distancetoNeighor = graph[nextRow][prevCol];
-      let totalDistance = distancetoNeighor + distance[currentNode];
-      let bottomLeftIndex = `${nextRow}-${prevCol}`;
-
-      if (totalDistance < distance[bottomLeftIndex]) {
-        distance[bottomLeftIndex] = totalDistance;
-        previous[bottomLeftIndex] = currentNode;
-      }
-    }
-
-    if (isLeftPosValid) {
-      let distancetoNeighor = graph[row][prevCol];
-      let totalDistance = distancetoNeighor + distance[currentNode];
-
-      let leftIndex = `${row}-${prevCol}`;
-      if (totalDistance < distance[leftIndex]) {
-        distance[leftIndex] = totalDistance;
-        previous[leftIndex] = currentNode;
-      }
-    }
-
-    if (previous[`${distination[0]}-${distination[1]}`]) {
-      return { previous, distance };
+    if (previous[distination]) {
+      return { previous, visitedOrderArr };
     }
   }
 
-  return { previous, distance };
+  return { previous, visitedOrderArr };
 }
 
 function getSmallestNode(unvisited: Set<string>, distance: Distance) {
   return Array.from(unvisited).reduce((minNode, node) => {
-    return distance[minNode] > distance[node] ? node : minNode;
+    return distance[minNode].distance > distance[node].distance
+      ? node
+      : minNode;
   });
 }
 
-const { previous, distance } = dijkstra(graph, [0, 5], [4, 5]);
-
-function createRoute(
-  previous: Path,
-  source: [number, number],
-  distination: [number, number]
+function updateNeighbors(
+  distance: Distance,
+  neighbors: string[],
+  currentNode: string,
+  previous: Path
 ) {
-  let route = [`${distination[0]}-${distination[1]}`];
+  neighbors.forEach((neighbor) => {
+    if (!distance[neighbor].isVisited) {
+      distance[neighbor].distance = distance[currentNode].distance + 1;
+      previous[neighbor] = currentNode;
+    }
+  });
+}
 
-  let path = previous[`${distination[0]}-${distination[1]}`];
-  while (path !== `${source[0]}-${source[1]}`) {
+export function createRoute(
+  previous: Path,
+  source: string,
+  distination: string
+) {
+  let route = [distination];
+
+  let path = previous[distination];
+  while (path !== source) {
     route.push(path);
     path = previous[path];
   }
 
-  route.push(`${source[0]}-${source[1]}`);
+  route.push(source);
   return route;
 }
-
-let route = createRoute(previous, [0, 5], [4, 5]);
-
-// function createBoard(graph: number[][], route: string[]) {
-//   for (let index = 0; index < route.length; index++) {
-//     let row = parseInt(route[index].split("-")[0]);
-//     let col = parseInt(route[index].split("-")[1]);
-
-//     graph[row][col] = 0;
-//   }
-//   return graph;
-// }
