@@ -23,7 +23,7 @@ function Graph(rows: number, cols: number) {
   return arr;
 }
 
-export const grid = Graph(20, 50);
+export const grid = Graph(20, 40);
 
 export function dijkstra(
   graph: number[][],
@@ -75,21 +75,29 @@ export function dijkstra(
     const isLeftPosValid = prevCol >= 0 ? true : false;
     const isBottomPosValid = nextRow < graph.length ? true : false;
 
-    let neighbor = [];
+    let neighbors = [];
 
-    if (isTopPosValid) neighbor.push(`${prevRow}-${col}`);
-    if (isRightPosValid) neighbor.push(`${row}-${nextCol}`);
+    if (isTopPosValid) neighbors.push(`${prevRow}-${col}`);
+    if (isRightPosValid) neighbors.push(`${row}-${nextCol}`);
 
-    if (isBottomPosValid) neighbor.push(`${nextRow}-${col}`);
+    if (isBottomPosValid) neighbors.push(`${nextRow}-${col}`);
 
-    if (isLeftPosValid) neighbor.push(`${row}-${prevCol}`);
+    if (isLeftPosValid) neighbors.push(`${row}-${prevCol}`);
     distance[currentNode].isVisited = true;
 
-    const neighborsNotWall = neighbor.filter(
+    const neighborsNotWall = neighbors.filter(
       (neighbor) => !distance[neighbor].isWall
     );
+    console.log(neighborsNotWall);
+
+    // const isAllneighborWalls = neighborsNotWall.length !== neighbors.length;
+    // if (isAllneighborWalls) {
+    //   return { previous, visitedOrderArr };
+    // }
+
     updateNeighbors(distance, neighborsNotWall, currentNode, previous);
     visitedOrderArr.push(...neighborsNotWall);
+
     if (previous[distination]) {
       return { previous, visitedOrderArr };
     }

@@ -1,4 +1,4 @@
-import React, { useRef, memo, useState, useCallback } from "react";
+import React, { useRef, memo, useState, useCallback, useMemo } from "react";
 import { useSetRecoilState } from "recoil";
 import { wallsAtom } from "../../../../state/pathFinder/atoms";
 
@@ -11,8 +11,8 @@ interface Props {
   setEndNode: React.Dispatch<React.SetStateAction<string | null>>;
   isMouseDown: boolean;
   setIsMouseDown: React.Dispatch<React.SetStateAction<boolean>>;
-  // walls: string[];
-  // setWalls: React.Dispatch<React.SetStateAction<string[]>>;
+  isDragging: boolean;
+  setIsDragging: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const Node = memo(
@@ -25,6 +25,8 @@ export const Node = memo(
     startNode,
     isMouseDown,
     setIsMouseDown,
+    isDragging,
+    setIsDragging,
   }: Props) => {
     const setWalls = useSetRecoilState(wallsAtom);
     const nodeRef = useRef<HTMLDivElement | null>(null);
@@ -32,55 +34,59 @@ export const Node = memo(
     const isStartNode = startNode === node ? "startNode" : "";
     const isEndNode = endNode === node ? "endNode" : "";
 
-    const hasStartNode = nodeRef.current?.classList.contains("startNode");
-    const hasEndNode = nodeRef.current?.classList.contains("endNode");
-
     const handleCurrentNode = () => {
-      if (hasStartNode) {
-        setStartNode(null);
-        return;
-      } else if (!startNode && !hasStartNode && !hasEndNode) {
-        setStartNode(node);
-        return;
-      }
-
-      if (hasEndNode) {
-        setEndNode(null);
-      } else if (!endNode && !hasEndNode && startNode && !hasStartNode) {
-        setEndNode(node);
-      }
-    };
-
-    const mouseDownHandler = () => {
-      setIsMouseDown(() => true);
-    };
-
-    const mouseOverHandler = () => {
       const hasWall = nodeRef.current?.classList.contains("walls");
+      const hasStartNode = nodeRef.current?.classList.contains("startNode");
+      const hasEndNode = nodeRef.current?.classList.contains("endNode");
 
       if (hasWall) {
         nodeRef.current?.classList.remove("walls");
         setWalls((walls) => {
           return walls.filter((wall) => wall !== node);
         });
+        return;
       }
-
-      if (isMouseDown && !hasStartNode && !hasEndNode) {
+      if (!hasStartNode && !hasEndNode) {
         nodeRef.current?.classList.add("walls");
         setWalls((walls) => [...walls, node]);
       }
     };
-    const mouseUpHandler = () => {
-      setIsMouseDown(() => false);
+
+    const mouseDownHandler = () => {
+      if (node === startNode) {
+        setIsDragging(() => true);
+      }
+      setIsMouseDown(() => true);
     };
 
-    // const onDrag = useCallback(() => {
-    //   setIsMouseDown(false);
-    //   setStartNode(null);
-    // }, []);
-    // const onDragLeave = useCallback(() => {
-    //   setStartNode(node);
-    // }, []);
+    const mouseUpHandler = () => {
+      setIsMouseDown(() => false);
+      setIsDragging(() => false);
+    };
+
+    const enter = () => {
+      const hasStartNode = nodeRef.current?.classList.contains("startNode");
+      const hasEndNode = nodeRef.current?.classList.contains("endNode");
+      const hasWall = nodeRef.current?.classList.contains("walls");
+
+      if (!isDragging) {
+        if (hasWall && isMouseDown) {
+          nodeRef.current?.classList.remove("walls");
+          setWalls((walls) => {
+            return walls.filter((wall) => wall !== node);
+          });
+          return;
+        }
+        if (isMouseDown && !hasStartNode && !hasEndNode) {
+          nodeRef.current?.classList.add("walls");
+          setWalls((walls) => [...walls, node]);
+          return;
+        }
+      }
+      if (isDragging && isMouseDown) {
+        setStartNode(() => node);
+      }
+    };
 
     return (
       <div
@@ -88,10 +94,8 @@ export const Node = memo(
         ref={nodeRef}
         onClick={handleCurrentNode}
         onMouseDown={mouseDownHandler}
-        onMouseOver={mouseOverHandler}
         onMouseUp={mouseUpHandler}
-        // onDragStart={onDrag}
-        // onDragLeave={onDragLeave}
+        onMouseEnter={enter}
         className={`grid__node ${isStartNode} ${isEndNode}`}
       ></div>
     );

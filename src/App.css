@@ -7,7 +7,7 @@
 }
 .grid {
   display: grid;
-  grid-template-columns: repeat(50, 25px);
+  grid-template-columns: repeat(40, 25px);
 }
 
 .grid__node {
@@ -19,11 +19,10 @@
 
 .startNode {
   background-color: #3b82f6;
-  cursor: grab;
 }
 .endNode {
   background-color: #ec4899;
-  cursor: grab;
+  /* cursor: grab; */
 }
 
 .walls {
