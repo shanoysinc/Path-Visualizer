@@ -52,17 +52,26 @@ export const Node = memo(
     };
 
     const mouseDownHandler = () => {
-      setIsMouseDown(true);
+      setIsMouseDown(() => true);
     };
 
     const mouseOverHandler = () => {
+      const hasWall = nodeRef.current?.classList.contains("walls");
+
+      if (hasWall) {
+        nodeRef.current?.classList.remove("walls");
+        setWalls((walls) => {
+          return walls.filter((wall) => wall !== node);
+        });
+      }
+
       if (isMouseDown && !hasStartNode && !hasEndNode) {
         nodeRef.current?.classList.add("walls");
         setWalls((walls) => [...walls, node]);
       }
     };
     const mouseUpHandler = () => {
-      setIsMouseDown(false);
+      setIsMouseDown(() => false);
     };
 
     // const onDrag = useCallback(() => {
