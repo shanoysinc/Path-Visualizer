@@ -6,22 +6,16 @@ import React, {
   useMemo,
   useCallback,
 } from "react";
-import {
-  initGraph,
-  dijkstra,
-  createRoute,
-} from "../../algorithms/graph/dijkstra";
-import { Node } from "./components/node/Node";
+import { grid, dijkstra, createRoute } from "../../algorithms/graph/dijkstra";
+import { Node } from "./components";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { wallsAtom } from "../../state/pathFinder/atoms";
 
 export const Grid = memo(() => {
-  const gridRef = useRef<HTMLDivElement | null>(null);
-
   const [isMouseDown, setIsMouseDown] = useState(false);
-  const [walls, setWalls] = useState<string[]>([]);
+  const [walls, setWalls] = useRecoilState(wallsAtom);
   const [startNode, setStartNode] = useState<string | null>(null);
   const [endNode, setEndNode] = useState<string | null>(null);
-
-  const grid = useMemo(() => initGraph(35, 80), []);
 
   const traverseGridHandler = () => {
     if (endNode && startNode) {
@@ -62,45 +56,44 @@ export const Grid = memo(() => {
   };
 
   const resetHandler = () => {
-    if (gridRef.current) {
-      [...gridRef.current.children].forEach((child) => {
-        child.classList.remove("startNode");
-        child.classList.remove("endNode");
-        child.classList.remove("walls");
-        child.classList.remove("visitedNode");
-        child.classList.remove("route");
-        setEndNode(null);
-        setStartNode(null);
+    document
+      .querySelectorAll(".startNode, .endNode, .walls, .visitedNode, .route")
+      .forEach((node) => {
+        return node.classList.remove(
+          ...["startNode", "endNode", "walls", "visitedNode", "route"]
+        );
       });
-    }
+    setEndNode(null);
+    setStartNode(null);
+    setWalls([]);
   };
 
-  const GridElement = grid.map((row, rowIndex) => {
-    console.log("rerender");
-    return row.map((col, colIndex) => (
-      <Node
-        key={`${rowIndex}-${colIndex}`}
-        row={rowIndex}
-        col={colIndex}
-        startNode={startNode}
-        setStartNode={setStartNode}
-        endNode={endNode}
-        setEndNode={setEndNode}
-        isMouseDown={isMouseDown}
-        setIsMouseDown={setIsMouseDown}
-        walls={walls}
-        setWalls={setWalls}
-      />
-    ));
-  });
+  const GridElement = grid.map((row, rowIndex) => (
+    <div key={rowIndex} className="grid">
+      {row.map((col, colIndex) => (
+        <Node
+          key={`${rowIndex}-${colIndex}`}
+          row={rowIndex}
+          col={colIndex}
+          startNode={startNode}
+          setStartNode={useCallback((node) => setStartNode(node), [startNode])}
+          endNode={endNode}
+          setEndNode={useCallback((node) => setEndNode(node), [endNode])}
+          isMouseDown={isMouseDown}
+          setIsMouseDown={useCallback(
+            (value) => setIsMouseDown(value),
+            [isMouseDown]
+          )}
+        />
+      ))}
+    </div>
+  ));
 
   return (
     <>
       <button onClick={traverseGridHandler}>Start</button>
       <button onClick={resetHandler}>Reset</button>
-      <div className="grid" ref={gridRef}>
-        {GridElement}
-      </div>
+      <div>{GridElement}</div>
     </>
   );
 });
