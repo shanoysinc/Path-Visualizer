@@ -1,4 +1,6 @@
-import React, { useRef, memo, useState } from "react";
+import React, { useRef, memo, useState, useCallback } from "react";
+import { useSetRecoilState } from "recoil";
+import { wallsAtom } from "../../../../state/pathFinder/atoms";
 
 interface Props {
   row: number;
@@ -9,8 +11,8 @@ interface Props {
   setEndNode: React.Dispatch<React.SetStateAction<string | null>>;
   isMouseDown: boolean;
   setIsMouseDown: React.Dispatch<React.SetStateAction<boolean>>;
-  walls: string[];
-  setWalls: React.Dispatch<React.SetStateAction<string[]>>;
+  // walls: string[];
+  // setWalls: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 export const Node = memo(
@@ -23,14 +25,17 @@ export const Node = memo(
     startNode,
     isMouseDown,
     setIsMouseDown,
-    walls,
-    setWalls,
   }: Props) => {
+    const setWalls = useSetRecoilState(wallsAtom);
     const nodeRef = useRef<HTMLDivElement | null>(null);
+    const node = `${row}-${col}`;
+    const isStartNode = startNode === node ? "startNode" : "";
+    const isEndNode = endNode === node ? "endNode" : "";
 
-    const handleCurrentNode = (node: string) => {
-      const hasStartNode = nodeRef.current?.classList.contains("startNode");
-      const hasEndNode = nodeRef.current?.classList.contains("endNode");
+    const hasStartNode = nodeRef.current?.classList.contains("startNode");
+    const hasEndNode = nodeRef.current?.classList.contains("endNode");
+
+    const handleCurrentNode = () => {
       if (hasStartNode) {
         setStartNode(null);
         return;
@@ -51,29 +56,33 @@ export const Node = memo(
     };
 
     const mouseOverHandler = () => {
-      const hasStartNode = nodeRef.current?.classList.contains("startNode");
-      const hasEndNode = nodeRef.current?.classList.contains("endNode");
-
       if (isMouseDown && !hasStartNode && !hasEndNode) {
         nodeRef.current?.classList.add("walls");
-        // setWalls([...walls, `${row}-${col}`]);
+        setWalls((walls) => [...walls, node]);
       }
     };
     const mouseUpHandler = () => {
       setIsMouseDown(false);
     };
 
-    const node = `${row}-${col}`;
-    const isStartNode = startNode === node ? "startNode" : "";
-    const isEndNode = endNode === node ? "endNode" : "";
+    // const onDrag = useCallback(() => {
+    //   setIsMouseDown(false);
+    //   setStartNode(null);
+    // }, []);
+    // const onDragLeave = useCallback(() => {
+    //   setStartNode(node);
+    // }, []);
+
     return (
       <div
         id={node}
         ref={nodeRef}
-        onClick={() => handleCurrentNode(node)}
+        onClick={handleCurrentNode}
         onMouseDown={mouseDownHandler}
         onMouseOver={mouseOverHandler}
         onMouseUp={mouseUpHandler}
+        // onDragStart={onDrag}
+        // onDragLeave={onDragLeave}
         className={`grid__node ${isStartNode} ${isEndNode}`}
       ></div>
     );
