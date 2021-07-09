@@ -11,7 +11,7 @@ interface Path {
   [props: string]: string;
 }
 
-export function initGraph(rows: number, cols: number) {
+function Graph(rows: number, cols: number) {
   let arr = [];
   for (let row = 0; row < rows; row++) {
     let colArr = [];
@@ -23,7 +23,7 @@ export function initGraph(rows: number, cols: number) {
   return arr;
 }
 
-let graph = initGraph(25, 50);
+export const grid = Graph(20, 50);
 
 export function dijkstra(
   graph: number[][],
@@ -53,8 +53,8 @@ export function dijkstra(
     isWall: false,
   };
 
-  walls.forEach((wall) => {
-    distance[wall].isWall = true;
+  walls.forEach((node) => {
+    distance[node].isWall = true;
   });
 
   while (unvisited.size > 0) {
@@ -76,6 +76,7 @@ export function dijkstra(
     const isBottomPosValid = nextRow < graph.length ? true : false;
 
     let neighbor = [];
+
     if (isTopPosValid) neighbor.push(`${prevRow}-${col}`);
     if (isRightPosValid) neighbor.push(`${row}-${nextCol}`);
 
@@ -87,9 +88,8 @@ export function dijkstra(
     const neighborsNotWall = neighbor.filter(
       (neighbor) => !distance[neighbor].isWall
     );
-    updateNeighbors(distance, neighbor, currentNode, previous);
+    updateNeighbors(distance, neighborsNotWall, currentNode, previous);
     visitedOrderArr.push(...neighborsNotWall);
-
     if (previous[distination]) {
       return { previous, visitedOrderArr };
     }
