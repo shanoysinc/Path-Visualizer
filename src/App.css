@@ -25,7 +25,7 @@
   /* cursor: grab; */
 }
 
-.walls {
+.wall {
   background-color: #111827;
   border: 1px dotted #111827;
 }

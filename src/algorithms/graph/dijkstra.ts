@@ -1,9 +1,5 @@
-interface GridNode {
-  distance: number;
-  isVisited: boolean;
-  isWall: boolean;
-}
-
+import { useRecoilCallback } from "recoil";
+import { NodeAtom } from "../../state/pathFinder/atoms";
 interface Distance {
   [props: string]: GridNode;
 }
@@ -11,25 +7,35 @@ interface Path {
   [props: string]: string;
 }
 
-function Graph(rows: number, cols: number) {
-  let arr = [];
-  for (let row = 0; row < rows; row++) {
-    let colArr = [];
-    for (let col = 0; col < cols; col++) {
-      colArr.push(0);
-    }
-    arr.push(colArr);
-  }
-  return arr;
+export interface GridNode {
+  row: number;
+  col: number;
+  isVisited: boolean;
+  distance: number;
+  isWall: boolean;
+  startNode: boolean;
+  endNode: boolean;
 }
 
-export const grid = Graph(20, 40);
+function createNode(node: GridNode) {
+  return {
+    ...node,
+    distance: Infinity,
+  };
+}
+
+const NodeDefault = {
+  distance: Infinity,
+  isVisited: false,
+  isWall: false,
+  startNode: false,
+  endNode: false,
+};
 
 export function dijkstra(
-  graph: number[][],
+  graph: GridNode[][],
   source: string,
-  distination: string,
-  walls: string[]
+  distination: string
 ) {
   const visitedOrderArr: string[] = [];
   let distance: Distance = {};
@@ -38,32 +44,35 @@ export function dijkstra(
   let unvisited: Set<string> = new Set();
   for (let row = 0; row < graph.length; row++) {
     for (let col = 0; col < graph[row].length; col++) {
-      distance[`${row}-${col}`] = {
-        isVisited: false,
-        distance: Infinity,
-        isWall: false,
-      };
+      const node = createNode(graph[row][col]);
+      distance[`${row}-${col}`] = node;
       unvisited.add(`${row}-${col}`);
     }
   }
 
+  const sourceArr = source.split("-");
+  const sourceCol = parseInt(sourceArr[1]);
+  const sourceRow = parseInt(sourceArr[0]);
   distance[source] = {
+    ...NodeDefault,
+    row: sourceRow,
+    col: sourceCol,
     distance: 0,
-    isVisited: false,
-    isWall: false,
+    startNode: true,
   };
 
-  walls.forEach((node) => {
-    distance[node].isWall = true;
-  });
+  // walls.forEach((node) => {
+  //   distance[node].isWall = true;
+  // });
 
   while (unvisited.size > 0) {
     let currentNode = getSmallestNode(unvisited, distance);
     unvisited.delete(currentNode);
 
-    const currentPos = currentNode.split("-");
-    let row = parseInt(currentPos[0]);
-    let col = parseInt(currentPos[1]);
+    const currentNodeArr = currentNode.split("-");
+    const row = parseInt(currentNodeArr[0]);
+    const col = parseInt(currentNodeArr[1]);
+    const currentNodeIndex = `${row}-${col}`;
 
     let prevRow = row - 1;
     let nextRow = row + 1;
@@ -83,19 +92,18 @@ export function dijkstra(
     if (isBottomPosValid) neighbors.push(`${nextRow}-${col}`);
 
     if (isLeftPosValid) neighbors.push(`${row}-${prevCol}`);
-    distance[currentNode].isVisited = true;
+    distance[currentNodeIndex].isVisited = true;
 
     const neighborsNotWall = neighbors.filter(
       (neighbor) => !distance[neighbor].isWall
     );
-    console.log(neighborsNotWall);
 
     // const isAllneighborWalls = neighborsNotWall.length !== neighbors.length;
     // if (isAllneighborWalls) {
     //   return { previous, visitedOrderArr };
     // }
 
-    updateNeighbors(distance, neighborsNotWall, currentNode, previous);
+    updateNeighbors(distance, neighborsNotWall, currentNodeIndex, previous);
     visitedOrderArr.push(...neighborsNotWall);
 
     if (previous[distination]) {
@@ -107,23 +115,23 @@ export function dijkstra(
 }
 
 function getSmallestNode(unvisited: Set<string>, distance: Distance) {
-  return Array.from(unvisited).reduce((minNode, node) => {
-    return distance[minNode].distance > distance[node].distance
-      ? node
-      : minNode;
+  return Array.from(unvisited).reduce((minNodeIndex, nodeIndex) => {
+    return distance[minNodeIndex].distance > distance[nodeIndex].distance
+      ? nodeIndex
+      : minNodeIndex;
   });
 }
 
 function updateNeighbors(
   distance: Distance,
   neighbors: string[],
-  currentNode: string,
+  currentNodeIndex: string,
   previous: Path
 ) {
   neighbors.forEach((neighbor) => {
     if (!distance[neighbor].isVisited) {
-      distance[neighbor].distance = distance[currentNode].distance + 1;
-      previous[neighbor] = currentNode;
+      distance[neighbor].distance = distance[currentNodeIndex].distance + 1;
+      previous[neighbor] = currentNodeIndex;
     }
   });
 }
