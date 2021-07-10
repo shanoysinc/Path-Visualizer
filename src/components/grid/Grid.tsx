@@ -11,7 +11,7 @@ import { END_INDEX, START_INDEX } from "./hooks/useInitialGrid";
 import { useInitialGrid } from "./hooks/useInitialGrid";
 import { useUpdateGrid } from "./hooks/useUpdateGrid";
 
-export const Grid = memo(() => {
+export const Grid = () => {
   const initGrid = useInitialGrid();
   const [grid, setGrid] = useRecoilState(GridAtom);
   const [isMouseDown, setIsMouseDown] = useState(false);
@@ -20,6 +20,8 @@ export const Grid = memo(() => {
   useEffect(() => {
     setGrid(initGrid());
   }, []);
+
+  console.log("rerender");
 
   const traverseGridHandler = async () => {
     const updatedGridData = await updatedGrid();
@@ -81,8 +83,8 @@ export const Grid = memo(() => {
           // setStartNode={setStartNode}
           // endNode={endNode}
           // setEndNode={setEndNode}
-          isMouseDown={isMouseDown}
-          setIsMouseDown={setIsMouseDown}
+          // isMouseDown={isMouseDown}
+          // setIsMouseDown={setIsMouseDown}
           // isDragging={isDragging}
           // setIsDragging={setIsDragging}
         />
@@ -97,4 +99,4 @@ export const Grid = memo(() => {
       <div>{GridElement}</div>
     </>
   );
-});
+};
