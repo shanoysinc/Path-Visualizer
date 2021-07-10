@@ -1,23 +1,13 @@
-import { atom } from "recoil";
-// import { grid } from "../../algorithms/graph/dijkstra";
-import create from "zustand";
+import { atomFamily, atom } from "recoil";
+import { GridNode } from "../../algorithms/graph/dijkstra";
+import { grid } from "../../components/grid/hooks/useInitialGrid";
 
-export const wallsAtom = atom<string[]>({
-  key: "walls",
+export const GridAtom = atom<GridNode[][]>({
+  key: "grid",
   default: [],
 });
 
-export const draggingNodeAtom = atom<string | null>({
-  key: "draggingNode",
-  default: null,
+export const NodeAtom = atomFamily<GridNode, { row: number; col: number }>({
+  key: "NodeAtom",
+  default: ({ row, col }) => grid[row][col],
 });
-
-interface DraggingNode {
-  draggingNode: string | null;
-  setDraggingNode: (node: string | null) => void;
-}
-
-export const useDraggingNodeStore = create<DraggingNode>((set) => ({
-  draggingNode: null,
-  setDraggingNode: (node) => set({ draggingNode: node }),
-}));
