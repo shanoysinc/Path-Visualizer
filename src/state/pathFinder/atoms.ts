@@ -1,7 +1,6 @@
 import { atomFamily, atom } from "recoil";
 import { GridNode } from "../../algorithms/graph/dijkstra";
 import { grid } from "../../components/grid/hooks/useInitialGrid";
-import create from "zustand";
 
 export const GridAtom = atom<GridNode[][]>({
   key: "grid",
@@ -19,15 +18,3 @@ export const GridFunctionAtom = atom({
     isMouseDown: false,
   },
 });
-
-interface Props {
-  isMouseDown: boolean;
-  updateFunc: (params: Params) => void;
-}
-interface Params {
-  isMouseDown: boolean;
-}
-export const useGridFunc = create<Props>((set) => ({
-  isMouseDown: false,
-  updateFunc: (params: Params) => set((state) => ({ ...state, ...params })),
-}));
