@@ -7,22 +7,23 @@
 }
 .grid {
   display: grid;
-  grid-template-columns: repeat(40, 25px);
+  grid-template-columns: repeat(40, 17px);
 }
 
 .grid__node {
-  height: 25px;
-  width: 25px;
+  height: 17px;
+  width: 17px;
   border: 1px dotted hsl(217, 19%, 20%);
   background-color: #374151;
 }
 
 .startNode {
   background-color: #3b82f6;
+  cursor: grab;
 }
 .endNode {
   background-color: #ec4899;
-  /* cursor: grab; */
+  cursor: grab;
 }
 
 .wall {
