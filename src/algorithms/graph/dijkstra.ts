@@ -1,5 +1,3 @@
-import { useRecoilCallback } from "recoil";
-import { NodeAtom } from "../../state/pathFinder/atoms";
 interface Distance {
   [props: string]: GridNode;
 }
@@ -61,10 +59,6 @@ export function dijkstra(
     startNode: true,
   };
 
-  // walls.forEach((node) => {
-  //   distance[node].isWall = true;
-  // });
-
   while (unvisited.size > 0) {
     let currentNode = getSmallestNode(unvisited, distance);
     unvisited.delete(currentNode);
@@ -102,7 +96,15 @@ export function dijkstra(
     // if (isAllneighborWalls) {
     //   return { previous, visitedOrderArr };
     // }
+    // const isAllneighborWalls = neighbors.every(
+    //   (neighbor) => distance[neighbor].isWall
+    // );
 
+    // if (isAllneighborWalls) {
+    //   console.log("all visited");
+
+    //   return { previous, visitedOrderArr };
+    // }
     updateNeighbors(distance, neighborsNotWall, currentNodeIndex, previous);
     visitedOrderArr.push(...neighborsNotWall);
 
