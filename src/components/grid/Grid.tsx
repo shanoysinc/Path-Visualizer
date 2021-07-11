@@ -42,7 +42,7 @@ export const Grid = memo(() => {
           if (!isEndNode && !isStartNode) {
             nodeDiv.classList.add("visitedNode");
           }
-        }, 1 + index);
+        }, 5 + index);
       }
     });
 
@@ -60,7 +60,7 @@ export const Grid = memo(() => {
             setTimeout(() => {
               nodeDiv.classList.remove("visitedNode");
               nodeDiv.classList.add("route");
-            }, 20 * index);
+            }, 40 * index);
           }
         });
       }, visitedOrderArr.length);
