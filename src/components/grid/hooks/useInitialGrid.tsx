@@ -15,17 +15,20 @@ const START_COL = 20;
 const END_ROW = 2;
 const END_COL = 10;
 
+export const NUMBER_OF_ROWS = 20;
+export const NUMBER_OF_COLS = 40;
+
 export const START_INDEX = `${START_ROW}-${START_COL}`;
 export const END_INDEX = `${END_ROW}-${END_COL}`;
 
-const initGrid = Graph(20, 40);
+const initGrid = createGrid(NUMBER_OF_ROWS, NUMBER_OF_COLS);
 
 initGrid[START_ROW][START_COL].startNode = true;
 initGrid[END_ROW][END_COL].endNode = true;
 
 export const grid = initGrid;
 
-export function Graph(rows: number, cols: number) {
+export function createGrid(rows: number, cols: number) {
   let arr = [];
   for (let row = 0; row < rows; row++) {
     let colArr = [];
@@ -40,10 +43,10 @@ export function Graph(rows: number, cols: number) {
 export function useInitialGrid() {
   return useRecoilCallback(({ set }) => () => {
     const initGrid: GridNode[][] = [];
-    for (let row = 0; row < 20; row++) {
+    for (let row = 0; row < NUMBER_OF_ROWS; row++) {
       let columns = [];
 
-      for (let col = 0; col < 40; col++) {
+      for (let col = 0; col < NUMBER_OF_COLS; col++) {
         columns.push(grid[row][col]);
         set(NodeAtom({ row, col }), grid[row][col]);
       }
