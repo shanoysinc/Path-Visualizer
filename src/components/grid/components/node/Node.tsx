@@ -1,7 +1,6 @@
 import React, { memo } from "react";
 import { useRecoilState } from "recoil";
 import { NodeAtom } from "../../../../state/pathFinder/atoms";
-
 import {
   useGridFunc,
   GridFuncProps,
@@ -15,6 +14,8 @@ import {
   useRoutePos,
   useRoutePosProps,
 } from "../../../../state/pathFinder/useRoutePos";
+import { TargetIcon } from "../../../../assets/TargetIcon";
+import { AirplaneIcon } from "../../../../assets/Airplane";
 
 interface Props {
   row: number;
@@ -43,6 +44,8 @@ export const Node = memo(({ col, row }: Props) => {
   const nodeIndex = `${row}-${col}`;
 
   const notStartNodeOrEndNode = !currentNode.startNode && !currentNode.endNode;
+  const isSelectedNodeStartNode = selectedNode === SelectedType.startNode;
+  const isSelectedNodeEndNode = selectedNode === SelectedType.endNode;
 
   const handleCurrentNode = () => {
     if (notStartNodeOrEndNode) {
@@ -56,8 +59,11 @@ export const Node = memo(({ col, row }: Props) => {
 
   const mouseDownHandler = () => {
     if (notStartNodeOrEndNode) {
-      gridFunc({ isMouseDown: true });
+      return gridFunc({ isMouseDown: true });
     }
+    if (isSelectedNodeStartNode && currentNode.endNode) return;
+    if (isSelectedNodeEndNode && currentNode.startNode) return;
+
     if (currentNode.startNode) {
       setSelectedNode(SelectedType.startNode);
     }
@@ -68,17 +74,19 @@ export const Node = memo(({ col, row }: Props) => {
 
   const mouseUpHandler = () => {
     if (isMouseDown) {
-      gridFunc({ isMouseDown: false });
+      return gridFunc({ isMouseDown: false });
     }
-    if (selectedNode) {
-      setSelectedNode(null);
-    }
-    if (selectedNode === SelectedType.startNode) {
+    if (isSelectedNodeStartNode && currentNode.endNode) return;
+    if (isSelectedNodeEndNode && currentNode.startNode) return;
+
+    if (isSelectedNodeStartNode) {
       setRoutePos({ sourceIndex: nodeIndex });
     }
-    if (selectedNode === SelectedType.endNode) {
+    if (isSelectedNodeEndNode) {
       setRoutePos({ destinationIndex: nodeIndex });
     }
+
+    setSelectedNode(null);
   };
 
   const onMouseEnter = () => {
@@ -91,19 +99,19 @@ export const Node = memo(({ col, row }: Props) => {
       }
       return;
     }
-    if (selectedNode === SelectedType.startNode) {
+    if (isSelectedNodeStartNode) {
       setCurrentNode((node) => ({ ...node, startNode: true, isWall: false }));
     }
-    if (selectedNode === SelectedType.endNode) {
+    if (isSelectedNodeEndNode) {
       setCurrentNode((node) => ({ ...node, endNode: true, isWall: false }));
     }
   };
 
   const onMouseOut = () => {
-    if (selectedNode === SelectedType.startNode) {
+    if (isSelectedNodeStartNode) {
       setCurrentNode((node) => ({ ...node, startNode: false, isWall: false }));
     }
-    if (selectedNode === SelectedType.endNode) {
+    if (isSelectedNodeEndNode) {
       setCurrentNode((node) => ({ ...node, endNode: false, isWall: false }));
     }
   };
@@ -111,16 +119,19 @@ export const Node = memo(({ col, row }: Props) => {
   const isStartNode = currentNode.startNode ? "startNode" : "";
   const isEndNode = currentNode.endNode ? "endNode" : "";
   const wall = currentNode.isWall ? "wall" : "";
-  // const isVisited = currentNode.isVisited ? "visitedNode" : "";
   return (
     <div
       id={nodeIndex}
       onClick={handleCurrentNode}
       onMouseDown={mouseDownHandler}
       onMouseUp={mouseUpHandler}
-      onMouseOut={onMouseOut}
+      onMouseLeave={onMouseOut}
       onMouseEnter={onMouseEnter}
+      draggable={false}
       className={`grid__node ${isStartNode} ${isEndNode} ${wall}`}
-    ></div>
+    >
+      {isEndNode && <TargetIcon color="white" height={25} width={30} />}
+      {isStartNode && <AirplaneIcon color="yellow" height={30} width={35} />}
+    </div>
   );
 });
