@@ -27,7 +27,7 @@ export const Grid = memo(() => {
   const traverseGridHandler = async () => {
     const updatedGridData = await updatedGrid();
 
-    const { visitedOrderArr, previous } = dijkstra(
+    const { visitedOrderArr, previous, hasRoute } = dijkstra(
       updatedGridData,
       routePos.sourceIndex,
       routePos.destinationIndex
@@ -46,23 +46,31 @@ export const Grid = memo(() => {
       }
     });
 
-    // setTimeout(() => {
-    //   const route = createRoute(
-    //     previous,
-    //     routePos.sourceIndex,
-    //     routePos.destinationIndex
-    //   );
-    //   route.forEach((node, index) => {
-    //     const nodeDiv = document.getElementById(node);
+    if (hasRoute) {
+      setTimeout(() => {
+        const route = createRoute(
+          previous,
+          routePos.sourceIndex,
+          routePos.destinationIndex
+        );
+        route.forEach((node, index) => {
+          const nodeDiv = document.getElementById(node);
 
-    //     if (nodeDiv) {
-    //       setTimeout(() => {
-    //         nodeDiv.classList.remove("visitedNode");
-    //         nodeDiv.classList.add("route");
-    //       }, 20 * index);
-    //     }
-    //   });
-    // }, visitedOrderArr.length);
+          if (nodeDiv) {
+            setTimeout(() => {
+              nodeDiv.classList.remove("visitedNode");
+              nodeDiv.classList.add("route");
+            }, 20 * index);
+          }
+        });
+      }, visitedOrderArr.length);
+
+      return;
+    }
+
+    setTimeout(() => {
+      alert("no path found!");
+    }, visitedOrderArr.length);
   };
 
   const resetHandler = () => {
@@ -71,7 +79,7 @@ export const Grid = memo(() => {
     });
 
     setGrid(initGrid());
-    setRoutePost({ destinationIndex: END_INDEX, sourceIndex: START_INDEX });
+    // setRoutePost({ destinationIndex: END_INDEX, sourceIndex: START_INDEX });
   };
 
   const GridElement = grid.map((row, rowIndex) => (
