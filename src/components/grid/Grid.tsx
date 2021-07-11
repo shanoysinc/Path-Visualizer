@@ -79,7 +79,7 @@ export const Grid = memo(() => {
     });
 
     setGrid(initGrid());
-    // setRoutePost({ destinationIndex: END_INDEX, sourceIndex: START_INDEX });
+    setRoutePost({ destinationIndex: END_INDEX, sourceIndex: START_INDEX });
   };
 
   const GridElement = grid.map((row, rowIndex) => (
