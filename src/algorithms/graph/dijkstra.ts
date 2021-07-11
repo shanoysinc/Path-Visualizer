@@ -38,6 +38,7 @@ export function dijkstra(
   const visitedOrderArr: string[] = [];
   let distance: Distance = {};
   let previous: Path = {};
+  let hasRoute = true;
 
   let unvisited: Set<string> = new Set();
   for (let row = 0; row < graph.length; row++) {
@@ -92,28 +93,26 @@ export function dijkstra(
       (neighbor) => !distance[neighbor].isWall
     );
 
-    // const isAllneighborWalls = neighborsNotWall.length !== neighbors.length;
-    // if (isAllneighborWalls) {
-    //   return { previous, visitedOrderArr };
-    // }
-    // const isAllneighborWalls = neighbors.every(
-    //   (neighbor) => distance[neighbor].isWall
-    // );
-
-    // if (isAllneighborWalls) {
-    //   console.log("all visited");
-
-    //   return { previous, visitedOrderArr };
-    // }
     updateNeighbors(distance, neighborsNotWall, currentNodeIndex, previous);
-    visitedOrderArr.push(...neighborsNotWall);
 
-    if (previous[distination]) {
-      return { previous, visitedOrderArr };
+    // break loop if all route is block off!
+    if (distance[currentNodeIndex].distance === Infinity) {
+      hasRoute = false;
+      break;
     }
+
+    visitedOrderArr.push(...neighborsNotWall);
+    // neighborsNotWall.forEach((n) => {
+    //   if (!visitedOrderArr.includes(n)) {
+    //     visitedOrderArr.push(n);
+    //   }
+    // });
+
+    // break loop if route is found!
+    if (previous[distination]) break;
   }
 
-  return { previous, visitedOrderArr };
+  return { previous, visitedOrderArr, hasRoute };
 }
 
 function getSmallestNode(unvisited: Set<string>, distance: Distance) {
