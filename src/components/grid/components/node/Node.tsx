@@ -111,6 +111,7 @@ export const Node = memo(({ col, row }: Props) => {
   const isStartNode = currentNode.startNode ? "startNode" : "";
   const isEndNode = currentNode.endNode ? "endNode" : "";
   const wall = currentNode.isWall ? "wall" : "";
+  // const isVisited = currentNode.isVisited ? "visitedNode" : "";
   return (
     <div
       id={nodeIndex}
