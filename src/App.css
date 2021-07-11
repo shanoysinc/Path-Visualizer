@@ -7,22 +7,27 @@
 }
 .grid {
   display: grid;
-  grid-template-columns: repeat(40, 17px);
+  grid-template-columns: repeat(40, 30px);
 }
 
 .grid__node {
-  height: 17px;
-  width: 17px;
-  border: 1px dotted hsl(217, 19%, 20%);
+  height: 30px;
+  width: 30px;
+  border: 1px solid hsla(216, 20%, 20%, 0.473);
   background-color: #374151;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .startNode {
-  background-color: #3b82f6;
+  /* background-color: #3b82f6; */
+  /* background-color: #374151; */
   cursor: grab;
 }
 .endNode {
-  background-color: #ec4899;
+  /* background-color: #374151; */
+  /* background-color: rgb(202, 45, 45); */
   cursor: grab;
 }
 
@@ -38,4 +43,5 @@
 
 .visitedNode {
   background-color: #14d696;
+  border: 1px solid hsla(160, 82%, 20%, 0.281);
 }
