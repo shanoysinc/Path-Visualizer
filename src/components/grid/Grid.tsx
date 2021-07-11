@@ -1,35 +1,36 @@
 import React, { useState, memo, useEffect } from "react";
 import { useRecoilState } from "recoil";
-import {
-  dijkstra,
-  createRoute,
-  GridNode,
-} from "../../algorithms/graph/dijkstra";
+import { dijkstra, createRoute } from "../../algorithms/graph/dijkstra";
 import { GridAtom } from "../../state/pathFinder/atoms";
+import {
+  useRoutePos,
+  useRoutePosProps,
+} from "../../state/pathFinder/useRoutePos";
 import { Node } from "./components";
-import { END_INDEX, START_INDEX } from "./hooks/useInitialGrid";
-import { useInitialGrid } from "./hooks/useInitialGrid";
+import { END_INDEX, START_INDEX, useInitialGrid } from "./hooks/useInitialGrid";
 import { useUpdateGrid } from "./hooks/useUpdateGrid";
 
-export const Grid = () => {
+const routePosSelector = (state: useRoutePosProps) => ({
+  routePos: state.routePos,
+  setRoutePost: state.setRoutePos,
+});
+export const Grid = memo(() => {
   const initGrid = useInitialGrid();
   const [grid, setGrid] = useRecoilState(GridAtom);
-  const [isMouseDown, setIsMouseDown] = useState(false);
-  // const [isDragging, setIsDragging] = useState(false);
   const updatedGrid = useUpdateGrid();
+  const { routePos, setRoutePost } = useRoutePos(routePosSelector);
+
   useEffect(() => {
     setGrid(initGrid());
   }, []);
-
-  console.log("rerender");
 
   const traverseGridHandler = async () => {
     const updatedGridData = await updatedGrid();
 
     const { visitedOrderArr, previous } = dijkstra(
       updatedGridData,
-      START_INDEX,
-      END_INDEX
+      routePos.sourceIndex,
+      routePos.destinationIndex
     );
 
     visitedOrderArr.forEach((node, index) => {
@@ -45,19 +46,23 @@ export const Grid = () => {
       }
     });
 
-    setTimeout(() => {
-      const route = createRoute(previous, START_INDEX, END_INDEX);
-      route.forEach((node, index) => {
-        const nodeDiv = document.getElementById(node);
+    // setTimeout(() => {
+    //   const route = createRoute(
+    //     previous,
+    //     routePos.sourceIndex,
+    //     routePos.destinationIndex
+    //   );
+    //   route.forEach((node, index) => {
+    //     const nodeDiv = document.getElementById(node);
 
-        if (nodeDiv) {
-          setTimeout(() => {
-            nodeDiv.classList.remove("visitedNode");
-            nodeDiv.classList.add("route");
-          }, 20 * index);
-        }
-      });
-    }, visitedOrderArr.length);
+    //     if (nodeDiv) {
+    //       setTimeout(() => {
+    //         nodeDiv.classList.remove("visitedNode");
+    //         nodeDiv.classList.add("route");
+    //       }, 20 * index);
+    //     }
+    //   });
+    // }, visitedOrderArr.length);
   };
 
   const resetHandler = () => {
@@ -66,28 +71,13 @@ export const Grid = () => {
     });
 
     setGrid(initGrid());
+    setRoutePost({ destinationIndex: END_INDEX, sourceIndex: START_INDEX });
   };
 
   const GridElement = grid.map((row, rowIndex) => (
     <div key={rowIndex} className="grid">
       {row.map((node, colIndex) => (
-        <Node
-          key={`${rowIndex}-${colIndex}`}
-          row={rowIndex}
-          col={colIndex}
-          // isVisited={node.isVisited}
-          // isWall={node.isWall}
-          // startNode={node.startNode}
-          // endNode={node.endNode}
-          // startNode={startNode}
-          // setStartNode={setStartNode}
-          // endNode={endNode}
-          // setEndNode={setEndNode}
-          // isMouseDown={isMouseDown}
-          // setIsMouseDown={setIsMouseDown}
-          // isDragging={isDragging}
-          // setIsDragging={setIsDragging}
-        />
+        <Node key={`${rowIndex}-${colIndex}`} row={rowIndex} col={colIndex} />
       ))}
     </div>
   ));
@@ -99,4 +89,4 @@ export const Grid = () => {
       <div>{GridElement}</div>
     </>
   );
-};
+});
