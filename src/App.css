@@ -1,20 +1,27 @@
-.App {
+/* .App {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 2em;
   flex-wrap: wrap;
+} */
+.App {
+  background-color: #ede9fe;
+  /* background-color: #e5e7eb; */
 }
 .grid {
-  display: grid;
-  grid-template-columns: repeat(40, 25px);
+  display: flex;
+  flex-wrap: wrap;
+  /* grid-template-columns: repeat(40, 25px); */
 }
 
 .grid__node {
   height: 25px;
-  width: 25px;
-  border: 1px solid hsla(216, 20%, 20%, 0.473);
-  background-color: #374151;
+  border: 1px solid hsla(252, 95%, 80%, 0.54);
+
+  /* width: 25px; */
+  /* border: 1px solid hsla(216, 20%, 20%, 0.473); */
+  /* background-color: #111827; */
   display: flex;
   justify-content: center;
   align-items: center;
