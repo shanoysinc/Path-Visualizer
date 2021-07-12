@@ -35,7 +35,11 @@ const routePosSelector = (state: useRoutePosProps) => ({
 });
 
 export const Node = memo(({ col, row }: Props) => {
+  // const [currentNode, setCurrentNode] = useRecoilState(
+  //   NodeSelector({ row, col })
+  // );
   const [currentNode, setCurrentNode] = useRecoilState(NodeAtom({ row, col }));
+  // console.log("node rerender");
 
   const { isMouseDown, gridFunc } = useGridFunc(gridFuncSelector);
   const { setRoutePos } = useRoutePos(routePosSelector);
@@ -131,7 +135,7 @@ export const Node = memo(({ col, row }: Props) => {
       className={`grid__node ${isStartNode} ${isEndNode} ${wall}`}
     >
       {isEndNode && <TargetIcon color="white" height={25} width={30} />}
-      {isStartNode && <AirplaneIcon color="yellow" height={30} width={35} />}
+      {isStartNode && <AirplaneIcon color="yellow" height={25} width={25} />}
     </div>
   );
 });

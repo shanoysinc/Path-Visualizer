@@ -7,12 +7,12 @@
 }
 .grid {
   display: grid;
-  grid-template-columns: repeat(40, 30px);
+  grid-template-columns: repeat(40, 25px);
 }
 
 .grid__node {
-  height: 30px;
-  width: 30px;
+  height: 25px;
+  width: 25px;
   border: 1px solid hsla(216, 20%, 20%, 0.473);
   background-color: #374151;
   display: flex;
