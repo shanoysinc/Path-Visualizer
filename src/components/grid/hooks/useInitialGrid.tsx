@@ -15,7 +15,7 @@ const START_COL = 20;
 const END_ROW = 2;
 const END_COL = 10;
 
-export const NUMBER_OF_ROWS = 16;
+export const NUMBER_OF_ROWS = 21;
 export const NUMBER_OF_COLS = 40;
 
 export const START_INDEX = `${START_ROW}-${START_COL}`;
