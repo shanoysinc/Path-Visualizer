@@ -9,6 +9,7 @@ import {
 import { Node } from "./components";
 import { END_INDEX, START_INDEX, useInitialGrid } from "./hooks/useInitialGrid";
 import { useUpdateGrid } from "./hooks/useUpdateGrid";
+import { Grid as ChakraUIGrid, GridItem, Box } from "@chakra-ui/react";
 
 const routePosSelector = (state: useRoutePosProps) => ({
   routePos: state.routePos,
@@ -83,18 +84,18 @@ export const Grid = memo(() => {
   };
 
   const GridElement = grid.map((row, rowIndex) => (
-    <div key={rowIndex} className="grid">
+    <>
       {row.map((node, colIndex) => (
         <Node key={`${rowIndex}-${colIndex}`} row={rowIndex} col={colIndex} />
       ))}
-    </div>
+    </>
   ));
 
   return (
     <>
-      {/* <button onClick={traverseGridHandler}>Start</button>
-      <button onClick={resetHandler}>Reset</button> */}
-      <div>{GridElement}</div>
+      <ChakraUIGrid templateColumns="repeat(40, 1fr)">
+        {GridElement}
+      </ChakraUIGrid>
     </>
   );
 });
