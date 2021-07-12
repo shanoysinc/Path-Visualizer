@@ -16,6 +16,7 @@ import {
 } from "../../../../state/pathFinder/useRoutePos";
 import { TargetIcon } from "../../../../assets/TargetIcon";
 import { AirplaneIcon } from "../../../../assets/Airplane";
+import { ArrowRightIcon, StarIcon } from "@chakra-ui/icons";
 
 interface Props {
   row: number;
@@ -134,8 +135,8 @@ export const Node = memo(({ col, row }: Props) => {
       draggable={false}
       className={`grid__node ${isStartNode} ${isEndNode} ${wall}`}
     >
-      {isEndNode && <TargetIcon color="white" height={25} width={30} />}
-      {isStartNode && <AirplaneIcon color="yellow" height={25} width={25} />}
+      {isEndNode && <ArrowRightIcon w={4} h={4} color="#5b21b6" />}
+      {isStartNode && <StarIcon w={4} h={4} color="yellow.400" />}
     </div>
   );
 });
