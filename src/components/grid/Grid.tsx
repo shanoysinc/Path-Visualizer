@@ -92,8 +92,8 @@ export const Grid = memo(() => {
 
   return (
     <>
-      <button onClick={traverseGridHandler}>Start</button>
-      <button onClick={resetHandler}>Reset</button>
+      {/* <button onClick={traverseGridHandler}>Start</button>
+      <button onClick={resetHandler}>Reset</button> */}
       <div>{GridElement}</div>
     </>
   );
