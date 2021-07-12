@@ -1,6 +1,6 @@
 import React from "react";
 import { Flex, Button, Select, Heading, Container } from "@chakra-ui/react";
-
+import SmallButton from "../Button/SmallButton";
 export const SidebarContent = () => {
   return (
     <>
@@ -45,53 +45,11 @@ export const SidebarContent = () => {
             <option value="Slow">Slow</option>
           </Select>
 
-          <Flex
-            // justify="space-between"
-            gridGap={4}
-            pt="10"
-            pb="4"
-            flexWrap="wrap"
-            // align="flex-start"
-          >
-            <Button
-              size="sm"
-              color="white"
-              variant="outline"
-              fontWeight="normal"
-              _hover={{ bg: "#6D28D9", borderColor: "#6D28D9" }}
-            >
-              Reset
-            </Button>
-            <Button
-              size="sm"
-              color="white"
-              variant="outline"
-              colorScheme="pink"
-              fontWeight="normal"
-              _hover={{ bg: "#6D28D9", borderColor: "#6D28D9" }}
-            >
-              Clear Walls
-            </Button>
-            <Button
-              size="sm"
-              color="white"
-              variant="outline"
-              colorScheme="pink"
-              fontWeight="normal"
-              _hover={{ bg: "#6D28D9", borderColor: "#6D28D9" }}
-            >
-              Clear path
-            </Button>
-            <Button
-              size="sm"
-              color="white"
-              variant="outline"
-              colorScheme="pink"
-              fontWeight="normal"
-              _hover={{ bg: "#6D28D9", borderColor: "#6D28D9" }}
-            >
-              Clear Board
-            </Button>
+          <Flex gridGap={4} pt="10" pb="4" flexWrap="wrap">
+            <SmallButton content="Reset" />
+            <SmallButton content="Clear Walls" />
+            <SmallButton content="Clear path" />
+            <SmallButton content="Clear Board" />
           </Flex>
         </div>
         <Container>
