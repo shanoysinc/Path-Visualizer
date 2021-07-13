@@ -16,10 +16,13 @@
 .grid__node {
   height: 25px;
   border: 1px dashed hsla(208, 97%, 55%, 0.349);
-
   display: flex;
   justify-content: center;
   align-items: center;
+  -webkit-user-select: none; /* Chrome all / Safari all */
+  -moz-user-select: none; /* Firefox all */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none; /* Likely future */
 }
 
 .startNode {
@@ -30,8 +33,8 @@
 }
 
 .wall {
-  background-color: hsl(208, 97%, 20%);
-  border: 1px dotted hsl(208, 97%, 20%);
+  background-color: hsl(208, 97%, 15%);
+  border: 1px dotted hsl(208, 97%, 15%);
 }
 
 .route {
@@ -42,4 +45,18 @@
 .visitedNode {
   background-color: #1e96fc;
   border: 1px dashed hsla(0, 0%, 100%, 0.199);
+}
+
+.arrow-right {
+  transform: rotate(135deg);
+  display: block;
+  margin: 30px auto;
+  width: 15px;
+  height: 15px;
+  border-top: 5px solid hsl(208, 97%, 15%);
+  border-left: 5px solid hsl(208, 97%, 15%);
+}
+
+.star {
+  font-size: 17px;
 }

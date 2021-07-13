@@ -15,8 +15,6 @@ import {
   useRoutePosProps,
 } from "../../../../state/pathFinder/useRoutePos";
 
-import { ArrowRightIcon, StarIcon } from "@chakra-ui/icons";
-
 interface Props {
   row: number;
   col: number;
@@ -39,7 +37,6 @@ export const Node = memo(({ col, row }: Props) => {
   //   NodeSelector({ row, col })
   // );
   const [currentNode, setCurrentNode] = useRecoilState(NodeAtom({ row, col }));
-  // console.log("node rerender");
 
   const { isMouseDown, gridFunc } = useGridFunc(gridFuncSelector);
   const { setRoutePos } = useRoutePos(routePosSelector);
@@ -134,8 +131,8 @@ export const Node = memo(({ col, row }: Props) => {
       draggable={false}
       className={`grid__node ${isStartNode} ${isEndNode} ${wall}`}
     >
-      {isStartNode && <ArrowRightIcon w={4} h={4} color="black" />}
-      {isEndNode && <StarIcon w={5} h={5} color="#34D399" />}
+      {isStartNode && <div className="arrow-right"></div>}
+      {isEndNode && <div className="star">⭐</div>}
     </div>
   );
 });

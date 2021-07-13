@@ -1,11 +1,11 @@
-import React from "react";
+import React, { memo } from "react";
 
 interface Props {
   height?: number;
   width?: number;
   // color?: string;
 }
-export const AlgoIcon = ({ height, width }: Props) => {
+export const AlgoIcon = memo(({ height, width }: Props) => {
   return (
     <svg
       id="color_line"
@@ -106,4 +106,4 @@ export const AlgoIcon = ({ height, width }: Props) => {
       />
     </svg>
   );
-};
+});

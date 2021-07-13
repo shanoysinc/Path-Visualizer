@@ -14,16 +14,26 @@ const GridKeys = () => {
         flexWrap="wrap"
       >
         <Center>
-          <ArrowRightIcon w={8} h={5} color="black" />
-          <Text fontWeight="semibold" fontSize={17} color={"#374151"}>
-            {" "}
+          <div className="arrow-right"></div>
+
+          <Text
+            paddingLeft={2}
+            fontWeight="semibold"
+            fontSize={17}
+            color={"#374151"}
+          >
             Start Node
           </Text>
         </Center>
         <Center>
-          <StarIcon w={8} h={5} color="#34D399" />
-
-          <Text fontWeight="semibold" fontSize={17} color={"#374151"}>
+          <span className="star"> ⭐</span>{" "}
+          {/* <StarIcon w={8} h={5} color="#34D399" /> */}
+          <Text
+            fontWeight="semibold"
+            paddingLeft={2}
+            fontSize={17}
+            color={"#374151"}
+          >
             Target Node
           </Text>
         </Center>
