@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Flex,
   Button,
@@ -33,10 +33,15 @@ export const SidebarContent = () => {
   const updatedGrid = useUpdateGrid();
   const removeGridWalls = useRemoveGridWalls();
   const { routePos, setRoutePos } = useRoutePos(routePosSelector);
+  const [userHasVisualize, setUserHasVisualize] = useState(false);
   const toast = useToast();
 
   const traverseGridHandler = async () => {
     const updatedGridData = await updatedGrid();
+
+    if (userHasVisualize) {
+      clearGridPathHandler();
+    }
 
     const { visitedOrderArr, previous, hasRoute } = dijkstra(
       updatedGridData,
@@ -89,6 +94,7 @@ export const SidebarContent = () => {
         });
       }, 5 * visitedOrderArr.length);
     }
+    setUserHasVisualize(true);
   };
 
   const resetHandler = () => {
@@ -102,6 +108,13 @@ export const SidebarContent = () => {
   const clearGridWallsHandler = async () => {
     removeGridWalls();
   };
+  const clearGridPathHandler = async () => {
+    document.querySelectorAll(".route, .visitedNode").forEach((node) => {
+      return node.classList.remove(...["route", "visitedNode"]);
+    });
+    setUserHasVisualize(true);
+  };
+
   return (
     <>
       {/* <Heading as="h3" size="lg">
@@ -151,7 +164,7 @@ export const SidebarContent = () => {
               content="Clear Walls"
               onClick={clearGridWallsHandler}
             />
-            <SmallButton content="Clear path" />
+            <SmallButton content="Clear path" onClick={clearGridPathHandler} />
           </Flex>
         </div>
         <Container>
