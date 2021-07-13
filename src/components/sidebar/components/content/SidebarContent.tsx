@@ -39,6 +39,7 @@ export const SidebarContent = () => {
   const { routePos, setRoutePos } = useRoutePos(routePosSelector);
   const [userHasVisualize, setUserHasVisualize] = useState(false);
   const [visualizingAlgo, setVisualizingAlgo] = useState(false);
+  // const [visualizeSpeed, setVisualizeSpeed] = useState(0);
   const toast = useToast();
 
   const traverseGridHandler = async () => {
@@ -54,6 +55,11 @@ export const SidebarContent = () => {
       routePos.sourceIndex,
       routePos.destinationIndex
     );
+    //
+    // slow - 40 * index
+    // average - 15 * index
+    // fast - 5 * index
+    const speedValue = 9;
 
     visitedOrderArr.forEach((node, index) => {
       const nodeDiv = document.getElementById(node);
@@ -64,9 +70,11 @@ export const SidebarContent = () => {
           if (!isEndNode && !isStartNode) {
             nodeDiv.classList.add("visitedNode");
           }
-        }, 5 * index);
+        }, speedValue * index);
       }
     });
+
+    //
 
     if (hasRoute) {
       setTimeout(() => {
@@ -82,7 +90,7 @@ export const SidebarContent = () => {
             setTimeout(() => {
               nodeDiv.classList.remove("visitedNode");
               nodeDiv.classList.add("route");
-            }, 50 * index);
+            }, speedValue * 10 * index);
           }
         });
 
@@ -97,8 +105,8 @@ export const SidebarContent = () => {
             isClosable: true,
             position: "top",
           });
-        }, route.length * 50);
-      }, visitedOrderArr.length * 5);
+        }, speedValue * 11 * route.length);
+      }, speedValue * visitedOrderArr.length);
     } else {
       setTimeout(() => {
         setVisualizingAlgo(false);
@@ -111,7 +119,7 @@ export const SidebarContent = () => {
           isClosable: true,
           position: "top",
         });
-      }, 5 * visitedOrderArr.length);
+      }, speedValue * visitedOrderArr.length);
     }
   };
 
@@ -135,6 +143,11 @@ export const SidebarContent = () => {
     document.querySelectorAll(".route, .visitedNode").forEach((node) => {
       return node.classList.remove(...["route", "visitedNode"]);
     });
+  };
+
+  const visualizeSpeedHandler = (value: any) => {
+    console.log(value.target.value);
+    // setVisualizeSpeed()
   };
 
   return (
@@ -181,6 +194,7 @@ export const SidebarContent = () => {
             _groupHover={{ bgColor: "red", bg: "red" }}
             w="fit-content"
             _hover={{ bg: "hsl(208, 97%, 49%);" }}
+            onChange={visualizeSpeedHandler}
           >
             <option className="option" value="Fast">
               Fast
@@ -251,4 +265,16 @@ export const SidebarContent = () => {
 //     return node.classList.remove(...["route", "visitedNode"]);
 //   });
 //   // setUserHasVisualize(false);
+// }
+
+// function animationSpeed(speedType: string){
+//   const speed = {
+//     overall: 12,
+//     route: 10,
+//     toast: 12
+//   }
+//   switch(speedType){
+//     case "FAST":
+
+//   }
 // }
