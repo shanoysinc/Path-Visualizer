@@ -22,7 +22,7 @@ import {
 import { GridAtom } from "../../../../state/pathFinder/atoms";
 import { useSetRecoilState } from "recoil";
 import { useRemoveGridWalls } from "../../../grid/hooks/useRemoveWalls";
-
+import { AlgoIcon } from "../../../../assets/AlgoIcon";
 const routePosSelector = (state: useRoutePosProps) => ({
   routePos: state.routePos,
   setRoutePos: state.setRoutePos,
@@ -141,12 +141,17 @@ export const SidebarContent = () => {
         p="5"
       >
         <div>
-          <Heading as="h3" size="lg" color="#FCD34D">
-            DevPath - Algorithm Visualizer
-          </Heading>
+          <div>
+            <Heading as="h3" size="lg" color="#EDE9FE">
+              DevPath - Algorithm Visualizer
+            </Heading>
+            <div className="algo-logo">
+              <AlgoIcon height={35} width={35} />
+            </div>
+          </div>
           <Select
             placeholder="Dijkstra's Algorithm"
-            mt="8"
+            mt="14"
             variant="filled"
             bg="#6D28D9"
             color="white"
