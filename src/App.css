@@ -15,7 +15,7 @@
 
 .grid__node {
   height: 25px;
-  border: 1px dashed hsla(252, 95%, 80%, 0.84);
+  border: 1px dashed hsla(208, 97%, 55%, 0.349);
 
   display: flex;
   justify-content: center;
@@ -30,8 +30,8 @@
 }
 
 .wall {
-  background-color: #111827;
-  border: 1px dotted #111827;
+  background-color: hsl(208, 97%, 20%);
+  border: 1px dotted hsl(208, 97%, 20%);
 }
 
 .route {
