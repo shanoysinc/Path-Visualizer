@@ -100,6 +100,8 @@ export const SidebarContent = () => {
       }, visitedOrderArr.length * 5);
     } else {
       setTimeout(() => {
+        setVisualizingAlgo(false);
+        setUserHasVisualize(true);
         toast({
           title: "No route to destination!",
           description: "All path is block off to your destination",
