@@ -34,11 +34,12 @@ export const SidebarContent = () => {
   const removeGridWalls = useRemoveGridWalls();
   const { routePos, setRoutePos } = useRoutePos(routePosSelector);
   const [userHasVisualize, setUserHasVisualize] = useState(false);
+  const [visualizingAlgo, setVisualizingAlgo] = useState(false);
   const toast = useToast();
 
   const traverseGridHandler = async () => {
     const updatedGridData = await updatedGrid();
-
+    setVisualizingAlgo(true);
     if (userHasVisualize) {
       clearGridPathHandler();
     }
@@ -79,6 +80,10 @@ export const SidebarContent = () => {
             }, 65 * index);
           }
         });
+
+        setTimeout(() => {
+          setVisualizingAlgo(false);
+        }, route.length * 65);
       }, visitedOrderArr.length * 5);
 
       return;
@@ -159,12 +164,21 @@ export const SidebarContent = () => {
           </Select>
 
           <Flex gridGap={4} pt="10" pb="4" flexWrap="wrap">
-            <SmallButton content="Reset" onClick={resetHandler} />
+            <SmallButton
+              content="Reset"
+              onClick={resetHandler}
+              visualizingAlgo={visualizingAlgo}
+            />
             <SmallButton
               content="Clear Walls"
               onClick={clearGridWallsHandler}
+              visualizingAlgo={visualizingAlgo}
             />
-            <SmallButton content="Clear path" onClick={clearGridPathHandler} />
+            <SmallButton
+              content="Clear path"
+              onClick={clearGridPathHandler}
+              visualizingAlgo={visualizingAlgo}
+            />
           </Flex>
         </div>
         <Container>
@@ -173,6 +187,7 @@ export const SidebarContent = () => {
             w="full"
             colorScheme="pink"
             onClick={traverseGridHandler}
+            disabled={visualizingAlgo}
           >
             Visualize
           </Button>
