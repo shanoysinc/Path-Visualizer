@@ -101,12 +101,12 @@ export function dijkstra(
       break;
     }
 
-    visitedOrderArr.push(...neighborsNotWall);
-    // neighborsNotWall.forEach((n) => {
-    //   if (!visitedOrderArr.includes(n)) {
-    //     visitedOrderArr.push(n);
-    //   }
-    // });
+    // visitedOrderArr.push(...neighborsNotWall);
+    neighborsNotWall.forEach((n) => {
+      if (!visitedOrderArr.includes(n)) {
+        visitedOrderArr.push(n);
+      }
+    });
 
     // break loop if route is found!
     if (previous[distination]) break;
