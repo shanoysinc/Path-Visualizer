@@ -23,7 +23,7 @@ function App() {
           <GridKeys />
         </GridItem>
 
-        <GridItem rowGap={2} rowSpan={5} colSpan={3}>
+        <GridItem rowSpan={5} colSpan={3}>
           <VisualizerGrid />
         </GridItem>
       </Grid>
