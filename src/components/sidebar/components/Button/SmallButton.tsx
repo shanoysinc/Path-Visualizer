@@ -13,9 +13,10 @@ const SmallButton = ({ content, onClick, visualizingAlgo }: Props) => {
       color="white"
       variant="outline"
       fontWeight="normal"
-      _hover={{ bg: "teal.600", borderColor: "teal.600" }}
+      _hover={{ bg: "hsl(208, 97%, 55%)", borderColor: "hsl(208, 97%, 50%);" }}
       onClick={onClick}
       disabled={visualizingAlgo}
+      _focus={{}}
     >
       {content}
     </Button>
