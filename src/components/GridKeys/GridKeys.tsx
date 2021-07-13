@@ -1,11 +1,18 @@
 import React from "react";
-import { Flex, Center, Text, Box } from "@chakra-ui/react";
-import { ArrowRightIcon, StarIcon } from "@chakra-ui/icons";
+import { Flex, Center, Text, Box, Link } from "@chakra-ui/react";
+
+import { ArrowRightIcon, StarIcon, ExternalLinkIcon } from "@chakra-ui/icons";
 
 const GridKeys = () => {
   return (
     <>
-      <Flex align="center" justify="space-evenly" h="full" marginTop={-5}>
+      <Flex
+        align="center"
+        justify="space-evenly"
+        h="full"
+        marginTop={-5}
+        flexWrap="wrap"
+      >
         <Center>
           <ArrowRightIcon w={8} h={5} color="black" />
           <Text fontWeight="semibold" fontSize={17} color={"#374151"}>
@@ -67,17 +74,36 @@ const GridKeys = () => {
           </Text>
         </Center>
       </Flex>
-      <Center>
+      <Flex justify="center" direction="column" align="center">
         <Text
           fontWeight="semibold"
           paddingLeft={2}
           fontSize={16}
           color="gray.600"
-          marginTop={-5}
+          marginTop={-10}
+          order={1}
         >
           See how algorithm's make their decisions!
         </Text>
-      </Center>
+        <Text
+          // fontWeight="semibold"
+          paddingLeft={2}
+          fontSize={14}
+          color="gray.500"
+          marginTop={-4}
+        >
+          Designed and Built by{" "}
+          <Link
+            href="https://shanoysinc.vercel.app"
+            isExternal
+            fontWeight="semibold"
+            color="teal.400"
+          >
+            Shanoy Sinc
+            <ExternalLinkIcon mx="2px" />
+          </Link>
+        </Text>
+      </Flex>
     </>
   );
 };
