@@ -20,7 +20,7 @@ import {
   useInitialGrid,
 } from "../../../grid/hooks/useInitialGrid";
 import { GridAtom } from "../../../../state/pathFinder/atoms";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { useRemoveGridWalls } from "../../../grid/hooks/useRemoveWalls";
 
 const routePosSelector = (state: useRoutePosProps) => ({
@@ -38,11 +38,12 @@ export const SidebarContent = () => {
   const toast = useToast();
 
   const traverseGridHandler = async () => {
-    const updatedGridData = await updatedGrid();
     setVisualizingAlgo(true);
+
     if (userHasVisualize) {
       clearGridPathHandler();
     }
+    const updatedGridData = await updatedGrid();
 
     const { visitedOrderArr, previous, hasRoute } = dijkstra(
       updatedGridData,
@@ -83,10 +84,9 @@ export const SidebarContent = () => {
 
         setTimeout(() => {
           setVisualizingAlgo(false);
+          setUserHasVisualize(true);
         }, route.length * 65);
       }, visitedOrderArr.length * 5);
-
-      return;
     } else {
       setTimeout(() => {
         toast({
@@ -99,7 +99,6 @@ export const SidebarContent = () => {
         });
       }, 5 * visitedOrderArr.length);
     }
-    setUserHasVisualize(true);
   };
 
   const resetHandler = () => {
@@ -109,15 +108,17 @@ export const SidebarContent = () => {
 
     setGrid(initGrid());
     setRoutePos({ destinationIndex: END_INDEX, sourceIndex: START_INDEX });
+    setUserHasVisualize(false);
   };
+
   const clearGridWallsHandler = async () => {
     removeGridWalls();
   };
-  const clearGridPathHandler = async () => {
+
+  const clearGridPathHandler = () => {
     document.querySelectorAll(".route, .visitedNode").forEach((node) => {
       return node.classList.remove(...["route", "visitedNode"]);
     });
-    setUserHasVisualize(true);
   };
 
   return (
@@ -196,3 +197,10 @@ export const SidebarContent = () => {
     </>
   );
 };
+
+// function clearGridPathHandler() {
+//   document.querySelectorAll(".route, .visitedNode").forEach((node) => {
+//     return node.classList.remove(...["route", "visitedNode"]);
+//   });
+//   // setUserHasVisualize(false);
+// }
