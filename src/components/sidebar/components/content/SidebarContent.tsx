@@ -113,6 +113,8 @@ export const SidebarContent = () => {
 
   const clearGridWallsHandler = async () => {
     removeGridWalls();
+    clearGridPathHandler();
+    setUserHasVisualize(false);
   };
 
   const clearGridPathHandler = () => {
