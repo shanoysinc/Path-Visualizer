@@ -50,7 +50,7 @@ const GridKeys = () => {
           </Text>
         </Center>
         <Center>
-          <Box w={6} h={6} bg="#111827" />
+          <Box w={6} h={6} bg="hsl(208, 97%, 15%)" />
           <Text
             fontWeight="semibold"
             paddingLeft={2}
