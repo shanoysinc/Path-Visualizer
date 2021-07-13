@@ -14,8 +14,7 @@ import {
   useRoutePos,
   useRoutePosProps,
 } from "../../../../state/pathFinder/useRoutePos";
-import { TargetIcon } from "../../../../assets/TargetIcon";
-import { AirplaneIcon } from "../../../../assets/Airplane";
+
 import { ArrowRightIcon, StarIcon } from "@chakra-ui/icons";
 
 interface Props {
