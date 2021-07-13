@@ -7,12 +7,6 @@
   margin-top: -2em;
 }
 
-.grid {
-  display: flex;
-  flex-wrap: wrap;
-  /* grid-template-columns: repeat(40, 25px); */
-}
-
 .grid__node {
   height: 25px;
   border: 1px dashed hsla(208, 97%, 55%, 0.349);
@@ -43,7 +37,7 @@
 }
 
 .visitedNode {
-  background-color: #1e96fc;
+  background-color: hsl(208, 97%, 55%);
   border: 1px dashed hsla(0, 0%, 100%, 0.199);
 }
 
@@ -59,4 +53,9 @@
 
 .star {
   font-size: 17px;
+}
+
+select option {
+  background-color: #111827 !important;
+  font-size: 20px;
 }
