@@ -21,7 +21,7 @@ const GridKeys = () => {
           </Text>
         </Center>
         <Center>
-          <Box w={6} h={6} border="2px dashed hsla(252, 95%, 80%, 0.54)" />
+          <Box w={6} h={6} border="2px dashed hsla(208, 97%, 55%, 0.349)" />
 
           <Text
             fontWeight="semibold"
