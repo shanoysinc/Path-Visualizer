@@ -7,21 +7,21 @@ const GridKeys = () => {
     <>
       <Flex align="center" justify="space-evenly" h="full" marginTop={-5}>
         <Center>
-          <ArrowRightIcon w={8} h={5} color="#5b21b6" />
+          <ArrowRightIcon w={8} h={5} color="black" />
           <Text fontWeight="semibold" fontSize={17} color={"#374151"}>
             {" "}
             Start Node
           </Text>
         </Center>
         <Center>
-          <StarIcon w={8} h={5} color="yellow.400" />
+          <StarIcon w={8} h={5} color="#34D399" />
 
           <Text fontWeight="semibold" fontSize={17} color={"#374151"}>
             Target Node
           </Text>
         </Center>
         <Center>
-          <Box w={6} h={6} bg="#374151" />
+          <Box w={6} h={6} border="2px dashed hsla(252, 95%, 80%, 0.54)" />
 
           <Text
             fontWeight="semibold"
@@ -45,7 +45,7 @@ const GridKeys = () => {
           </Text>
         </Center>
         <Center>
-          <Box w={6} h={6} bg="#5b21b6" />
+          <Box w={6} h={6} bg="hsl(34, 93%, 58%)" />
           <Text
             fontWeight="semibold"
             paddingLeft={2}
@@ -56,7 +56,7 @@ const GridKeys = () => {
           </Text>
         </Center>
         <Center>
-          <Box w={6} h={6} bg="#14d696" />
+          <Box w={6} h={6} bg="#1e96fc" />
           <Text
             fontWeight="semibold"
             paddingLeft={2}
@@ -75,7 +75,7 @@ const GridKeys = () => {
           color="gray.600"
           marginTop={-5}
         >
-          Pick an algorithm and visualize it!
+          See how algorithm's make their decisions!
         </Text>
       </Center>
     </>

@@ -134,8 +134,8 @@ export const Node = memo(({ col, row }: Props) => {
       draggable={false}
       className={`grid__node ${isStartNode} ${isEndNode} ${wall}`}
     >
-      {isStartNode && <ArrowRightIcon w={4} h={4} color="#5b21b6" />}
-      {isEndNode && <StarIcon w={5} h={5} color="yellow.400" />}
+      {isStartNode && <ArrowRightIcon w={4} h={4} color="black" />}
+      {isEndNode && <StarIcon w={5} h={5} color="#34D399" />}
     </div>
   );
 });

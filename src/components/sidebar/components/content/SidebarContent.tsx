@@ -156,7 +156,7 @@ export const SidebarContent = () => {
             placeholder="Dijkstra's Algorithm"
             mt="14"
             variant="filled"
-            bg="#6D28D9"
+            bg="#1e96fc"
             color="white"
           >
             {/* <option value="option1">Dijkstra's Alogrithm</option> */}
@@ -165,7 +165,7 @@ export const SidebarContent = () => {
             placeholder="Speed: Fast"
             mt="4"
             variant="filled"
-            bg="#6D28D9"
+            bg="#1e96fc"
             color="white"
             w="fit-content"
           >

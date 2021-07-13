@@ -1,13 +1,5 @@
-/* .App {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 2em;
-  flex-wrap: wrap;
-} */
 .App {
   background-color: #ede9fe;
-  /* background-color: #e5e7eb; */
 }
 
 .algo-logo {
@@ -23,23 +15,17 @@
 
 .grid__node {
   height: 25px;
-  border: 1px solid hsla(252, 95%, 80%, 0.54);
-  /* width: 25px; */
-  /* border: 1px solid hsla(216, 20%, 20%, 0.473); */
-  /* background-color: #111827; */
+  border: 1px dashed hsla(252, 95%, 80%, 0.84);
+
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .startNode {
-  /* background-color: #3b82f6; */
-  /* background-color: #374151; */
   cursor: grab;
 }
 .endNode {
-  /* background-color: #374151; */
-  /* background-color: rgb(202, 45, 45); */
   cursor: grab;
 }
 
@@ -49,11 +35,11 @@
 }
 
 .route {
-  border: 1px solid #5b21b6;
-  background-color: #5b21b6;
+  border: 1px solid hsl(34, 93%, 58%);
+  background-color: hsl(34, 93%, 58%);
 }
 
 .visitedNode {
-  background-color: #14d696;
-  border: 1px dotted hsla(160, 82%, 20%, 0.281);
+  background-color: #1e96fc;
+  border: 1px dashed hsla(0, 0%, 100%, 0.199);
 }
