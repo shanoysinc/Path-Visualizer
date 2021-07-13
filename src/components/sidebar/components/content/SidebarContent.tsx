@@ -6,6 +6,7 @@ import {
   Heading,
   Container,
   useToast,
+  Spinner,
   Text,
 } from "@chakra-ui/react";
 import SmallButton from "../Button/SmallButton";
@@ -168,20 +169,28 @@ export const SidebarContent = () => {
             variant="filled"
             bg="#1e96fc"
             color="white"
+            _hover={{ bg: "hsl(208, 97%, 49%);" }}
           >
             {/* <option value="option1">Dijkstra's Alogrithm</option> */}
           </Select>
           <Select
-            placeholder="Speed: Fast"
             mt="4"
             variant="filled"
             bg="#1e96fc"
             color="white"
+            _groupHover={{ bgColor: "red", bg: "red" }}
             w="fit-content"
+            _hover={{ bg: "hsl(208, 97%, 49%);" }}
           >
-            <option value="Fast">Fast</option>
-            <option value="Average">Average</option>
-            <option value="Slow">Slow</option>
+            <option className="option" value="Fast">
+              Fast
+            </option>
+            <option className="option" value="Average">
+              Average
+            </option>
+            <option className="option" value="Slow">
+              Slow
+            </option>
           </Select>
 
           <Flex align="center" gridGap="2" pt="10">
@@ -219,7 +228,17 @@ export const SidebarContent = () => {
             onClick={traverseGridHandler}
             disabled={visualizingAlgo}
           >
-            Visualize
+            {visualizingAlgo ? (
+              <Spinner
+                thickness="4px"
+                speed="1s"
+                emptyColor="gray.200"
+                color="blue.500"
+                size="lg"
+              />
+            ) : (
+              "Visualize"
+            )}
           </Button>
         </Container>
       </Flex>
