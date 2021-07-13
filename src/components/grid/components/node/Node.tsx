@@ -104,10 +104,10 @@ export const Node = memo(({ col, row }: Props) => {
       }
       return;
     }
-    if (isSelectedNodeStartNode) {
+    if (isSelectedNodeStartNode && !currentNode.endNode) {
       setCurrentNode((node) => ({ ...node, startNode: true, isWall: false }));
     }
-    if (isSelectedNodeEndNode) {
+    if (isSelectedNodeEndNode && !currentNode.startNode) {
       setCurrentNode((node) => ({ ...node, endNode: true, isWall: false }));
     }
   };
