@@ -81,7 +81,7 @@ export const SidebarContent = () => {
             setTimeout(() => {
               nodeDiv.classList.remove("visitedNode");
               nodeDiv.classList.add("route");
-            }, 65 * index);
+            }, 50 * index);
           }
         });
 
@@ -96,7 +96,7 @@ export const SidebarContent = () => {
             isClosable: true,
             position: "top",
           });
-        }, route.length * 65);
+        }, route.length * 50);
       }, visitedOrderArr.length * 5);
     } else {
       setTimeout(() => {
