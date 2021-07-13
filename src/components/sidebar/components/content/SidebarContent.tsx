@@ -6,6 +6,7 @@ import {
   Heading,
   Container,
   useToast,
+  Text,
 } from "@chakra-ui/react";
 import SmallButton from "../Button/SmallButton";
 import { useUpdateGrid } from "../../../grid/hooks/useUpdateGrid";
@@ -22,7 +23,9 @@ import {
 import { GridAtom } from "../../../../state/pathFinder/atoms";
 import { useSetRecoilState } from "recoil";
 import { useRemoveGridWalls } from "../../../grid/hooks/useRemoveWalls";
+import { SettingsIcon } from "@chakra-ui/icons";
 import { AlgoIcon } from "../../../../assets/AlgoIcon";
+
 const routePosSelector = (state: useRoutePosProps) => ({
   routePos: state.routePos,
   setRoutePos: state.setRoutePos,
@@ -171,7 +174,16 @@ export const SidebarContent = () => {
             <option value="Slow">Slow</option>
           </Select>
 
-          <Flex gridGap={4} pt="10" pb="4" flexWrap="wrap">
+          <Flex align="center" gridGap="2" pt="10">
+            <div>
+              <SettingsIcon mt="-1" w={4} h={4} color="teal.300" />
+            </div>
+            <Text color="teal.300" fontWeight="medium">
+              Grid Funtionality :
+            </Text>
+          </Flex>
+
+          <Flex gridGap={4} pt="4" pb="4" flexWrap="wrap">
             <SmallButton
               content="Reset"
               onClick={resetHandler}
