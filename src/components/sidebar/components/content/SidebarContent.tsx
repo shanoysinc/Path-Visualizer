@@ -88,6 +88,14 @@ export const SidebarContent = () => {
         setTimeout(() => {
           setVisualizingAlgo(false);
           setUserHasVisualize(true);
+          toast({
+            title: "Success!",
+            description: "A path to your destination has been found!",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+            position: "top",
+          });
         }, route.length * 65);
       }, visitedOrderArr.length * 5);
     } else {
