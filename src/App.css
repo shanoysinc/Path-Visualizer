@@ -9,6 +9,12 @@
   background-color: #ede9fe;
   /* background-color: #e5e7eb; */
 }
+
+.algo-logo {
+  margin-left: 9em;
+  margin-top: -2em;
+}
+
 .grid {
   display: flex;
   flex-wrap: wrap;
