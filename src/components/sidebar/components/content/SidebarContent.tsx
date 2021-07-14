@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import {
   Flex,
   Button,
@@ -7,6 +7,7 @@ import {
   Container,
   useToast,
   Spinner,
+  Checkbox,
   Text,
 } from "@chakra-ui/react";
 import SmallButton from "../Button/SmallButton";
@@ -31,7 +32,7 @@ const routePosSelector = (state: useRoutePosProps) => ({
   routePos: state.routePos,
   setRoutePos: state.setRoutePos,
 });
-export const SidebarContent = () => {
+export const SidebarContent = memo(() => {
   const initGrid = useInitialGrid();
   const setGrid = useSetRecoilState(GridAtom);
   const updatedGrid = useUpdateGrid();
@@ -39,6 +40,8 @@ export const SidebarContent = () => {
   const { routePos, setRoutePos } = useRoutePos(routePosSelector);
   const [userHasVisualize, setUserHasVisualize] = useState(false);
   const [isAlgoVisualizing, setisAlgoVisualizing] = useState(false);
+  const [animateVisitedNode, setAnimateVisitedNode] = useState(true);
+  const [animateRoute, setAnimateRoute] = useState(true);
   const [visualizeSpeed, setVisualizeSpeed] = useState(12);
   const toast = useToast();
 
@@ -63,7 +66,9 @@ export const SidebarContent = () => {
         const isEndNode = nodeDiv.classList.contains("endNode");
         setTimeout(() => {
           if (!isEndNode && !isStartNode) {
-            nodeDiv.classList.add("visitedNode");
+            animateVisitedNode
+              ? nodeDiv.classList.add("visitedNode-animation")
+              : nodeDiv.classList.add("visitedNode");
           }
         }, visualizeSpeed * index);
       }
@@ -82,7 +87,10 @@ export const SidebarContent = () => {
           if (nodeDiv) {
             setTimeout(() => {
               nodeDiv.classList.remove("visitedNode");
-              nodeDiv.classList.add("route");
+              nodeDiv.classList.remove("visitedNode-animation");
+              animateRoute
+                ? nodeDiv.classList.add("route-animation")
+                : nodeDiv.classList.add("route");
             }, visualizeSpeed * 4 * index);
           }
         });
@@ -117,9 +125,20 @@ export const SidebarContent = () => {
   };
 
   const resetHandler = () => {
-    document.querySelectorAll(".route, .visitedNode").forEach((node) => {
-      return node.classList.remove(...["route", "visitedNode"]);
-    });
+    document
+      .querySelectorAll(
+        ".route, .visitedNode, .visitedNode-animation, .route-animation"
+      )
+      .forEach((node) => {
+        return node.classList.remove(
+          ...[
+            "route",
+            "visitedNode",
+            "visitedNode-animation",
+            "route-animation",
+          ]
+        );
+      });
 
     setGrid(initGrid());
     setRoutePos({ destinationIndex: END_INDEX, sourceIndex: START_INDEX });
@@ -133,9 +152,20 @@ export const SidebarContent = () => {
   };
 
   const clearGridPathHandler = () => {
-    document.querySelectorAll(".route, .visitedNode").forEach((node) => {
-      return node.classList.remove(...["route", "visitedNode"]);
-    });
+    document
+      .querySelectorAll(
+        ".route, .visitedNode, .visitedNode-animation, .route-animation"
+      )
+      .forEach((node) => {
+        return node.classList.remove(
+          ...[
+            "route",
+            "visitedNode",
+            "visitedNode-animation",
+            "route-animation",
+          ]
+        );
+      });
   };
 
   const visualizeSpeedHandler = (value: any) => {
@@ -151,6 +181,13 @@ export const SidebarContent = () => {
         setVisualizeSpeed(12);
         return;
     }
+  };
+
+  const visitedNodeAnimHandler = () => {
+    setAnimateVisitedNode(!animateVisitedNode);
+  };
+  const routeAnimHandler = () => {
+    setAnimateRoute(!animateRoute);
   };
 
   return (
@@ -233,6 +270,24 @@ export const SidebarContent = () => {
               isAlgoVisualizing={isAlgoVisualizing}
             />
           </Flex>
+          <Checkbox
+            colorScheme="green"
+            defaultIsChecked
+            color="white"
+            isChecked={animateVisitedNode}
+            onChange={visitedNodeAnimHandler}
+          >
+            Visited Animations
+          </Checkbox>
+          <Checkbox
+            colorScheme="green"
+            defaultIsChecked
+            color="white"
+            isChecked={animateRoute}
+            onChange={routeAnimHandler}
+          >
+            Route Animations
+          </Checkbox>
         </div>
         <Container>
           <Button
@@ -260,4 +315,4 @@ export const SidebarContent = () => {
       </Flex>
     </>
   );
-};
+});
