@@ -38,12 +38,12 @@ export const SidebarContent = () => {
   const removeGridWalls = useRemoveGridWalls();
   const { routePos, setRoutePos } = useRoutePos(routePosSelector);
   const [userHasVisualize, setUserHasVisualize] = useState(false);
-  const [visualizingAlgo, setVisualizingAlgo] = useState(false);
-  // const [visualizeSpeed, setVisualizeSpeed] = useState(0);
+  const [isAlgoVisualizing, setisAlgoVisualizing] = useState(false);
+  const [visualizeSpeed, setVisualizeSpeed] = useState(12);
   const toast = useToast();
 
   const traverseGridHandler = async () => {
-    setVisualizingAlgo(true);
+    setisAlgoVisualizing(true);
 
     if (userHasVisualize) {
       clearGridPathHandler();
@@ -55,11 +55,6 @@ export const SidebarContent = () => {
       routePos.sourceIndex,
       routePos.destinationIndex
     );
-    //
-    // slow - 40 * index
-    // average - 15 * index
-    // fast - 5 * index
-    const speedValue = 12;
 
     visitedOrderArr.forEach((node, index) => {
       const nodeDiv = document.getElementById(node);
@@ -70,11 +65,9 @@ export const SidebarContent = () => {
           if (!isEndNode && !isStartNode) {
             nodeDiv.classList.add("visitedNode");
           }
-        }, speedValue * index);
+        }, visualizeSpeed * index);
       }
     });
-
-    //
 
     if (hasRoute) {
       setTimeout(() => {
@@ -90,12 +83,12 @@ export const SidebarContent = () => {
             setTimeout(() => {
               nodeDiv.classList.remove("visitedNode");
               nodeDiv.classList.add("route");
-            }, speedValue * 10 * index);
+            }, visualizeSpeed * 4 * index);
           }
         });
 
         setTimeout(() => {
-          setVisualizingAlgo(false);
+          setisAlgoVisualizing(false);
           setUserHasVisualize(true);
           toast({
             title: "Success!",
@@ -105,11 +98,11 @@ export const SidebarContent = () => {
             isClosable: true,
             position: "top",
           });
-        }, speedValue * 10 * route.length);
-      }, speedValue * visitedOrderArr.length);
+        }, visualizeSpeed * 5 * route.length);
+      }, visualizeSpeed * visitedOrderArr.length);
     } else {
       setTimeout(() => {
-        setVisualizingAlgo(false);
+        setisAlgoVisualizing(false);
         setUserHasVisualize(true);
         toast({
           title: "No route to destination!",
@@ -119,7 +112,7 @@ export const SidebarContent = () => {
           isClosable: true,
           position: "top",
         });
-      }, speedValue * visitedOrderArr.length);
+      }, (visualizeSpeed + 1) * visitedOrderArr.length);
     }
   };
 
@@ -146,8 +139,18 @@ export const SidebarContent = () => {
   };
 
   const visualizeSpeedHandler = (value: any) => {
-    console.log(value.target.value);
-    // setVisualizeSpeed()
+    const speedType = value.target.value;
+    switch (speedType) {
+      case "AVERAGE":
+        setVisualizeSpeed(18);
+        return;
+      case "SLOW":
+        setVisualizeSpeed(25);
+        return;
+      default:
+        setVisualizeSpeed(12);
+        return;
+    }
   };
 
   return (
@@ -183,9 +186,7 @@ export const SidebarContent = () => {
             bg="#1d94fc"
             color="white"
             _hover={{ bg: "hsl(208, 97%, 55%);" }}
-          >
-            {/* <option value="option1">Dijkstra's Alogrithm</option> */}
-          </Select>
+          ></Select>
           <Select
             mt="4"
             variant="filled"
@@ -195,13 +196,13 @@ export const SidebarContent = () => {
             _hover={{ bg: "hsl(208, 97%, 50%);" }}
             onChange={visualizeSpeedHandler}
           >
-            <option className="option" value="Fast">
+            <option className="option" value="FAST">
               Fast
             </option>
-            <option className="option" value="Average">
+            <option className="option" value="AVERAGE">
               Average
             </option>
-            <option className="option" value="Slow">
+            <option className="option" value="SLOW">
               Slow
             </option>
           </Select>
@@ -219,17 +220,17 @@ export const SidebarContent = () => {
             <SmallButton
               content="Reset"
               onClick={resetHandler}
-              visualizingAlgo={visualizingAlgo}
+              isAlgoVisualizing={isAlgoVisualizing}
             />
             <SmallButton
               content="Clear Walls"
               onClick={clearGridWallsHandler}
-              visualizingAlgo={visualizingAlgo}
+              isAlgoVisualizing={isAlgoVisualizing}
             />
             <SmallButton
               content="Clear path"
               onClick={clearGridPathHandler}
-              visualizingAlgo={visualizingAlgo}
+              isAlgoVisualizing={isAlgoVisualizing}
             />
           </Flex>
         </div>
@@ -241,9 +242,9 @@ export const SidebarContent = () => {
             _hover={{ bg: "hsla(148, 97%, 50%, 0.619)" }}
             color="white"
             onClick={traverseGridHandler}
-            disabled={visualizingAlgo}
+            disabled={isAlgoVisualizing}
           >
-            {visualizingAlgo ? (
+            {isAlgoVisualizing ? (
               <Spinner
                 thickness="4px"
                 speed="1s"
@@ -260,22 +261,3 @@ export const SidebarContent = () => {
     </>
   );
 };
-
-// function clearGridPathHandler() {
-//   document.querySelectorAll(".route, .visitedNode").forEach((node) => {
-//     return node.classList.remove(...["route", "visitedNode"]);
-//   });
-//   // setUserHasVisualize(false);
-// }
-
-// function animationSpeed(speedType: string){
-//   const speed = {
-//     overall: 12,
-//     route: 10,
-//     toast: 12
-//   }
-//   switch(speedType){
-//     case "FAST":
-
-//   }
-// }

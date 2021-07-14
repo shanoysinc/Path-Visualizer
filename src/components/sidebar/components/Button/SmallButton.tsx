@@ -4,9 +4,9 @@ import { Button } from "@chakra-ui/react";
 interface Props {
   content: string;
   onClick?: () => void;
-  visualizingAlgo: boolean;
+  isAlgoVisualizing: boolean;
 }
-const SmallButton = ({ content, onClick, visualizingAlgo }: Props) => {
+const SmallButton = ({ content, onClick, isAlgoVisualizing }: Props) => {
   return (
     <Button
       size="sm"
@@ -18,7 +18,7 @@ const SmallButton = ({ content, onClick, visualizingAlgo }: Props) => {
         borderColor: "#fc371d",
       }}
       onClick={onClick}
-      disabled={visualizingAlgo}
+      disabled={isAlgoVisualizing}
       _focus={{}}
     >
       {content}
