@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import { useRecoilState } from "recoil";
-import { NodeAtom } from "../../../../state/pathFinder/atoms";
+import { NodeAtom, NodeSelector } from "../../../../state/pathFinder/atoms";
 import {
   useGridFunc,
   GridFuncProps,
@@ -33,10 +33,10 @@ const routePosSelector = (state: useRoutePosProps) => ({
 });
 
 export const Node = memo(({ col, row }: Props) => {
-  // const [currentNode, setCurrentNode] = useRecoilState(
-  //   NodeSelector({ row, col })
-  // );
-  const [currentNode, setCurrentNode] = useRecoilState(NodeAtom({ row, col }));
+  const [currentNode, setCurrentNode] = useRecoilState(
+    NodeSelector({ row, col })
+  );
+  // const [currentNode, setCurrentNode] = useRecoilState(NodeAtom({ row, col }));
 
   const { isMouseDown, gridFunc } = useGridFunc(gridFuncSelector);
   const { setRoutePos } = useRoutePos(routePosSelector);
