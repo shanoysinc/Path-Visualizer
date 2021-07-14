@@ -180,20 +180,19 @@ export const SidebarContent = () => {
             placeholder="Dijkstra's Algorithm"
             mt="14"
             variant="filled"
-            bg="#1e96fc"
+            bg="#1d94fc"
             color="white"
-            _hover={{ bg: "hsl(208, 97%, 49%);" }}
+            _hover={{ bg: "hsl(208, 97%, 55%);" }}
           >
             {/* <option value="option1">Dijkstra's Alogrithm</option> */}
           </Select>
           <Select
             mt="4"
             variant="filled"
-            bg="#1e96fc"
+            bg="#1d94fc"
             color="white"
-            _groupHover={{ bgColor: "red", bg: "red" }}
             w="fit-content"
-            _hover={{ bg: "hsl(208, 97%, 49%);" }}
+            _hover={{ bg: "hsl(208, 97%, 50%);" }}
             onChange={visualizeSpeedHandler}
           >
             <option className="option" value="Fast">
@@ -212,7 +211,7 @@ export const SidebarContent = () => {
               <SettingsIcon mt="-1" w={4} h={4} color="teal.300" />
             </div>
             <Text color="teal.300" fontWeight="medium">
-              Grid Funtionality :
+              Grid Functionalities :
             </Text>
           </Flex>
 
@@ -238,7 +237,9 @@ export const SidebarContent = () => {
           <Button
             size="lg"
             w="full"
-            colorScheme="pink"
+            bg="hsla(148, 97%, 50%, 0.719)"
+            _hover={{ bg: "hsla(148, 97%, 50%, 0.619)" }}
+            color="white"
             onClick={traverseGridHandler}
             disabled={visualizingAlgo}
           >
@@ -247,7 +248,7 @@ export const SidebarContent = () => {
                 thickness="4px"
                 speed="1s"
                 emptyColor="gray.200"
-                color="blue.500"
+                color="hsl(208, 97%, 55%);"
                 size="lg"
               />
             ) : (
