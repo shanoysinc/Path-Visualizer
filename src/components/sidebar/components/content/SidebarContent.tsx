@@ -59,7 +59,7 @@ export const SidebarContent = () => {
     // slow - 40 * index
     // average - 15 * index
     // fast - 5 * index
-    const speedValue = 9;
+    const speedValue = 12;
 
     visitedOrderArr.forEach((node, index) => {
       const nodeDiv = document.getElementById(node);
@@ -105,7 +105,7 @@ export const SidebarContent = () => {
             isClosable: true,
             position: "top",
           });
-        }, speedValue * 11 * route.length);
+        }, speedValue * 10 * route.length);
       }, speedValue * visitedOrderArr.length);
     } else {
       setTimeout(() => {
