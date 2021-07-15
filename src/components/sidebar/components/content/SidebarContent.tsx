@@ -9,6 +9,10 @@ import {
   Spinner,
   Checkbox,
   Text,
+  Switch,
+  Stack,
+  Wrap,
+  WrapItem,
 } from "@chakra-ui/react";
 import SmallButton from "../Button/SmallButton";
 import { useUpdateGrid } from "../../../grid/hooks/useUpdateGrid";
@@ -270,24 +274,38 @@ export const SidebarContent = memo(() => {
               isAlgoVisualizing={isAlgoVisualizing}
             />
           </Flex>
-          <Checkbox
-            colorScheme="green"
-            defaultIsChecked
-            color="white"
-            isChecked={animateVisitedNode}
-            onChange={visitedNodeAnimHandler}
-          >
-            Visited Animations
-          </Checkbox>
-          <Checkbox
-            colorScheme="green"
-            defaultIsChecked
-            color="white"
-            isChecked={animateRoute}
-            onChange={routeAnimHandler}
-          >
-            Route Animations
-          </Checkbox>
+          <Stack>
+            <Wrap>
+              <WrapItem>
+                <Flex
+                  align="center"
+                  gridGap={2}
+                  justify="space-between"
+                  w="180px"
+                >
+                  <Text color="white"> Visited Animations</Text>
+                  <Switch
+                    onChange={visitedNodeAnimHandler}
+                    isChecked={animateVisitedNode}
+                  />
+                </Flex>
+              </WrapItem>
+              <WrapItem>
+                <Flex
+                  w="180px"
+                  align="center"
+                  gridGap={2}
+                  justify="space-between"
+                >
+                  <Text color="white"> Route Animations</Text>
+                  <Switch
+                    isChecked={animateRoute}
+                    onChange={routeAnimHandler}
+                  />
+                </Flex>
+              </WrapItem>
+            </Wrap>
+          </Stack>
         </div>
         <Container>
           <Button

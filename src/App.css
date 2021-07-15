@@ -9,7 +9,19 @@
 
 .grid__node {
   height: 25px;
-  border: 1px dashed hsla(208, 97%, 15%, 0.315);
+  border-left: 1px solid rgba(5, 199, 157, 0.744);
+  border-top: 1px solid hsla(172, 97%, 38%, 0.1);
+  border-bottom: 1px solid hsla(172, 97%, 38%, 0.644);
+  border-right: 1px solid hsla(172, 97%, 38%, 0.1);
+
+  /* border-left: 1px solid hsla(254, 97%, 55%, 0.744);
+  border-top: 1px solid hsla(254, 97%, 55%, 0.144);
+  border-bottom: 1px solid hsla(254, 97%, 55%, 0.644);
+  border-right: 1px solid hsla(254, 97%, 55%, 0.1); */
+  border-width: 1px;
+  border-width: 0.1em;
+  border-width: 0.01em;
+  border-width: 1px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -52,7 +64,12 @@
 
 .visitedNode-animation {
   background-color: hsl(208, 97%, 55%);
-  border: 1px solid hsla(0, 0%, 100%, 0.171);
+  border: 1px solid hsl(0, 0%, 100%);
+  border-left: 1px solid hsla(0, 0%, 100%, 0.544);
+  border-top: 1px solid hsla(0, 0%, 100%, 0.144);
+  border-bottom: 1px solid hsla(0, 0%, 100%, 0.544);
+  border-right: 1px solid hsla(0, 0%, 100%, 0.144);
+
   animation: circle-to-square 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) normal;
 }
 
