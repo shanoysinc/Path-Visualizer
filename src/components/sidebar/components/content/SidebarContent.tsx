@@ -233,7 +233,7 @@ export const SidebarContent = memo(() => {
             w="fit-content"
             _hover={{ bg: "hsl(208, 97%, 50%);" }}
             onChange={visualizeSpeedHandler}
-            value="AVERAGE"
+            defaultValue="Average"
           >
             <option className="option" value="FAST">
               Fast
