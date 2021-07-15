@@ -95,7 +95,7 @@ export const SidebarContent = memo(() => {
               animateRoute
                 ? nodeDiv.classList.add("route-animation")
                 : nodeDiv.classList.add("route");
-            }, visualizeSpeed * 4 * index);
+            }, visualizeSpeed * 5 * index);
           }
         });
 
@@ -106,7 +106,7 @@ export const SidebarContent = memo(() => {
             title: "Success!",
             description: "A path to your destination has been found!",
             status: "success",
-            duration: 3000,
+            duration: 2000,
             isClosable: true,
             position: "top",
           });
@@ -120,7 +120,7 @@ export const SidebarContent = memo(() => {
           title: "No route to destination!",
           description: "All path is block off to your destination",
           status: "info",
-          duration: 3000,
+          duration: 2000,
           isClosable: true,
           position: "top",
         });
@@ -176,7 +176,7 @@ export const SidebarContent = memo(() => {
     const speedType = value.target.value;
     switch (speedType) {
       case "AVERAGE":
-        setVisualizeSpeed(18);
+        setVisualizeSpeed(20);
         return;
       case "SLOW":
         setVisualizeSpeed(25);
