@@ -54,8 +54,6 @@
   background-color: hsl(208, 97%, 55%);
   border: 1px solid hsla(0, 0%, 100%, 0.171);
   animation: circle-to-square 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) normal;
-  animation-iteration-count: 2;
-  will-change: transform;
 }
 
 .arrow-right {

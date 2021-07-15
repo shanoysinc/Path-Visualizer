@@ -42,7 +42,7 @@ export const SidebarContent = memo(() => {
   const [isAlgoVisualizing, setisAlgoVisualizing] = useState(false);
   const [animateVisitedNode, setAnimateVisitedNode] = useState(true);
   const [animateRoute, setAnimateRoute] = useState(true);
-  const [visualizeSpeed, setVisualizeSpeed] = useState(12);
+  const [visualizeSpeed, setVisualizeSpeed] = useState(15);
   const toast = useToast();
 
   const traverseGridHandler = async () => {
@@ -178,7 +178,7 @@ export const SidebarContent = memo(() => {
         setVisualizeSpeed(25);
         return;
       default:
-        setVisualizeSpeed(12);
+        setVisualizeSpeed(15);
         return;
     }
   };
