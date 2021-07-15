@@ -23,7 +23,6 @@ import {
 import { END_INDEX, START_INDEX } from "../../../grid/hooks/useInitialGrid";
 import { useRemoveGridWalls } from "../../../grid/hooks/useRemoveWalls";
 import { SettingsIcon } from "@chakra-ui/icons";
-import { AlgoIcon } from "../../../../assets/AlgoIcon";
 import { useResetGrid } from "../../../grid/hooks/useInitialGrid";
 
 const routePosSelector = (state: useRoutePosProps) => ({
@@ -39,7 +38,7 @@ export const SidebarContent = memo(() => {
   const [isAlgoVisualizing, setisAlgoVisualizing] = useState(false);
   const [animateVisitedNode, setAnimateVisitedNode] = useState(true);
   const [animateRoute, setAnimateRoute] = useState(true);
-  const [visualizeSpeed, setVisualizeSpeed] = useState(15);
+  const [visualizeSpeed, setVisualizeSpeed] = useState(20);
   const toast = useToast();
 
   const traverseGridHandler = async () => {
@@ -167,6 +166,7 @@ export const SidebarContent = memo(() => {
 
   const visualizeSpeedHandler = (value: any) => {
     const speedType = value.target.value;
+
     switch (speedType) {
       case "AVERAGE":
         setVisualizeSpeed(20);
@@ -189,12 +189,6 @@ export const SidebarContent = memo(() => {
 
   return (
     <>
-      {/* <Heading as="h3" size="lg">
-        DevPath - Algorithm Visualizer
-      </Heading> */}
-      {/* <Heading as="h4" size="md">
-        DevPath - Algorithm Visualizer
-      </Heading> */}
       <Flex
         direction="column"
         justify="space-between"
@@ -209,9 +203,6 @@ export const SidebarContent = memo(() => {
             <Heading as="h3" size="lg" color="#EDE9FE">
               DevPath - Algorithm Visualizer
             </Heading>
-            <div className="algo-logo">
-              <AlgoIcon height={35} width={35} />
-            </div>
           </div>
           <Select
             placeholder="Dijkstra's Algorithm"
