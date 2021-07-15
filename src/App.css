@@ -41,15 +41,14 @@
 .wall {
   background-color: hsl(208, 97%, 10%);
   border: 1px dotted hsl(208, 97%, 10%);
-  transition: all 100ms ease;
-  animation: moveInSpring 400ms ease forwards;
+  animation: moveInSpring 150ms ease forwards;
   /* will-change: transform; */
 }
 
 /* #511dfc */
 .route {
   border: 1px solid hsl(148, 97%, 50%);
-  background-color: hsl(148, 97%, 50%);
+  background-color: hsl(148, 66%, 83%);
 }
 .route-animation {
   border: 1px solid hsl(148, 97%, 50%);
@@ -122,21 +121,11 @@ select option {
   0% {
     transform: scale3d(0.96, 0.96, 1);
   }
-  20% {
-    transform: scale3d(1.1, 1.1, 1);
-  }
-  40% {
-    transform: scale3d(0.98, 0.98, 1);
-  }
+
   60% {
-    transform: scale3d(1.03, 1.03, 1);
+    transform: scale3d(1.14, 1.14, 1);
   }
-  70% {
-    transform: scale3d(1.05, 1.08, 1);
-  }
-  80% {
-    transform: scale3d(1.01, 1.04, 1);
-  }
+
   100% {
     transform: scale3d(1, 1, 1);
   }
