@@ -128,7 +128,7 @@ export const Node = memo(({ col, row }: Props) => {
       onMouseUp={mouseUpHandler}
       onMouseLeave={onMouseOut}
       onMouseEnter={onMouseEnter}
-      // draggable={false}
+      draggable={false}
       className={`grid__node ${isStartNode} ${isEndNode} ${wall}`}
     >
       {isStartNode && <div className="arrow-right"></div>}
