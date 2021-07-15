@@ -28,7 +28,7 @@ initGrid[END_ROW][END_COL].endNode = true;
 
 export const grid = initGrid;
 
-export function createGrid(rows: number, cols: number) {
+function createGrid(rows: number, cols: number) {
   let arr = [];
   for (let row = 0; row < rows; row++) {
     let colArr = [];
@@ -40,18 +40,12 @@ export function createGrid(rows: number, cols: number) {
   return arr;
 }
 
-export function useInitialGrid() {
+export function useResetGrid() {
   return useRecoilCallback(({ set }) => () => {
-    const initGrid: GridNode[][] = [];
     for (let row = 0; row < NUMBER_OF_ROWS; row++) {
-      let columns = [];
-
       for (let col = 0; col < NUMBER_OF_COLS; col++) {
-        columns.push(grid[row][col]);
         set(NodeAtom({ row, col }), grid[row][col]);
       }
-      initGrid.push(columns);
     }
-    return initGrid;
   });
 }

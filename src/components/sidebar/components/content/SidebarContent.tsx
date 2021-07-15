@@ -7,7 +7,6 @@ import {
   Container,
   useToast,
   Spinner,
-  Checkbox,
   Text,
   Switch,
   Stack,
@@ -21,24 +20,18 @@ import {
   useRoutePos,
   useRoutePosProps,
 } from "../../../../state/pathFinder/useRoutePos";
-import {
-  END_INDEX,
-  START_INDEX,
-  useInitialGrid,
-} from "../../../grid/hooks/useInitialGrid";
-import { GridAtom } from "../../../../state/pathFinder/atoms";
-import { useSetRecoilState } from "recoil";
+import { END_INDEX, START_INDEX } from "../../../grid/hooks/useInitialGrid";
 import { useRemoveGridWalls } from "../../../grid/hooks/useRemoveWalls";
 import { SettingsIcon } from "@chakra-ui/icons";
 import { AlgoIcon } from "../../../../assets/AlgoIcon";
+import { useResetGrid } from "../../../grid/hooks/useInitialGrid";
 
 const routePosSelector = (state: useRoutePosProps) => ({
   routePos: state.routePos,
   setRoutePos: state.setRoutePos,
 });
 export const SidebarContent = memo(() => {
-  const initGrid = useInitialGrid();
-  const setGrid = useSetRecoilState(GridAtom);
+  const resetGrid = useResetGrid();
   const updatedGrid = useUpdateGrid();
   const removeGridWalls = useRemoveGridWalls();
   const { routePos, setRoutePos } = useRoutePos(routePosSelector);
@@ -144,9 +137,9 @@ export const SidebarContent = memo(() => {
         );
       });
 
-    setGrid(initGrid());
     setRoutePos({ destinationIndex: END_INDEX, sourceIndex: START_INDEX });
     setUserHasVisualize(false);
+    resetGrid();
   };
 
   const clearGridWallsHandler = async () => {
