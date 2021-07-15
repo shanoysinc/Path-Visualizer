@@ -65,10 +65,10 @@
 .visitedNode-animation {
   background-color: hsl(208, 97%, 55%);
   border: 1px solid hsl(0, 0%, 100%);
-  border-left: 1px solid hsla(0, 0%, 100%, 0.544);
-  border-top: 1px solid hsla(0, 0%, 100%, 0.144);
-  border-bottom: 1px solid hsla(0, 0%, 100%, 0.544);
-  border-right: 1px solid hsla(0, 0%, 100%, 0.144);
+  border-left: 1px solid hsla(0, 0%, 84%, 0.744);
+  border-top: 1px solid hsla(0, 0%, 84%, 0.1);
+  border-bottom: 1px solid hsla(0, 0%, 84%, 0.544);
+  border-right: 1px solid hsla(0, 0%, 84%, 0.1);
 
   animation: circle-to-square 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) normal;
 }
