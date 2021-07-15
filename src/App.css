@@ -13,11 +13,6 @@
   border-top: 1px solid hsla(172, 97%, 38%, 0.1);
   border-bottom: 1px solid hsla(172, 97%, 38%, 0.644);
   border-right: 1px solid hsla(172, 97%, 38%, 0.1);
-
-  /* border-left: 1px solid hsla(254, 97%, 55%, 0.744);
-  border-top: 1px solid hsla(254, 97%, 55%, 0.144);
-  border-bottom: 1px solid hsla(254, 97%, 55%, 0.644);
-  border-right: 1px solid hsla(254, 97%, 55%, 0.1); */
   border-width: 1px;
   border-width: 0.1em;
   border-width: 0.01em;
@@ -48,7 +43,7 @@
 /* #511dfc */
 .route {
   border: 1px solid hsl(148, 97%, 50%);
-  background-color: hsl(148, 66%, 83%);
+  background-color: hsl(148, 97%, 50%);
 }
 .route-animation {
   border: 1px solid hsl(148, 97%, 50%);
