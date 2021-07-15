@@ -41,7 +41,7 @@
 .wall {
   background-color: hsl(208, 97%, 10%);
   border: 1px dotted hsl(208, 97%, 10%);
-  animation: moveInSpring 150ms ease forwards;
+  /* animation: moveInSpring 150ms ease forwards; */
   /* will-change: transform; */
 }
 
