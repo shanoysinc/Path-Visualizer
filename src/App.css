@@ -151,22 +151,15 @@ select option {
   }
   30% {
     border-radius: 50%;
-    transform: scale(0.3);
+    transform: scale(0.5);
     opacity: 1;
     background-color: rgba(4, 251, 119, 0.509);
+  }
 
-    /* background-color: hsla(254, 97%, 55%, 0.286); */
-  }
-  60% {
-    border-radius: 40%;
-    transform: scale(0.6);
-    /* background-color: hsla(55, 97%, 55%, 0.226); */
-  }
   80% {
     border-radius: 50%;
     transform: scale(0.8);
     background-color: hsla(254, 97%, 55%, 0.786);
-    /* background-color: rgba(4, 251, 119, 0.719); */
   }
   100% {
     border-radius: 0;
