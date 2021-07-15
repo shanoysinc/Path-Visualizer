@@ -5,7 +5,7 @@ import { grid } from "./hooks/useInitialGrid";
 
 export const Grid = memo(() => {
   const GridElement = grid.map((row, rowIndex) => (
-    <ChakraUIGrid templateColumns="repeat(40, 1fr)" key={`${rowIndex}`}>
+    <ChakraUIGrid templateColumns="repeat(38, 1fr)" key={`${rowIndex}`}>
       {row.map((_node, colIndex) => (
         <Node key={`${rowIndex}-${colIndex}`} row={rowIndex} col={colIndex} />
       ))}

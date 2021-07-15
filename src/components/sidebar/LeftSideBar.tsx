@@ -1,11 +1,9 @@
 import React from "react";
 import { SidebarContent } from "./components";
-const LeftSideBar = () => {
+export const LeftSideBar = () => {
   return (
     <>
       <SidebarContent />
     </>
   );
 };
-
-export default LeftSideBar;

@@ -1,42 +1,31 @@
 import React from "react";
+import { Drawer as LeftSideDrawer, DrawerContent } from "@chakra-ui/react";
+import { SidebarContent } from "../sidebar/components";
 import {
-  Drawer as LeftSideDrawer,
-  DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  useDisclosure,
-  Button,
-} from "@chakra-ui/react";
-const Drawer = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = React.useRef();
+  DrawerStateProps,
+  useDrawerState,
+} from "../../state/UI/useDrawerDisplay";
+
+const drawerSelector = (state: DrawerStateProps) => ({
+  isOpen: state.isOpen,
+  setIsOpen: state.setIsOpen,
+});
+
+export const Drawer = () => {
+  const { setIsOpen, isOpen } = useDrawerState(drawerSelector);
 
   return (
     <>
-      {/* <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
-        Open
-      </Button> */}
-      <LeftSideDrawer isOpen={isOpen} placement="left" onClose={onClose}>
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>Create your account</DrawerHeader>
-
-          <DrawerBody>{/* <Input placeholder="Type here..." /> */}</DrawerBody>
-
-          <DrawerFooter>
-            <Button variant="outline" mr={3} onClick={onClose}>
-              Cancel
-            </Button>
-            <Button colorScheme="blue">Save</Button>
-          </DrawerFooter>
+      <LeftSideDrawer
+        isOpen={isOpen}
+        placement="left"
+        onClose={() => setIsOpen(false)}
+        size="sm"
+      >
+        <DrawerContent bg="#111827">
+          <SidebarContent />
         </DrawerContent>
       </LeftSideDrawer>
     </>
   );
 };
-
-export default Drawer;

@@ -24,11 +24,19 @@ import { END_INDEX, START_INDEX } from "../../../grid/hooks/useInitialGrid";
 import { useRemoveGridWalls } from "../../../grid/hooks/useRemoveWalls";
 import { SettingsIcon } from "@chakra-ui/icons";
 import { useResetGrid } from "../../../grid/hooks/useInitialGrid";
-
+import {
+  DrawerStateProps,
+  useDrawerState,
+} from "../../../../state/UI/useDrawerDisplay";
 const routePosSelector = (state: useRoutePosProps) => ({
   routePos: state.routePos,
   setRoutePos: state.setRoutePos,
 });
+const drawerSelector = (state: DrawerStateProps) => ({
+  isOpen: state.isOpen,
+  setIsOpen: state.setIsOpen,
+});
+
 export const SidebarContent = memo(() => {
   const resetGrid = useResetGrid();
   const updatedGrid = useUpdateGrid();
@@ -39,9 +47,14 @@ export const SidebarContent = memo(() => {
   const [animateVisitedNode, setAnimateVisitedNode] = useState(true);
   const [animateRoute, setAnimateRoute] = useState(true);
   const [visualizeSpeed, setVisualizeSpeed] = useState(20);
+  const { setIsOpen, isOpen: isDrawerOpen } = useDrawerState(drawerSelector);
+
   const toast = useToast();
 
   const traverseGridHandler = async () => {
+    if (isDrawerOpen) {
+      setIsOpen(false);
+    }
     setisAlgoVisualizing(true);
 
     if (userHasVisualize) {
