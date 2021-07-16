@@ -52,14 +52,16 @@ export const SidebarContent = memo(() => {
   const toast = useToast();
 
   const traverseGridHandler = async () => {
-    if (isDrawerOpen) {
-      setIsOpen(false);
-    }
-    setisAlgoVisualizing(true);
-
-    if (userHasVisualize) {
+    if (userHasVisualize || isDrawerOpen) {
       clearGridPathHandler();
     }
+
+    if (isDrawerOpen) {
+      setIsOpen(false);
+    } else {
+      setisAlgoVisualizing(true);
+    }
+
     const updatedGridData = await updatedGrid();
 
     const { visitedOrderArr, previous, hasRoute } = dijkstra(
@@ -105,8 +107,10 @@ export const SidebarContent = memo(() => {
         });
 
         setTimeout(() => {
-          setisAlgoVisualizing(false);
-          setUserHasVisualize(true);
+          if (!isDrawerOpen) {
+            setisAlgoVisualizing(false);
+            setUserHasVisualize(true);
+          }
           toast({
             title: "Success!",
             description: "A path to your destination has been found!",
@@ -119,8 +123,10 @@ export const SidebarContent = memo(() => {
       }, visualizeSpeed * visitedOrderArr.length);
     } else {
       setTimeout(() => {
-        setisAlgoVisualizing(false);
-        setUserHasVisualize(true);
+        if (!isDrawerOpen) {
+          setisAlgoVisualizing(false);
+          setUserHasVisualize(true);
+        }
         toast({
           title: "No route to destination!",
           description: "All path is block off to your destination",

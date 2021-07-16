@@ -26,7 +26,7 @@ function App() {
         display={["block", "block", "block", "block", "none"]}
         pos="fixed"
         left="5"
-        top="10"
+        top="2"
         _hover={{}}
       >
         <HamburgerIcon w={5} h={5} color="white" />
