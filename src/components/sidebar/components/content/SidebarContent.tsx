@@ -46,7 +46,7 @@ export const SidebarContent = memo(() => {
   const [isAlgoVisualizing, setisAlgoVisualizing] = useState(false);
   const [animateVisitedNode, setAnimateVisitedNode] = useState(true);
   const [animateRoute, setAnimateRoute] = useState(true);
-  const [visualizeSpeed, setVisualizeSpeed] = useState(20);
+  const [visualizeSpeed, setVisualizeSpeed] = useState(15);
   const { setIsOpen, isOpen: isDrawerOpen } = useDrawerState(drawerSelector);
 
   const toast = useToast();
@@ -185,6 +185,7 @@ export const SidebarContent = memo(() => {
 
   const visualizeSpeedHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const speedType = e.target.value;
+    console.log(speedType);
 
     switch (speedType) {
       case "AVERAGE":
@@ -239,7 +240,7 @@ export const SidebarContent = memo(() => {
             w="fit-content"
             _hover={{ bg: "hsl(208, 97%, 50%);" }}
             onChange={visualizeSpeedHandler}
-            defaultValue="Average"
+            defaultValue="FAST"
           >
             <option className="option" value="FAST">
               Fast

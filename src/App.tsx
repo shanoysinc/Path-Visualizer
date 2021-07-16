@@ -32,7 +32,6 @@ function App() {
         <HamburgerIcon w={5} h={5} color="white" />
       </Button>
       <Drawer />
-      {/* <Flex justify="center" bg="red" align="center"> */}
       <Grid
         h="100vh"
         templateRows="repeat(5, 1fr)"
@@ -65,7 +64,6 @@ function App() {
           <VisualizerGrid />
         </GridItem>
       </Grid>
-      {/* </Flex> */}
     </div>
   );
 }
