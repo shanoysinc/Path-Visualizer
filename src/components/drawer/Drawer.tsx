@@ -1,5 +1,9 @@
 import React from "react";
-import { Drawer as LeftSideDrawer, DrawerContent } from "@chakra-ui/react";
+import {
+  Drawer as LeftSideDrawer,
+  DrawerCloseButton,
+  DrawerContent,
+} from "@chakra-ui/react";
 import { SidebarContent } from "../sidebar/components";
 import {
   DrawerStateProps,
@@ -23,6 +27,7 @@ export const Drawer = () => {
         size="sm"
       >
         <DrawerContent bg="#111827">
+          <DrawerCloseButton color="white" />
           <SidebarContent />
         </DrawerContent>
       </LeftSideDrawer>
