@@ -14,8 +14,8 @@ const START_COL = 20;
 const END_ROW = 2;
 const END_COL = 10;
 
-export const NUMBER_OF_ROWS = 18;
-export const NUMBER_OF_COLS = 38;
+const NUMBER_OF_ROWS = 18;
+const NUMBER_OF_COLS = 38;
 
 export const START_INDEX = `${START_ROW}-${START_COL}`;
 export const END_INDEX = `${END_ROW}-${END_COL}`;
@@ -41,8 +41,8 @@ function createGrid(rows: number, cols: number) {
 
 export function useResetGrid() {
   return useRecoilCallback(({ set }) => () => {
-    for (let row = 0; row < NUMBER_OF_ROWS; row++) {
-      for (let col = 0; col < NUMBER_OF_COLS; col++) {
+    for (let row = 0; row < grid.length; row++) {
+      for (let col = 0; col < grid[row].length; col++) {
         set(NodeAtom({ row, col }), grid[row][col]);
       }
     }
