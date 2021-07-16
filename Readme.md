@@ -28,6 +28,12 @@ cd Path-Visualizer
 npm install
 ```
 
+3. Start dev server
+
+```Bash
+npm run dev
+```
+
 **🎇 You are Ready to Go!**
 
 ## 👷 Built with
