@@ -183,19 +183,19 @@ export const SidebarContent = memo(() => {
       });
   };
 
-  const visualizeSpeedHandler = (value: any) => {
-    const speedType = value.target.value;
+  const visualizeSpeedHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const speedType = e.target.value;
 
     switch (speedType) {
       case "AVERAGE":
         setVisualizeSpeed(20);
-        return;
+        break;
       case "SLOW":
         setVisualizeSpeed(25);
-        return;
+        break;
       default:
         setVisualizeSpeed(15);
-        return;
+        break;
     }
   };
 

@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Grid, GridItem, Button, useDisclosure, Flex } from "@chakra-ui/react";
+import { Grid, GridItem, Button } from "@chakra-ui/react";
 import {
   Grid as VisualizerGrid,
   Drawer,

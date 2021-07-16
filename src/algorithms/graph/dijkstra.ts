@@ -36,11 +36,11 @@ export function dijkstra(
   distination: string
 ) {
   const visitedOrderArr: string[] = [];
-  let distance: Distance = {};
-  let previous: Path = {};
+  const distance: Distance = {};
+  const previous: Path = {};
   let hasRoute = true;
 
-  let unvisited: Set<string> = new Set();
+  const unvisited: Set<string> = new Set();
   for (let row = 0; row < graph.length; row++) {
     for (let col = 0; col < graph[row].length; col++) {
       const node = createNode(graph[row][col]);
@@ -61,7 +61,7 @@ export function dijkstra(
   };
 
   while (unvisited.size > 0) {
-    let currentNode = getSmallestNode(unvisited, distance);
+    const currentNode = getSmallestNode(unvisited, distance);
     unvisited.delete(currentNode);
 
     const currentNodeArr = currentNode.split("-");
@@ -69,17 +69,17 @@ export function dijkstra(
     const col = parseInt(currentNodeArr[1]);
     const currentNodeIndex = `${row}-${col}`;
 
-    let prevRow = row - 1;
-    let nextRow = row + 1;
-    let prevCol = col - 1;
-    let nextCol = col + 1;
+    const prevRow = row - 1;
+    const nextRow = row + 1;
+    const prevCol = col - 1;
+    const nextCol = col + 1;
 
     const isTopPosValid = prevRow >= 0 ? true : false;
     const isRightPosValid = nextCol < graph[row].length ? true : false;
     const isLeftPosValid = prevCol >= 0 ? true : false;
     const isBottomPosValid = nextRow < graph.length ? true : false;
 
-    let neighbors = [];
+    const neighbors = [];
 
     if (isTopPosValid) neighbors.push(`${prevRow}-${col}`);
     if (isRightPosValid) neighbors.push(`${row}-${nextCol}`);
@@ -142,7 +142,7 @@ export function createRoute(
   source: string,
   distination: string
 ) {
-  let route = [distination];
+  const route = [distination];
 
   let path = previous[distination];
   while (path !== source) {

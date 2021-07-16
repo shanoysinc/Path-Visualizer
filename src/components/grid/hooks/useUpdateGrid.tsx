@@ -8,7 +8,7 @@ export function useUpdateGrid() {
     const updatedGrid: GridNode[][] = [];
 
     for (let row = 0; row < NUMBER_OF_ROWS; row++) {
-      let columns = [];
+      const columns = [];
       for (let col = 0; col < NUMBER_OF_COLS; col++) {
         const node = await snapshot.getPromise(NodeAtom({ row, col }));
         columns.push(node);

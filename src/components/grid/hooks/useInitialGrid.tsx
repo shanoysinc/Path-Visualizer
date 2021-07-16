@@ -1,5 +1,4 @@
 import { useRecoilCallback } from "recoil";
-import { GridNode } from "../../../algorithms/graph/dijkstra";
 import { NodeAtom } from "../../../state/pathFinder/atoms";
 
 const NodeDefault = {
@@ -29,9 +28,9 @@ initGrid[END_ROW][END_COL].endNode = true;
 export const grid = initGrid;
 
 function createGrid(rows: number, cols: number) {
-  let arr = [];
+  const arr = [];
   for (let row = 0; row < rows; row++) {
-    let colArr = [];
+    const colArr = [];
     for (let col = 0; col < cols; col++) {
       colArr.push({ col, row, ...NodeDefault });
     }

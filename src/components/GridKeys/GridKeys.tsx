@@ -1,7 +1,7 @@
 import React from "react";
 import { Flex, Center, Text, Box, Link } from "@chakra-ui/react";
 
-import { ArrowRightIcon, StarIcon, ExternalLinkIcon } from "@chakra-ui/icons";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 export const GridKeys = () => {
   return (
@@ -28,7 +28,6 @@ export const GridKeys = () => {
           </Center>
           <Center>
             <span className="star"> ⭐</span>{" "}
-            {/* <StarIcon w={8} h={5} color="#34D399" /> */}
             <Text
               fontWeight="semibold"
               paddingLeft={2}
@@ -94,15 +93,9 @@ export const GridKeys = () => {
             marginTop={-10}
             order={1}
           >
-            See how algorithm's make their decisions!
+            See how algorithm&apos;s make their decisions!
           </Text>
-          <Text
-            // fontWeight="semibold"
-            paddingLeft={2}
-            fontSize={14}
-            color="gray.500"
-            marginTop={-4}
-          >
+          <Text paddingLeft={2} fontSize={14} color="gray.500" marginTop={-4}>
             Designed and Built by{" "}
             <Link
               href="https://shanoysinc.vercel.app"
