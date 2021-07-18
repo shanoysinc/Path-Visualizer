@@ -1,4 +1,4 @@
-import { atomFamily } from "recoil";
+import { atomFamily, atom } from "recoil";
 import { GridNode } from "../../algorithms/graph/dijkstra";
 import { grid } from "../../components/grid/hooks/useInitialGrid";
 
@@ -6,6 +6,11 @@ import { grid } from "../../components/grid/hooks/useInitialGrid";
 //   key: "grid",
 //   default: grid,
 // });
+
+export const isMouseDownAtom = atom({
+  key: "mouse",
+  default: false,
+});
 
 export const NodeAtom = atomFamily<GridNode, { row: number; col: number }>({
   key: "NodeAtom",

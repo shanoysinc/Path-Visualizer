@@ -1,6 +1,6 @@
-import React, { memo } from "react";
+import React, { memo, useCallback, useMemo } from "react";
 import { useRecoilState } from "recoil";
-import { NodeAtom } from "../../../../state/pathFinder/atoms";
+import { NodeAtom, isMouseDownAtom } from "../../../../state/pathFinder/atoms";
 import {
   useGridFunc,
   GridFuncProps,
@@ -37,8 +37,9 @@ export const Node = memo(({ col, row }: Props) => {
   //   NodeSelector({ row, col })
   // );
   const [currentNode, setCurrentNode] = useRecoilState(NodeAtom({ row, col }));
+  console.log("render");
 
-  const { isMouseDown, gridFunc } = useGridFunc(gridFuncSelector);
+  const [isMouseDown, setIsMouseDown] = useRecoilState(isMouseDownAtom);
   const { setRoutePos } = useRoutePos(routePosSelector);
   const { selectedNode, setSelectedNode } =
     useSelectedNode(selectedNodeSelector);
@@ -57,10 +58,11 @@ export const Node = memo(({ col, row }: Props) => {
       }
     }
   };
+  console.log("render");
 
   const mouseDownHandler = () => {
     if (notStartNodeOrEndNode) {
-      return gridFunc({ isMouseDown: true });
+      return setIsMouseDown(true);
     }
     if (isSelectedNodeStartNode && currentNode.endNode) return;
     if (isSelectedNodeEndNode && currentNode.startNode) return;
@@ -73,49 +75,49 @@ export const Node = memo(({ col, row }: Props) => {
     }
   };
 
-  const mouseUpHandler = () => {
-    if (isMouseDown) {
-      return gridFunc({ isMouseDown: false });
-    }
-    if (isSelectedNodeStartNode && currentNode.endNode) return;
-    if (isSelectedNodeEndNode && currentNode.startNode) return;
+  // const mouseUpHandler = () => {
+  //   if (isMouseDown) {
+  //     return gridFunc({ isMouseDown: false });
+  //   }
+  //   if (isSelectedNodeStartNode && currentNode.endNode) return;
+  //   if (isSelectedNodeEndNode && currentNode.startNode) return;
 
-    if (isSelectedNodeStartNode) {
-      setRoutePos({ sourceIndex: nodeIndex });
-    }
-    if (isSelectedNodeEndNode) {
-      setRoutePos({ destinationIndex: nodeIndex });
-    }
+  //   if (isSelectedNodeStartNode) {
+  //     setRoutePos({ sourceIndex: nodeIndex });
+  //   }
+  //   if (isSelectedNodeEndNode) {
+  //     setRoutePos({ destinationIndex: nodeIndex });
+  //   }
 
-    setSelectedNode(null);
-  };
+  //   setSelectedNode(null);
+  // };
 
-  const onMouseEnter = () => {
-    if (isMouseDown && notStartNodeOrEndNode) {
-      if (currentNode.isWall) {
-        setCurrentNode((node) => ({ ...node, isWall: false }));
-      }
-      if (!currentNode.isWall && notStartNodeOrEndNode) {
-        setCurrentNode((node) => ({ ...node, isWall: true }));
-      }
-      return;
-    }
-    if (isSelectedNodeStartNode && !currentNode.endNode) {
-      setCurrentNode((node) => ({ ...node, startNode: true, isWall: false }));
-    }
-    if (isSelectedNodeEndNode && !currentNode.startNode) {
-      setCurrentNode((node) => ({ ...node, endNode: true, isWall: false }));
-    }
-  };
+  // const onMouseEnter = () => {
+  //   if (isMouseDown && notStartNodeOrEndNode) {
+  //     if (currentNode.isWall) {
+  //       setCurrentNode((node) => ({ ...node, isWall: false }));
+  //     }
+  //     if (!currentNode.isWall && notStartNodeOrEndNode) {
+  //       setCurrentNode((node) => ({ ...node, isWall: true }));
+  //     }
+  //     return;
+  //   }
+  //   if (isSelectedNodeStartNode && !currentNode.endNode) {
+  //     setCurrentNode((node) => ({ ...node, startNode: true, isWall: false }));
+  //   }
+  //   if (isSelectedNodeEndNode && !currentNode.startNode) {
+  //     setCurrentNode((node) => ({ ...node, endNode: true, isWall: false }));
+  //   }
+  // };
 
-  const onMouseOut = () => {
-    if (isSelectedNodeStartNode) {
-      setCurrentNode((node) => ({ ...node, startNode: false, isWall: false }));
-    }
-    if (isSelectedNodeEndNode) {
-      setCurrentNode((node) => ({ ...node, endNode: false, isWall: false }));
-    }
-  };
+  // const onMouseOut = () => {
+  //   if (isSelectedNodeStartNode) {
+  //     setCurrentNode((node) => ({ ...node, startNode: false, isWall: false }));
+  //   }
+  //   if (isSelectedNodeEndNode) {
+  //     setCurrentNode((node) => ({ ...node, endNode: false, isWall: false }));
+  //   }
+  // };
 
   const isStartNode = currentNode.startNode ? "startNode" : "";
   const isEndNode = currentNode.endNode ? "endNode" : "";
@@ -125,9 +127,9 @@ export const Node = memo(({ col, row }: Props) => {
       id={nodeIndex}
       onClick={handleCurrentNode}
       onMouseDown={mouseDownHandler}
-      onMouseUp={mouseUpHandler}
-      onMouseLeave={onMouseOut}
-      onMouseEnter={onMouseEnter}
+      // onMouseUp={mouseUpHandler}
+      // onMouseLeave={onMouseOut}
+      // onMouseEnter={onMouseEnter}
       draggable={false}
       className={`grid__node ${isStartNode} ${isEndNode} ${wall}`}
     >
