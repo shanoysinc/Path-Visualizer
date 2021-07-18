@@ -16,10 +16,6 @@ import {
 import SmallButton from "../Button/SmallButton";
 import { useUpdateGrid } from "../../../grid/hooks/useUpdateGrid";
 import { createRoute, dijkstra } from "../../../../algorithms/graph/dijkstra";
-import {
-  useRoutePos,
-  useRoutePosProps,
-} from "../../../../state/pathFinder/useRoutePos";
 import { END_INDEX, START_INDEX } from "../../../grid/hooks/useInitialGrid";
 import { useRemoveGridWalls } from "../../../grid/hooks/useRemoveWalls";
 import { SettingsIcon } from "@chakra-ui/icons";
@@ -28,10 +24,9 @@ import {
   DrawerStateProps,
   useDrawerState,
 } from "../../../../state/UI/useDrawerDisplay";
-const routePosSelector = (state: useRoutePosProps) => ({
-  routePos: state.routePos,
-  setRoutePos: state.setRoutePos,
-});
+import { useRecoilState } from "recoil";
+import { RoutePosAtom } from "../../../../state/pathFinder/atoms";
+
 const drawerSelector = (state: DrawerStateProps) => ({
   isOpen: state.isOpen,
   setIsOpen: state.setIsOpen,
@@ -41,7 +36,7 @@ export const SidebarContent = memo(() => {
   const resetGrid = useResetGrid();
   const updatedGrid = useUpdateGrid();
   const removeGridWalls = useRemoveGridWalls();
-  const { routePos, setRoutePos } = useRoutePos(routePosSelector);
+  const [routePos, setRoutePos] = useRecoilState(RoutePosAtom);
   const [userHasVisualize, setUserHasVisualize] = useState(false);
   const [isAlgoVisualizing, setisAlgoVisualizing] = useState(false);
   const [animateVisitedNode, setAnimateVisitedNode] = useState(true);
@@ -119,7 +114,7 @@ export const SidebarContent = memo(() => {
             isClosable: true,
             position: "top",
           });
-        }, visualizeSpeed * 5 * route.length);
+        }, visualizeSpeed * 6 * route.length);
       }, visualizeSpeed * visitedOrderArr.length);
     } else {
       setTimeout(() => {
@@ -135,7 +130,7 @@ export const SidebarContent = memo(() => {
           isClosable: true,
           position: "top",
         });
-      }, (visualizeSpeed + 1) * visitedOrderArr.length);
+      }, (visualizeSpeed + 2) * visitedOrderArr.length);
     }
   };
 

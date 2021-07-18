@@ -1,36 +1,26 @@
 import { atomFamily, atom } from "recoil";
 import { GridNode } from "../../algorithms/graph/dijkstra";
-import { grid } from "../../components/grid/hooks/useInitialGrid";
+import {
+  END_INDEX,
+  grid,
+  START_INDEX,
+} from "../../components/grid/hooks/useInitialGrid";
+import { SelectedType, RoutePosState } from "../types";
 
-// export const GridAtom = atom<GridNode[][]>({
-//   key: "grid",
-//   default: grid,
-// });
+export const SelectNodeAtom = atom<null | SelectedType>({
+  key: "selectedNode",
+  default: null,
+});
 
-export const isMouseDownAtom = atom({
-  key: "mouse",
-  default: false,
+export const RoutePosAtom = atom<RoutePosState>({
+  key: "RoutePos",
+  default: {
+    destinationIndex: END_INDEX,
+    sourceIndex: START_INDEX,
+  },
 });
 
 export const NodeAtom = atomFamily<GridNode, { row: number; col: number }>({
   key: "NodeAtom",
   default: ({ row, col }) => grid[row][col],
 });
-
-// export const NodeSelector = selectorFamily<
-//   GridNode,
-//   { row: number; col: number }
-// >({
-//   key: "NodeAtom/NodeSelector",
-//   get:
-//     ({ row, col }) =>
-//     ({ get }) => {
-//       const node = get(NodeAtom({ col, row }));
-//       return node;
-//     },
-//   set:
-//     ({ row, col }) =>
-//     ({ set }, newValue) => {
-//       set(NodeAtom({ col, row }), newValue);
-//     },
-// });

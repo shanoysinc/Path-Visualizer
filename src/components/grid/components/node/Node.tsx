@@ -1,140 +1,129 @@
-import React, { memo, useCallback, useMemo } from "react";
-import { useRecoilState } from "recoil";
-import { NodeAtom, isMouseDownAtom } from "../../../../state/pathFinder/atoms";
-import {
-  useGridFunc,
-  GridFuncProps,
-} from "../../../../state/pathFinder/useGridFunc";
-import {
-  useSelectedNode,
-  useSelectedNodeProps,
-  SelectedType,
-} from "../../../../state/pathFinder/useSelectedNode";
-import {
-  useRoutePos,
-  useRoutePosProps,
-} from "../../../../state/pathFinder/useRoutePos";
+import React, { memo } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { NodeAtom, RoutePosAtom } from "../../../../state/pathFinder/atoms";
+import { SelectedType } from "../../../../state/types";
 
 interface Props {
   row: number;
   col: number;
+  isMouseDown: boolean;
+  setIsMouseDown: (val: boolean) => void;
+  selectedNode: null | SelectedType;
+  setSelectedNode: (val: null | SelectedType) => void;
 }
 
-const gridFuncSelector = (state: GridFuncProps) => ({
-  isMouseDown: state.isMouseDown,
-  gridFunc: state.updateFunc,
-});
-const selectedNodeSelector = (state: useSelectedNodeProps) => ({
-  selectedNode: state.selectedNode,
-  setSelectedNode: state.setSelectedNode,
-});
-const routePosSelector = (state: useRoutePosProps) => ({
-  setRoutePos: state.setRoutePos,
-});
+export const Node = memo(
+  ({
+    col,
+    row,
+    isMouseDown,
+    setIsMouseDown,
+    selectedNode,
+    setSelectedNode,
+  }: Props) => {
+    const [currentNode, setCurrentNode] = useRecoilState(
+      NodeAtom({ row, col })
+    );
+    const setRoutePos = useSetRecoilState(RoutePosAtom);
 
-export const Node = memo(({ col, row }: Props) => {
-  // const [currentNode, setCurrentNode] = useRecoilState(
-  //   NodeSelector({ row, col })
-  // );
-  const [currentNode, setCurrentNode] = useRecoilState(NodeAtom({ row, col }));
-  console.log("render");
+    const nodeIndex = `${row}-${col}`;
 
-  const [isMouseDown, setIsMouseDown] = useRecoilState(isMouseDownAtom);
-  const { setRoutePos } = useRoutePos(routePosSelector);
-  const { selectedNode, setSelectedNode } =
-    useSelectedNode(selectedNodeSelector);
-  const nodeIndex = `${row}-${col}`;
+    const notStartNodeOrEndNode =
+      !currentNode.startNode && !currentNode.endNode;
+    const isSelectedNodeStartNode = selectedNode === SelectedType.startNode;
+    const isSelectedNodeEndNode = selectedNode === SelectedType.endNode;
 
-  const notStartNodeOrEndNode = !currentNode.startNode && !currentNode.endNode;
-  const isSelectedNodeStartNode = selectedNode === SelectedType.startNode;
-  const isSelectedNodeEndNode = selectedNode === SelectedType.endNode;
-
-  const handleCurrentNode = () => {
-    if (notStartNodeOrEndNode) {
-      if (currentNode.isWall) {
-        setCurrentNode((node) => ({ ...node, isWall: false }));
-      } else {
-        setCurrentNode((node) => ({ ...node, isWall: true }));
+    const handleCurrentNode = () => {
+      if (notStartNodeOrEndNode) {
+        if (currentNode.isWall) {
+          setCurrentNode((node) => ({ ...node, isWall: false }));
+        } else {
+          setCurrentNode((node) => ({ ...node, isWall: true }));
+        }
       }
-    }
-  };
-  console.log("render");
+    };
 
-  const mouseDownHandler = () => {
-    if (notStartNodeOrEndNode) {
-      return setIsMouseDown(true);
-    }
-    if (isSelectedNodeStartNode && currentNode.endNode) return;
-    if (isSelectedNodeEndNode && currentNode.startNode) return;
+    const mouseDownHandler = () => {
+      if (notStartNodeOrEndNode) {
+        return setIsMouseDown(true);
+      }
+      if (isSelectedNodeStartNode && currentNode.endNode) return;
+      if (isSelectedNodeEndNode && currentNode.startNode) return;
 
-    if (currentNode.startNode) {
-      setSelectedNode(SelectedType.startNode);
-    }
-    if (currentNode.endNode) {
-      setSelectedNode(SelectedType.endNode);
-    }
-  };
+      if (currentNode.startNode) {
+        setSelectedNode(SelectedType.startNode);
+      }
+      if (currentNode.endNode) {
+        setSelectedNode(SelectedType.endNode);
+      }
+    };
 
-  // const mouseUpHandler = () => {
-  //   if (isMouseDown) {
-  //     return gridFunc({ isMouseDown: false });
-  //   }
-  //   if (isSelectedNodeStartNode && currentNode.endNode) return;
-  //   if (isSelectedNodeEndNode && currentNode.startNode) return;
+    const mouseUpHandler = () => {
+      if (isMouseDown) {
+        setIsMouseDown(false);
+        return;
+      }
+      if (isSelectedNodeStartNode && currentNode.endNode) return;
+      if (isSelectedNodeEndNode && currentNode.startNode) return;
 
-  //   if (isSelectedNodeStartNode) {
-  //     setRoutePos({ sourceIndex: nodeIndex });
-  //   }
-  //   if (isSelectedNodeEndNode) {
-  //     setRoutePos({ destinationIndex: nodeIndex });
-  //   }
+      if (isSelectedNodeStartNode) {
+        setRoutePos((state) => ({ ...state, sourceIndex: nodeIndex }));
+      }
+      if (isSelectedNodeEndNode) {
+        setRoutePos((state) => ({ ...state, destinationIndex: nodeIndex }));
+      }
 
-  //   setSelectedNode(null);
-  // };
+      setSelectedNode(null);
+    };
 
-  // const onMouseEnter = () => {
-  //   if (isMouseDown && notStartNodeOrEndNode) {
-  //     if (currentNode.isWall) {
-  //       setCurrentNode((node) => ({ ...node, isWall: false }));
-  //     }
-  //     if (!currentNode.isWall && notStartNodeOrEndNode) {
-  //       setCurrentNode((node) => ({ ...node, isWall: true }));
-  //     }
-  //     return;
-  //   }
-  //   if (isSelectedNodeStartNode && !currentNode.endNode) {
-  //     setCurrentNode((node) => ({ ...node, startNode: true, isWall: false }));
-  //   }
-  //   if (isSelectedNodeEndNode && !currentNode.startNode) {
-  //     setCurrentNode((node) => ({ ...node, endNode: true, isWall: false }));
-  //   }
-  // };
+    const onMouseEnter = () => {
+      if (isMouseDown && notStartNodeOrEndNode) {
+        if (currentNode.isWall) {
+          setCurrentNode((node) => ({ ...node, isWall: false }));
+        }
+        if (!currentNode.isWall && notStartNodeOrEndNode) {
+          setCurrentNode((node) => ({ ...node, isWall: true }));
+        }
+        return;
+      }
+      if (isSelectedNodeStartNode && !currentNode.endNode) {
+        setCurrentNode((node) => ({ ...node, startNode: true, isWall: false }));
+      }
+      if (isSelectedNodeEndNode && !currentNode.startNode) {
+        setCurrentNode((node) => ({ ...node, endNode: true, isWall: false }));
+      }
+    };
 
-  // const onMouseOut = () => {
-  //   if (isSelectedNodeStartNode) {
-  //     setCurrentNode((node) => ({ ...node, startNode: false, isWall: false }));
-  //   }
-  //   if (isSelectedNodeEndNode) {
-  //     setCurrentNode((node) => ({ ...node, endNode: false, isWall: false }));
-  //   }
-  // };
+    const onMouseOut = () => {
+      if (isSelectedNodeStartNode) {
+        setCurrentNode((node) => ({
+          ...node,
+          startNode: false,
+          isWall: false,
+        }));
+      }
+      if (isSelectedNodeEndNode) {
+        setCurrentNode((node) => ({ ...node, endNode: false, isWall: false }));
+      }
+    };
 
-  const isStartNode = currentNode.startNode ? "startNode" : "";
-  const isEndNode = currentNode.endNode ? "endNode" : "";
-  const wall = currentNode.isWall ? "wall" : "";
-  return (
-    <div
-      id={nodeIndex}
-      onClick={handleCurrentNode}
-      onMouseDown={mouseDownHandler}
-      // onMouseUp={mouseUpHandler}
-      // onMouseLeave={onMouseOut}
-      // onMouseEnter={onMouseEnter}
-      draggable={false}
-      className={`grid__node ${isStartNode} ${isEndNode} ${wall}`}
-    >
-      {isStartNode && <div className="arrow-right"></div>}
-      {isEndNode && <div className="star">⭐</div>}
-    </div>
-  );
-});
+    const isStartNode = currentNode.startNode ? "startNode" : "";
+    const isEndNode = currentNode.endNode ? "endNode" : "";
+    const wall = currentNode.isWall ? "wall" : "";
+    return (
+      <div
+        id={nodeIndex}
+        onClick={handleCurrentNode}
+        onMouseDown={mouseDownHandler}
+        onMouseUp={mouseUpHandler}
+        onMouseLeave={onMouseOut}
+        onMouseEnter={onMouseEnter}
+        draggable={false}
+        className={`grid__node ${isStartNode} ${isEndNode} ${wall}`}
+      >
+        {isStartNode && <div className="arrow-right"></div>}
+        {isEndNode && <div className="star">⭐</div>}
+      </div>
+    );
+  }
+);
