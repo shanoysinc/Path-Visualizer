@@ -64,8 +64,6 @@
   border-bottom: 1px solid hsla(0, 0%, 84%, 0.544);
   border-right: 1px solid hsla(0, 0%, 84%, 0.1);
   animation: circle-to-square 1.5s linear both;
-  will-change: transform;
-  animation-delay: 0.3s;
 }
 
 .arrow-right {
