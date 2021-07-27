@@ -21,13 +21,6 @@ const NUMBER_OF_COLS = 38;
 export const START_INDEX = `${START_ROW}-${START_COL}`;
 export const END_INDEX = `${END_ROW}-${END_COL}`;
 
-const initGrid = createGrid(NUMBER_OF_ROWS, NUMBER_OF_COLS);
-
-initGrid[START_ROW][START_COL].startNode = true;
-initGrid[END_ROW][END_COL].endNode = true;
-
-export const grid = initGrid;
-
 function createGrid(rows: number, cols: number) {
   const arr: GridNode[][] = [];
   for (let row = 0; row < rows; row++) {
@@ -39,6 +32,13 @@ function createGrid(rows: number, cols: number) {
   }
   return arr;
 }
+
+const initGrid = createGrid(NUMBER_OF_ROWS, NUMBER_OF_COLS);
+
+initGrid[START_ROW][START_COL].startNode = true;
+initGrid[END_ROW][END_COL].endNode = true;
+
+export const grid = initGrid;
 
 export function useResetGrid() {
   return useRecoilCallback(({ set }) => () => {

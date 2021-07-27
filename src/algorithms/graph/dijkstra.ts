@@ -1,7 +1,7 @@
 interface Distance {
   [props: string]: GridNode;
 }
-interface Path {
+export interface Path {
   [props: string]: string;
 }
 

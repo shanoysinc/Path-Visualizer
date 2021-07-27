@@ -15,7 +15,11 @@ import {
 } from "@chakra-ui/react";
 import SmallButton from "../Button/SmallButton";
 import { useUpdateGrid } from "../../../grid/hooks/useUpdateGrid";
-import { createRoute, dijkstra } from "../../../../algorithms/graph/dijkstra";
+import {
+  createRoute,
+  dijkstra,
+  Path,
+} from "../../../../algorithms/graph/dijkstra";
 import { END_INDEX, START_INDEX } from "../../../grid/hooks/useInitialGrid";
 import { useRemoveGridWalls } from "../../../grid/hooks/useRemoveWalls";
 import { SettingsIcon } from "@chakra-ui/icons";
@@ -41,21 +45,22 @@ export const SidebarContent = memo(() => {
   const [isAlgoVisualizing, setisAlgoVisualizing] = useState(false);
   const [animateVisitedNode, setAnimateVisitedNode] = useState(true);
   const [animateRoute, setAnimateRoute] = useState(true);
-  const [visualizeSpeed, setVisualizeSpeed] = useState(15);
+  const [updatingGid, setUpdatingGrid] = useState(false);
+  const [visualizeSpeed, setVisualizeSpeed] = useState(20);
   const { setIsOpen, isOpen: isDrawerOpen } = useDrawerState(drawerSelector);
 
   const toast = useToast();
 
   const traverseGridHandler = async () => {
     if (userHasVisualize || isDrawerOpen) {
+      setUpdatingGrid(true);
       clearGridPathHandler();
     }
 
     if (isDrawerOpen) {
       setIsOpen(false);
-    } else {
-      setisAlgoVisualizing(true);
     }
+    setisAlgoVisualizing(true);
 
     const updatedGridData = await updatedGrid();
 
@@ -65,28 +70,36 @@ export const SidebarContent = memo(() => {
       routePos.destinationIndex
     );
 
-    visitedOrderArr.forEach((node, index) => {
-      const nodeDiv = document.getElementById(node);
-      if (nodeDiv) {
-        const isStartNode = nodeDiv.classList.contains("startNode");
-        const isEndNode = nodeDiv.classList.contains("endNode");
-        setTimeout(() => {
-          if (!isEndNode && !isStartNode) {
-            animateVisitedNode
-              ? nodeDiv.classList.add("visitedNode-animation")
-              : nodeDiv.classList.add("visitedNode");
-          }
-        }, visualizeSpeed * index);
-      }
-    });
+    if (!updatingGid) {
+      createVisitedNodeAnimation({
+        animateVisitedNode,
+        visitedOrderArr,
+        visualizeSpeed,
+      });
+
+      createRouteAnimation({
+        hasRoute,
+        previous,
+        visitedOrderArrLength: visitedOrderArr.length,
+      });
+    }
+  };
+
+  const createRouteAnimation = (setUp: {
+    hasRoute: boolean;
+    previous: Path;
+    visitedOrderArrLength: number;
+  }) => {
+    const { hasRoute, previous, visitedOrderArrLength } = setUp;
 
     if (hasRoute) {
+      const route = createRoute(
+        previous,
+        routePos.sourceIndex,
+        routePos.destinationIndex
+      );
+
       setTimeout(() => {
-        const route = createRoute(
-          previous,
-          routePos.sourceIndex,
-          routePos.destinationIndex
-        );
         route.forEach((node, index) => {
           const nodeDiv = document.getElementById(node);
 
@@ -97,25 +110,16 @@ export const SidebarContent = memo(() => {
               animateRoute
                 ? nodeDiv.classList.add("route-animation")
                 : nodeDiv.classList.add("route");
-            }, visualizeSpeed * 5 * index);
+            }, visualizeSpeed * 3 * index);
           }
         });
-
         setTimeout(() => {
           if (!isDrawerOpen) {
             setisAlgoVisualizing(false);
             setUserHasVisualize(true);
           }
-          toast({
-            title: "Success!",
-            description: "A path to your destination has been found!",
-            status: "success",
-            duration: 2000,
-            isClosable: true,
-            position: "top",
-          });
-        }, visualizeSpeed * 6 * route.length);
-      }, visualizeSpeed * visitedOrderArr.length);
+        }, visualizeSpeed * 4 * route.length);
+      }, visualizeSpeed * visitedOrderArrLength);
     } else {
       setTimeout(() => {
         if (!isDrawerOpen) {
@@ -127,10 +131,9 @@ export const SidebarContent = memo(() => {
           description: "All path is block off to your destination",
           status: "info",
           duration: 2000,
-          isClosable: true,
           position: "top",
         });
-      }, (visualizeSpeed + 2) * visitedOrderArr.length);
+      }, (visualizeSpeed + 2) * visitedOrderArrLength);
     }
   };
 
@@ -176,21 +179,18 @@ export const SidebarContent = memo(() => {
           ]
         );
       });
+    setUpdatingGrid(false);
   };
 
   const visualizeSpeedHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const speedType = e.target.value;
-    console.log(speedType);
 
     switch (speedType) {
-      case "AVERAGE":
-        setVisualizeSpeed(20);
-        break;
       case "SLOW":
         setVisualizeSpeed(25);
         break;
       default:
-        setVisualizeSpeed(15);
+        setVisualizeSpeed(20);
         break;
     }
   };
@@ -235,11 +235,8 @@ export const SidebarContent = memo(() => {
             w="fit-content"
             _hover={{ bg: "hsl(208, 97%, 50%);" }}
             onChange={visualizeSpeedHandler}
-            defaultValue="FAST"
+            defaultValue="AVERAGE"
           >
-            <option className="option" value="FAST">
-              Fast
-            </option>
             <option className="option" value="AVERAGE">
               Average
             </option>
@@ -334,3 +331,25 @@ export const SidebarContent = memo(() => {
     </>
   );
 });
+
+function createVisitedNodeAnimation(setUp: {
+  visitedOrderArr: string[];
+  animateVisitedNode: boolean;
+  visualizeSpeed: number;
+}) {
+  const { animateVisitedNode, visitedOrderArr, visualizeSpeed } = setUp;
+  visitedOrderArr.forEach((node, index) => {
+    const nodeDiv = document.getElementById(node);
+    if (nodeDiv) {
+      const isStartNode = nodeDiv.classList.contains("startNode");
+      const isEndNode = nodeDiv.classList.contains("endNode");
+      setTimeout(() => {
+        if (!isEndNode && !isStartNode) {
+          animateVisitedNode
+            ? nodeDiv.classList.add("visitedNode-animation")
+            : nodeDiv.classList.add("visitedNode");
+        }
+      }, visualizeSpeed * index);
+    }
+  });
+}

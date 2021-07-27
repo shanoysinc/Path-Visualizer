@@ -1,12 +1,9 @@
-import React, { memo, useState } from "react";
+import React from "react";
 import { Node } from "./components";
 import { Grid as ChakraUIGrid } from "@chakra-ui/react";
 import { grid } from "./hooks/useInitialGrid";
-import { SelectedType } from "../../state/types";
 
-export const Grid = memo(() => {
-  const [isMouseDown, setIsMouseDown] = useState(false);
-  const [selectedNode, setSelectedNode] = useState<null | SelectedType>(null);
+export const Grid = () => {
   return (
     <>
       {grid.map((row, rowIndex) => (
@@ -16,14 +13,10 @@ export const Grid = memo(() => {
               key={`${rowIndex}-${colIndex}`}
               row={rowIndex}
               col={colIndex}
-              isMouseDown={isMouseDown}
-              setIsMouseDown={setIsMouseDown}
-              selectedNode={selectedNode}
-              setSelectedNode={setSelectedNode}
             />
           ))}
         </ChakraUIGrid>
       ))}
     </>
   );
-});
+};
