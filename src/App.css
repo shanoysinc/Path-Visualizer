@@ -36,7 +36,7 @@
 .wall {
   background-color: hsl(208, 97%, 10%);
   border: 1px dotted hsl(208, 97%, 10%);
-  /* animation: moveInSpring 400ms ease forwards; */
+  animation: moveInSpring 400ms ease forwards;
   /* will-change: transform; */
 }
 
@@ -63,7 +63,8 @@
   border-top: 1px solid hsla(0, 0%, 84%, 0.1);
   border-bottom: 1px solid hsla(0, 0%, 84%, 0.544);
   border-right: 1px solid hsla(0, 0%, 84%, 0.1);
-  animation: circle-to-square 700ms forwards;
+  /* transition: all 200ms; */
+  animation: circle-to-square 1.5s both;
 }
 
 .arrow-right {
@@ -145,20 +146,15 @@ select option {
 
 @keyframes circle-to-square {
   0% {
-    transform: scale(0);
-    opacity: 0;
-  }
-  30% {
-    border-radius: 50%;
     transform: scale(0.5);
     opacity: 1;
-    background-color: rgba(4, 251, 119, 0.509);
+    /* background-color: hsla(254, 97%, 55%, 0.786); */
   }
 
   80% {
+    background-color: rgba(4, 251, 119, 0.509);
     border-radius: 50%;
     transform: scale(0.8);
-    background-color: hsla(254, 97%, 55%, 0.786);
   }
   100% {
     border-radius: 0;
