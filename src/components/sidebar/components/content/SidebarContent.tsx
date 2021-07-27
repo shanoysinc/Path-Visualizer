@@ -119,7 +119,7 @@ export const SidebarContent = memo(() => {
             setUserHasVisualize(true);
           }
         }, visualizeSpeed * 4 * route.length);
-      }, visualizeSpeed * visitedOrderArrLength);
+      }, (visualizeSpeed + 2) * visitedOrderArrLength);
     } else {
       setTimeout(() => {
         if (!isDrawerOpen) {
