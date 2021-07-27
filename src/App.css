@@ -63,7 +63,8 @@
   border-top: 1px solid hsla(0, 0%, 84%, 0.1);
   border-bottom: 1px solid hsla(0, 0%, 84%, 0.544);
   border-right: 1px solid hsla(0, 0%, 84%, 0.1);
-  animation: circle-to-square 3s linear both;
+  animation: circle-to-square 1.5s linear both;
+  will-change: transform;
 }
 
 .arrow-right {
