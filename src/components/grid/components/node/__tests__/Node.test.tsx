@@ -2,7 +2,7 @@
 import React, { ReactElement } from "react";
 import {
   render as rtlRender,
-  screen,
+  // screen,
   queryByAttribute,
   Matcher,
   MatcherOptions,
