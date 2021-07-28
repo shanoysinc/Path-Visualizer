@@ -53,7 +53,7 @@
 
 .visitedNode {
   background-color: hsl(208, 97%, 55%);
-  border: 1px dashed hsla(0, 0%, 100%, 0.13);
+  border: 1px dashed hsla(0, 0%, 100%, 0.14);
 }
 
 .visitedNode-animation {
