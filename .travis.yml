@@ -5,5 +5,12 @@ cache:
     - node_modules
 install:
   - npm install
+notifications:
+  webhooks: https://api.netlify.com/build_hooks/61016375ffa39e0eebca9ecf
+    on_sucess: always
+    on_failure: never
+    on_cancel: never
+    on_error: never
 scripts:
+  - npm run dev
   - npm run cy:run

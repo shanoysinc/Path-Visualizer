@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 
-function addWalls(walls: string[]) {
+function addWalls(walls) {
   walls.forEach((wall) => {
     cy.get(`#${wall}`).click();
   });
