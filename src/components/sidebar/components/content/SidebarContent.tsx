@@ -282,6 +282,7 @@ export const SidebarContent = memo(() => {
                 >
                   <Text color="white"> Visited Animations</Text>
                   <Switch
+                    data-test={"Visited-Animations-btn"}
                     onChange={visitedNodeAnimHandler}
                     isChecked={animateVisitedNode}
                   />
@@ -296,6 +297,7 @@ export const SidebarContent = memo(() => {
                 >
                   <Text color="white"> Route Animations</Text>
                   <Switch
+                    data-test={"Route-Animations-btn"}
                     isChecked={animateRoute}
                     onChange={routeAnimHandler}
                   />
@@ -306,6 +308,7 @@ export const SidebarContent = memo(() => {
         </div>
         <Container>
           <Button
+            data-test={"visualize-btn"}
             size="lg"
             w="full"
             bg="hsla(148, 97%, 50%, 0.719)"

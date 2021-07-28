@@ -15,8 +15,9 @@
     "isolatedModules": false,
     "noEmit": true,
     "jsx": "react",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "types": ["cypress", "@testing-library/cypress"]
   },
-  "include": ["./src"],
+  "include": ["**/*.ts"],
   "exclude": ["node_modules"]
 }
