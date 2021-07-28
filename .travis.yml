@@ -4,6 +4,6 @@ cache:
   directories:
     - node_modules
 install:
-  - npm  run install
+  - npm install
 scripts:
   - npm run cy:run
