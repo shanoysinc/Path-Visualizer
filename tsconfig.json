@@ -16,7 +16,7 @@
     "noEmit": true,
     "jsx": "react",
     "rootDir": "./src",
-    "types": ["jest", "@testing-library/cypress"]
+    "types": ["jest"]
   },
   "include": ["./src"],
   "exclude": ["node_modules"]
