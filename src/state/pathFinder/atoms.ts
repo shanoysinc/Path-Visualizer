@@ -1,5 +1,5 @@
 import { atomFamily, atom } from "recoil";
-import { GridNode } from "../../algorithms/graph/dijkstra";
+import { GridNode } from "../../algorithms/graph/";
 import {
   END_INDEX,
   grid,

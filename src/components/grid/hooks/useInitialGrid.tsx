@@ -1,5 +1,5 @@
 import { useRecoilCallback } from "recoil";
-import { GridNode } from "../../../algorithms/graph/dijkstra";
+import { GridNode } from "../../../algorithms/graph/";
 import { NodeAtom } from "../../../state/pathFinder/atoms";
 
 const NodeDefault = {
