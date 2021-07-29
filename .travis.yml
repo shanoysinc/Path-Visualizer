@@ -18,3 +18,4 @@ deploy:
   message: ${TRAVIS_COMMIT_MESSAGE}
   on:
     branch: main
+    condition: "$TRAVIS_TEST_RESULT = 0"
