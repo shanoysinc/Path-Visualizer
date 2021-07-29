@@ -10,10 +10,11 @@ scripts:
   - npm run test:e2e:run
 deploy:
   provider: netlify
-  site: $NETLIFY_SITE_ID
-  auth: $NETLIFY_AUTH
+  site: ${NETLIFY_SITE_ID}
+  auth: ${NETLIFY_AUTH}
   edge: true
   dir: "dist"
   prod: true
+  message: "build from travis ci"
   on:
     branch: main
