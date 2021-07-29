@@ -7,7 +7,7 @@ cache:
     - "$HOME/.npm"
 scripts:
   - npm run build
-  - npm run test:e2e:run
+  - npm run test:e2e
 deploy:
   provider: netlify
   site: ${NETLIFY_SITE_ID}
