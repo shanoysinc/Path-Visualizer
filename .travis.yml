@@ -15,6 +15,6 @@ deploy:
   edge: true
   dir: "dist"
   prod: true
-  message: "build from travis ci"
+  message: ${TRAVIS_COMMIT_MESSAGE}
   on:
     branch: main
