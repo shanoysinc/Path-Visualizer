@@ -8,12 +8,14 @@ cache:
 scripts:
   - npm run build
   - npm run test:e2e:run
-notifications:
-  webhooks: 
-    urls:
-      - https://api.netlify.com/build_hooks/61016375ffa39e0eebca9ecf
-    on_success: always
-    on_failure: never
-    on_cancel: never
-    on_error: never
-
+deploy:
+  provider: netlify
+  site: 
+    -env : 
+      NETLIFY_SITE_ID
+  auth: 
+    -env:
+      NETLIFY_AUTH
+  edge: true
+  dir: "dist"
+  prod: true
