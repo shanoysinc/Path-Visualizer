@@ -77,11 +77,11 @@ export const SidebarContent = memo(() => {
         visualizeSpeed,
       });
 
-      createRouteAnimation({
-        hasRoute,
-        previous,
-        visitedOrderArrLength: visitedOrderArr.length,
-      });
+      // createRouteAnimation({
+      //   hasRoute,
+      //   previous,
+      //   visitedOrderArrLength: visitedOrderArr.length,
+      // });
     }
   };
 
@@ -216,7 +216,7 @@ export const SidebarContent = memo(() => {
         <div>
           <div>
             <Heading as="h3" size="lg" color="#EDE9FE">
-              DevPath - Algorithm Visualize
+              DevPath Algorithm Visualizer
             </Heading>
           </div>
           <Select
