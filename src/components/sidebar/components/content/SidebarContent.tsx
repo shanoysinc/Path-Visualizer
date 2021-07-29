@@ -216,7 +216,7 @@ export const SidebarContent = memo(() => {
         <div>
           <div>
             <Heading as="h3" size="lg" color="#EDE9FE">
-              DevPath - Algorithm Visualizer
+              DevPath - Algorithm Visualize
             </Heading>
           </div>
           <Select
