@@ -147,11 +147,6 @@ describe("testing grid functionalities", () => {
     cy.get(openDrawerBtn).should("be.visible");
   });
 
-  it("test fail deploy", () => {
-    const websiteName =
-      "#chakra-modal-2 > .css-f1rwq6 > :nth-child(1) > :nth-child(1) > .chakra-heading";
-    cy.get(websiteName).should("eq", "hello");
-  });
   // it("move ending node", () => {
   //   cy.visit("/");
   //   // cy.get("[data-cy='2-3']").click();
