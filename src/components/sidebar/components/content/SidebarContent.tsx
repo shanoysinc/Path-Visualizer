@@ -77,11 +77,11 @@ export const SidebarContent = memo(() => {
         visualizeSpeed,
       });
 
-      // createRouteAnimation({
-      //   hasRoute,
-      //   previous,
-      //   visitedOrderArrLength: visitedOrderArr.length,
-      // });
+      createRouteAnimation({
+        hasRoute,
+        previous,
+        visitedOrderArrLength: visitedOrderArr.length,
+      });
     }
   };
 
