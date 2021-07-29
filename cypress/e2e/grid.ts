@@ -145,13 +145,12 @@ describe("testing grid functionalities", () => {
     cy.get(closeDrawerBtn).click();
 
     cy.get(openDrawerBtn).should("be.visible");
-    // cy.get(visitedNodeAnimBtn).click();
-    // cy.get(visualizeBtn).click();
+  });
 
-    // cy.wait(10000);
-
-    // cy.get("#14-15").should("have.class", "visitedNode");
-    // cy.get("#14-16").should("not.have.class", "visitedNode-animation");
+  it("test fail deploy", () => {
+    const websiteName =
+      "#chakra-modal-2 > .css-f1rwq6 > :nth-child(1) > :nth-child(1) > .chakra-heading";
+    cy.get(websiteName).should("eq", "hello");
   });
   // it("move ending node", () => {
   //   cy.visit("/");
