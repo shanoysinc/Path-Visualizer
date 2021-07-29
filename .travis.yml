@@ -19,3 +19,5 @@ deploy:
   edge: true
   dir: "dist"
   prod: true
+  on:
+    branch: main
