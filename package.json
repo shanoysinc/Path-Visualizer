@@ -4,7 +4,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "serve": "vite preview",
-    "test": "jest ",
+    "test": "jest",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
     "cy:open": "cypress open",
