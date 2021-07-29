@@ -10,12 +10,8 @@ scripts:
   - npm run test:e2e:run
 deploy:
   provider: netlify
-  site: 
-    -env : 
-      NETLIFY_SITE_ID
-  auth: 
-    -env:
-      NETLIFY_AUTH
+  site: NETLIFY_SITE_ID
+  auth: NETLIFY_AUTH
   edge: true
   dir: "dist"
   prod: true
