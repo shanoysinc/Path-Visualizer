@@ -1,34 +1,7 @@
-interface Distance {
-  [props: string]: GridNode;
-}
-export interface Path {
-  [props: string]: string;
-}
-
-export interface GridNode {
-  row: number;
-  col: number;
-  isVisited: boolean;
-  distance: number;
-  isWall: boolean;
-  startNode: boolean;
-  endNode: boolean;
-}
-
-function createNode(node: GridNode) {
-  return {
-    ...node,
-    distance: Infinity,
-  };
-}
-
-const NodeDefault = {
-  distance: Infinity,
-  isVisited: false,
-  isWall: false,
-  startNode: false,
-  endNode: false,
-};
+import { getSmallestNode } from "./getSmallestNode";
+import { Distance, GridNode, Path } from "./types";
+import { createDistance } from "./createDistance";
+import { createUnvisitedNode } from "./createUnvisitedNode";
 
 export function dijkstra(
   graph: GridNode[][],
@@ -36,29 +9,10 @@ export function dijkstra(
   distination: string
 ) {
   const visitedOrderArr: string[] = [];
-  const distance: Distance = {};
+  const distance = createDistance(graph, source);
+  const unvisited = createUnvisitedNode(distance);
   const previous: Path = {};
   let hasRoute = true;
-
-  const unvisited: Set<string> = new Set();
-  for (let row = 0; row < graph.length; row++) {
-    for (let col = 0; col < graph[row].length; col++) {
-      const node = createNode(graph[row][col]);
-      distance[`${row}-${col}`] = node;
-      unvisited.add(`${row}-${col}`);
-    }
-  }
-
-  const sourceArr = source.split("-");
-  const sourceCol = parseInt(sourceArr[1]);
-  const sourceRow = parseInt(sourceArr[0]);
-  distance[source] = {
-    ...NodeDefault,
-    row: sourceRow,
-    col: sourceCol,
-    distance: 0,
-    startNode: true,
-  };
 
   while (unvisited.size > 0) {
     const currentNode = getSmallestNode(unvisited, distance);
@@ -101,7 +55,6 @@ export function dijkstra(
       break;
     }
 
-    // visitedOrderArr.push(...neighborsNotWall);
     neighborsNotWall.forEach((n) => {
       if (!visitedOrderArr.includes(n)) {
         visitedOrderArr.push(n);
@@ -113,14 +66,6 @@ export function dijkstra(
   }
 
   return { previous, visitedOrderArr, hasRoute };
-}
-
-function getSmallestNode(unvisited: Set<string>, distance: Distance) {
-  return Array.from(unvisited).reduce((minNodeIndex, nodeIndex) => {
-    return distance[minNodeIndex].distance > distance[nodeIndex].distance
-      ? nodeIndex
-      : minNodeIndex;
-  });
 }
 
 function updateNeighbors(
@@ -135,21 +80,4 @@ function updateNeighbors(
       previous[neighbor] = currentNodeIndex;
     }
   });
-}
-
-export function createRoute(
-  previous: Path,
-  source: string,
-  distination: string
-) {
-  const route = [distination];
-
-  let path = previous[distination];
-  while (path !== source) {
-    route.push(path);
-    path = previous[path];
-  }
-
-  route.push(source);
-  return route;
 }

@@ -15,11 +15,7 @@ import {
 } from "@chakra-ui/react";
 import SmallButton from "../Button/SmallButton";
 import { useUpdateGrid } from "../../../grid/hooks/useUpdateGrid";
-import {
-  createRoute,
-  dijkstra,
-  Path,
-} from "../../../../algorithms/graph/dijkstra";
+import { createRoute, dijkstra, Path } from "../../../../algorithms/graph/";
 import { END_INDEX, START_INDEX } from "../../../grid/hooks/useInitialGrid";
 import { useRemoveGridWalls } from "../../../grid/hooks/useRemoveWalls";
 import { SettingsIcon } from "@chakra-ui/icons";
