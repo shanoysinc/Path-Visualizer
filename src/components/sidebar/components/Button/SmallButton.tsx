@@ -5,8 +5,20 @@ interface Props {
   content: string;
   onClick?: () => void;
   isAlgoVisualizing: boolean;
+  beforeClickFn?: () => void;
 }
-const SmallButton = ({ content, onClick, isAlgoVisualizing }: Props) => {
+const SmallButton = ({
+  content,
+  onClick,
+  isAlgoVisualizing,
+  beforeClickFn,
+}: Props) => {
+  const clickHandler = () => {
+    if (beforeClickFn) {
+      beforeClickFn();
+    }
+    onClick();
+  };
   return (
     <Button
       size="sm"
@@ -17,7 +29,7 @@ const SmallButton = ({ content, onClick, isAlgoVisualizing }: Props) => {
         bg: "#fc371d",
         borderColor: "#fc371d",
       }}
-      onClick={onClick}
+      onClick={clickHandler}
       disabled={isAlgoVisualizing}
       _focus={{}}
     >

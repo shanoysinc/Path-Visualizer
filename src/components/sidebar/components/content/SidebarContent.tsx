@@ -26,6 +26,7 @@ import {
 } from "../../../../state/UI/useDrawerDisplay";
 import { useRecoilState } from "recoil";
 import { RoutePosAtom } from "../../../../state/pathFinder/atoms";
+import { useRandomWalls } from "../../../grid/hooks/ueRandomWalls";
 
 const drawerSelector = (state: DrawerStateProps) => ({
   isOpen: state.isOpen,
@@ -35,6 +36,7 @@ const drawerSelector = (state: DrawerStateProps) => ({
 export const SidebarContent = memo(() => {
   const resetGrid = useResetGrid();
   const updatedGrid = useUpdateGrid();
+  const placeRandomWalls = useRandomWalls();
   const removeGridWalls = useRemoveGridWalls();
   const [routePos, setRoutePos] = useRecoilState(RoutePosAtom);
   const [userHasVisualize, setUserHasVisualize] = useState(false);
@@ -264,6 +266,12 @@ export const SidebarContent = memo(() => {
             <SmallButton
               content="Clear path"
               onClick={clearGridPathHandler}
+              isAlgoVisualizing={isAlgoVisualizing}
+            />
+            <SmallButton
+              content="Generate Walls"
+              beforeClickFn={clearGridWallsHandler}
+              onClick={placeRandomWalls}
               isAlgoVisualizing={isAlgoVisualizing}
             />
           </Flex>
