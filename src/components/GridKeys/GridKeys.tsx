@@ -1,9 +1,9 @@
-import React from "react";
+import React, { memo } from "react";
 import { Flex, Center, Text, Box, Link } from "@chakra-ui/react";
 
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 
-export const GridKeys = () => {
+export const GridKeys = memo(() => {
   return (
     <>
       <Flex flexWrap="wrap" justify="center" direction="column" align="center">
@@ -111,4 +111,4 @@ export const GridKeys = () => {
       </Flex>
     </>
   );
-};
+});

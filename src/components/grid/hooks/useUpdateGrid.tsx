@@ -2,6 +2,7 @@ import { useRecoilCallback } from "recoil";
 import { GridNode } from "../../../algorithms/graph/";
 import { NodeAtom } from "../../../state/pathFinder/atoms";
 import { grid } from "./useInitialGrid";
+
 export function useUpdateGrid() {
   return useRecoilCallback(({ snapshot }) => () => {
     const updatedGrid: GridNode[][] = [];
