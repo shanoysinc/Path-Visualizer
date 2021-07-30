@@ -47,7 +47,7 @@ export const SidebarContent = memo(() => {
 
   const toast = useToast();
 
-  const traverseGridHandler = async () => {
+  const traverseGridHandler = () => {
     if (userHasVisualize || isDrawerOpen) {
       setUpdatingGrid(true);
       clearGridPathHandler();
@@ -58,7 +58,7 @@ export const SidebarContent = memo(() => {
     }
     setisAlgoVisualizing(true);
 
-    const updatedGridData = await updatedGrid();
+    const updatedGridData = updatedGrid();
 
     const { visitedOrderArr, previous, hasRoute } = dijkstra(
       updatedGridData,
