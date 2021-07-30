@@ -24,10 +24,11 @@ export const Drawer = () => {
         isOpen={isOpen}
         placement="left"
         onClose={() => setIsOpen(false)}
-        size="sm"
+        size="xs"
       >
         <DrawerContent bg="#111827">
           <DrawerCloseButton color="white" />
+
           <SidebarContent />
         </DrawerContent>
       </LeftSideDrawer>
