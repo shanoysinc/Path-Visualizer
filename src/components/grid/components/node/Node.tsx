@@ -108,6 +108,7 @@ export const Node = memo(({ col, row }: Props) => {
   };
 
   const onMouseOut = () => {
+    if (isMouseDown) return;
     if (isSelectedNodeStartNode) {
       setCurrentNode((node) => ({
         ...node,

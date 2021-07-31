@@ -1,12 +1,7 @@
 import React from "react";
 import "./App.css";
 import { Grid, GridItem, Button } from "@chakra-ui/react";
-import {
-  Grid as VisualizerGrid,
-  Drawer,
-  GridKeys,
-  LeftSideBar,
-} from "./components";
+import { Grid as VisualizerGrid, GridKeys, LeftSideBar } from "./components";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { DrawerStateProps, useDrawerState } from "./state/UI/useDrawerDisplay";
 const drawerSelector = (state: DrawerStateProps) => ({
@@ -31,7 +26,6 @@ function App() {
       >
         <HamburgerIcon w={5} h={5} color="white" />
       </Button>
-      <Drawer />
       <div className="App">
         <Grid
           h="100vh"
@@ -44,7 +38,7 @@ function App() {
             "repeat(4, 1fr)",
           ]}
           columnGap={4}
-          w={["90%", "90%", "90%", "90%", "100%"]}
+          w={["95%", "95%", "95%", "95%", "100%"]}
           m={["0 auto"]}
           mr={{ xlg: 10 }}
         >
@@ -57,11 +51,11 @@ function App() {
             <LeftSideBar />
           </GridItem>
 
-          <GridItem colSpan={[2, 2, 2, 2, 3]}>
+          <GridItem colSpan={[2, 2, 2, 2, 3]} mr={"2"}>
             <GridKeys />
           </GridItem>
 
-          <GridItem rowSpan={[5, 5]} colSpan={[2, 2, 2, 3, 3]} mt="65">
+          <GridItem rowSpan={[5, 5]} colSpan={[2, 2, 2, 3, 3]} mt="65" mr={"2"}>
             <VisualizerGrid />
           </GridItem>
         </Grid>

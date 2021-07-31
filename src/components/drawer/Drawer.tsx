@@ -18,12 +18,15 @@ const drawerSelector = (state: DrawerStateProps) => ({
 export const Drawer = () => {
   const { setIsOpen, isOpen } = useDrawerState(drawerSelector);
 
+  const close = () => {
+    setIsOpen(false);
+  };
   return (
     <>
       <LeftSideDrawer
         isOpen={isOpen}
         placement="left"
-        onClose={() => setIsOpen(false)}
+        onClose={close}
         size="xs"
       >
         <DrawerContent bg="#111827">

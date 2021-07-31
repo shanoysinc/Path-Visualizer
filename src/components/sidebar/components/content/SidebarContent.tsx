@@ -39,36 +39,32 @@ export const SidebarContent = memo(() => {
   const placeRandomWalls = useRandomWalls();
   const removeGridWalls = useRemoveGridWalls();
   const [routePos, setRoutePos] = useRecoilState(RoutePosAtom);
-  const [userHasVisualize, setUserHasVisualize] = useState(false);
   const [isAlgoVisualizing, setisAlgoVisualizing] = useState(false);
   const [animateVisitedNode, setAnimateVisitedNode] = useState(true);
   const [animateRoute, setAnimateRoute] = useState(true);
-  const [updatingGid, setUpdatingGrid] = useState(false);
   const [visualizeSpeed, setVisualizeSpeed] = useState(20);
   const { setIsOpen, isOpen: isDrawerOpen } = useDrawerState(drawerSelector);
-
+  const [visitedOrder, setVisitedOrder] = useState<string[]>([]);
+  const [updatingGid, setUpdatingGrid] = useState(false);
   const toast = useToast();
 
   const traverseGridHandler = () => {
-    if (userHasVisualize || isDrawerOpen) {
-      setUpdatingGrid(true);
-      clearGridPathHandler();
-    }
+    removeNodeClasses(visitedOrder);
 
     if (isDrawerOpen) {
       setIsOpen(false);
+      setUpdatingGrid(true);
     }
     setisAlgoVisualizing(true);
 
-    const updatedGridData = updatedGrid();
-
-    const { visitedOrderArr, previous, hasRoute } = dijkstra(
-      updatedGridData,
-      routePos.sourceIndex,
-      routePos.destinationIndex
-    );
-
     if (!updatingGid) {
+      const updatedGridData = updatedGrid();
+
+      const { visitedOrderArr, previous, hasRoute } = dijkstra(
+        updatedGridData,
+        routePos.sourceIndex,
+        routePos.destinationIndex
+      );
       createVisitedNodeAnimation({
         animateVisitedNode,
         visitedOrderArr,
@@ -80,6 +76,8 @@ export const SidebarContent = memo(() => {
         previous,
         visitedOrderArrLength: visitedOrderArr.length,
       });
+      setVisitedOrder(visitedOrderArr);
+      setUpdatingGrid(false);
     }
   };
 
@@ -114,7 +112,6 @@ export const SidebarContent = memo(() => {
         setTimeout(() => {
           if (!isDrawerOpen) {
             setisAlgoVisualizing(false);
-            setUserHasVisualize(true);
           }
         }, visualizeSpeed * 4 * route.length);
       }, (visualizeSpeed + 2) * visitedOrderArrLength);
@@ -122,7 +119,6 @@ export const SidebarContent = memo(() => {
       setTimeout(() => {
         if (!isDrawerOpen) {
           setisAlgoVisualizing(false);
-          setUserHasVisualize(true);
         }
         toast({
           title: "No route to destination!",
@@ -136,48 +132,14 @@ export const SidebarContent = memo(() => {
   };
 
   const resetHandler = () => {
-    document
-      .querySelectorAll(
-        ".route, .visitedNode, .visitedNode-animation, .route-animation"
-      )
-      .forEach((node) => {
-        return node.classList.remove(
-          ...[
-            "route",
-            "visitedNode",
-            "visitedNode-animation",
-            "route-animation",
-          ]
-        );
-      });
-
+    removeNodeClasses(visitedOrder);
     setRoutePos({ destinationIndex: END_INDEX, sourceIndex: START_INDEX });
-    setUserHasVisualize(false);
     resetGrid();
   };
 
   const clearGridWallsHandler = async () => {
     removeGridWalls();
-    clearGridPathHandler();
-    setUserHasVisualize(false);
-  };
-
-  const clearGridPathHandler = () => {
-    document
-      .querySelectorAll(
-        ".route, .visitedNode, .visitedNode-animation, .route-animation"
-      )
-      .forEach((node) => {
-        return node.classList.remove(
-          ...[
-            "route",
-            "visitedNode",
-            "visitedNode-animation",
-            "route-animation",
-          ]
-        );
-      });
-    setUpdatingGrid(false);
+    removeNodeClasses(visitedOrder);
   };
 
   const visualizeSpeedHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -265,7 +227,7 @@ export const SidebarContent = memo(() => {
             />
             <SmallButton
               content="Clear path"
-              onClick={clearGridPathHandler}
+              onClick={() => ({})}
               isAlgoVisualizing={isAlgoVisualizing}
             />
             <SmallButton
@@ -358,5 +320,16 @@ function createVisitedNodeAnimation(setUp: {
         }
       }, visualizeSpeed * index);
     }
+  });
+}
+
+function removeNodeClasses(visitedOrder: string[]) {
+  if (visitedOrder.length === 0) return;
+  visitedOrder.forEach((nodeId) => {
+    document
+      .getElementById(nodeId)
+      .classList.remove(
+        ...["route", "visitedNode", "visitedNode-animation", "route-animation"]
+      );
   });
 }
