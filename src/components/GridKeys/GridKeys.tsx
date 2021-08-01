@@ -6,7 +6,13 @@ import { ExternalLinkIcon } from "@chakra-ui/icons";
 export const GridKeys = memo(() => {
   return (
     <>
-      <Flex flexWrap="wrap" justify="center" direction="column" align="center">
+      <Flex
+        flexWrap="wrap"
+        justify="center"
+        direction="column"
+        align="center"
+        mt="5"
+      >
         <Flex
           justify="space-between"
           h="full"
