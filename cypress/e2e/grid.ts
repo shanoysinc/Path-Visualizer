@@ -29,16 +29,7 @@ describe("testing grid functionalities", () => {
 
   it("remove all walls", () => {
     cy.visit("/");
-    addWalls([
-      "11-2",
-      "10-11",
-      "4-10",
-      "10-4",
-      "14-14",
-      "10-35",
-      "11-34",
-      "2-20",
-    ]);
+    addWalls(["11-2", "4-4", "4-10", "10-4", "3-3", "10-11", "11-4", "2-6"]);
 
     cy.get(clearWallsBtn).click();
 
@@ -116,8 +107,8 @@ describe("testing grid functionalities", () => {
     cy.get(visualizeBtn).click();
     cy.wait(10000);
 
-    cy.get("#14-16").should("have.class", "visitedNode-animation");
-    cy.get("#14-15").should("not.have.class", "visitedNode");
+    cy.get("#10-16").should("have.class", "visitedNode-animation");
+    cy.get("#10-16").should("not.have.class", "visitedNode");
   });
 
   it("find route - [WITHOUT VisitedNode-ANIMATION]", () => {
@@ -126,15 +117,15 @@ describe("testing grid functionalities", () => {
     cy.get(visualizeBtn).click();
     cy.wait(10000);
 
-    cy.get("#14-15").should("have.class", "visitedNode");
-    cy.get("#14-16").should("not.have.class", "visitedNode-animation");
+    cy.get("#10-16").should("have.class", "visitedNode");
+    cy.get("#10-16").should("not.have.class", "visitedNode-animation");
   });
 
   it("open and close drawer", () => {
     cy.visit("/");
 
     cy.viewport("ipad-2");
-    const openDrawerBtn = ".css-1p7ebew > .chakra-icon > path";
+    const openDrawerBtn = ".css-1pqr4m8 > .chakra-icon > path";
     const closeDrawerBtn = ".chakra-modal__close-btn > .chakra-icon > path";
     const websiteName =
       "#chakra-modal-2 > .css-f1rwq6 > :nth-child(1) > :nth-child(1) > .chakra-heading";

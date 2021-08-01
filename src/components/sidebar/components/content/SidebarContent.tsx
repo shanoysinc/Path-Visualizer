@@ -220,7 +220,7 @@ export const SidebarContent = ({ isOpen: isDrawerOpen, setIsOpen }: Props) => {
             />
             <SmallButton
               content="Clear path"
-              onClick={() => ({})}
+              onClick={() => removeNodeClasses(visitedNodes)}
               isAlgoVisualizing={isAlgoVisualizing}
             />
             <SmallButton
