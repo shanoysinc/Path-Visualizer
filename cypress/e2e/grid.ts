@@ -107,18 +107,18 @@ describe("testing grid functionalities", () => {
     cy.get(visualizeBtn).click();
     cy.wait(10000);
 
-    cy.get("#10-16").should("have.class", "visitedNode-animation");
-    cy.get("#10-16").should("not.have.class", "visitedNode");
+    cy.get("#10-10").should("have.class", "visitedNode-animation");
+    cy.get("#10-10").should("not.have.class", "visitedNode");
   });
 
-  it("find route - [WITHOUT VisitedNode-ANIMATION]", () => {
+  it.only("find route - [WITHOUT VisitedNode-ANIMATION]", () => {
     cy.visit("/");
     cy.get(visitedNodeAnimBtn).click();
     cy.get(visualizeBtn).click();
     cy.wait(10000);
 
-    cy.get("#10-16").should("have.class", "visitedNode");
-    cy.get("#10-16").should("not.have.class", "visitedNode-animation");
+    cy.get("#10-10").should("have.class", "visitedNode");
+    cy.get("#10-10").should("not.have.class", "visitedNode-animation");
   });
 
   it("open and close drawer", () => {
