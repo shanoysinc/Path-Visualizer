@@ -1,19 +1,25 @@
 import React from "react";
 import "./App.css";
 import { Grid, GridItem, Button } from "@chakra-ui/react";
-import { Grid as VisualizerGrid, GridKeys, LeftSideBar } from "./components";
+import {
+  Grid as VisualizerGrid,
+  Drawer,
+  GridKeys,
+  LeftSideBar,
+} from "./components";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { DrawerStateProps, useDrawerState } from "./state/UI/useDrawerDisplay";
+
 const drawerSelector = (state: DrawerStateProps) => ({
   isOpen: state.isOpen,
   setIsOpen: state.setIsOpen,
 });
 
 function App() {
-  const { setIsOpen } = useDrawerState(drawerSelector);
+  const { setIsOpen, isOpen } = useDrawerState(drawerSelector);
 
   return (
-    <>
+    <div className="App">
       <Button
         bg="hsl(208, 97%, 55%)"
         onClick={() => setIsOpen(true)}
@@ -26,42 +32,41 @@ function App() {
       >
         <HamburgerIcon w={5} h={5} color="white" />
       </Button>
-      <div className="App">
-        <Grid
-          h="100vh"
-          templateRows="repeat(5, 1fr)"
-          templateColumns={[
-            "repeat(2, 1fr)",
-            "repeat(2, 1fr)",
-            "repeat(2, 1fr)",
-            "repeat(2, 1fr)",
-            "repeat(4, 1fr)",
-          ]}
-          columnGap={4}
-          w={["95%", "95%", "95%", "95%", "100%"]}
-          m={["0 auto"]}
-          mr={{ xlg: 10 }}
+      {isOpen && <Drawer isOpen={isOpen} setIsOpen={setIsOpen} />}
+      <Grid
+        h="100vh"
+        templateRows="repeat(5, 1fr)"
+        templateColumns={[
+          "repeat(2, 1fr)",
+          "repeat(2, 1fr)",
+          "repeat(2, 1fr)",
+          "repeat(2, 1fr)",
+          "repeat(4, 1fr)",
+        ]}
+        columnGap={4}
+        w={["90%", "90%", "90%", "90%", "100%"]}
+        m={["0 auto"]}
+        mr="10"
+      >
+        <GridItem
+          rowSpan={5}
+          colSpan={1}
+          bg="#111827"
+          display={["none", "none", "none", "none", "block"]}
         >
-          <GridItem
-            rowSpan={5}
-            colSpan={1}
-            bg="#111827"
-            display={["none", "none", "none", "none", "block"]}
-          >
-            <LeftSideBar />
-          </GridItem>
+          <LeftSideBar />
+        </GridItem>
 
-          <GridItem colSpan={[2, 2, 2, 2, 3]} mr={"2"}>
-            <GridKeys />
-          </GridItem>
+        <GridItem colSpan={[2, 2, 2, 2, 3]} mr="5">
+          <GridKeys />
+        </GridItem>
 
-          <GridItem rowSpan={[5, 5]} colSpan={[2, 2, 2, 3, 3]} mt="65" mr={"2"}>
-            <VisualizerGrid />
-          </GridItem>
-        </Grid>
-      </div>
-    </>
+        <GridItem rowSpan={[5, 5]} colSpan={[2, 2, 2, 3, 3]} mt="8">
+          <VisualizerGrid />
+        </GridItem>
+      </Grid>
+    </div>
   );
 }
 
-export default React.memo(App);
+export default App;

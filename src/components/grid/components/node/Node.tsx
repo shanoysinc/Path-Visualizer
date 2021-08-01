@@ -1,18 +1,15 @@
 import React, { memo } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { NodeAtom, RoutePosAtom } from "../../../../state/pathFinder/atoms";
+import {
+  NodeAtom,
+  RoutePosAtom,
+  SelectNodeAtom,
+} from "../../../../state/pathFinder/atoms";
 import {
   GridFuncProps,
   useGridFunc,
 } from "../../../../state/pathFinder/useGridFunc";
-// import {
-//   useRoutePos,
-//   useRoutePosProps,
-// } from "../../../../state/pathFinder/useRoutePos";
-import {
-  useSelectedNode,
-  useSelectedNodeProps,
-} from "../../../../state/pathFinder/useSelectedNode";
+
 import { SelectedType } from "../../../../state/types";
 
 interface Props {
@@ -24,21 +21,12 @@ const gridFuncSelector = (state: GridFuncProps) => ({
   isMouseDown: state.isMouseDown,
   gridFunc: state.updateFunc,
 });
-const selectedNodeSelector = (state: useSelectedNodeProps) => ({
-  selectedNode: state.selectedNode,
-  setSelectedNode: state.setSelectedNode,
-});
-// const routePosSelector = (state: useRoutePosProps) => ({
-//   setRoutePos: state.setRoutePos,
-// });
 
 export const Node = memo(({ col, row }: Props) => {
   const [currentNode, setCurrentNode] = useRecoilState(NodeAtom({ row, col }));
+  const [selectedNode, setSelectedNode] = useRecoilState(SelectNodeAtom);
   const setRoutePos = useSetRecoilState(RoutePosAtom);
   const { isMouseDown, gridFunc } = useGridFunc(gridFuncSelector);
-  // const { setRoutePos } = useRoutePos(routePosSelector);
-  const { selectedNode, setSelectedNode } =
-    useSelectedNode(selectedNodeSelector);
 
   const nodeIndex = `${row}-${col}`;
 
