@@ -35,8 +35,8 @@
 .wall {
   background-color: hsl(208, 97%, 10%);
   border: 1px dotted hsl(208, 97%, 10%);
-  /* animation: moveInSpring 400ms linear; */
-  /* will-change: transform; */
+  /* animation: moveInSpring 300ms linear;
+  will-change: transform; */
 }
 
 /* #511dfc */
@@ -53,6 +53,7 @@
 .visitedNode {
   background-color: hsl(208, 97%, 55%);
   border: 1px dashed hsla(0, 0%, 100%, 0.14);
+  will-change: transform;
 }
 
 .visitedNode-animation {
@@ -64,6 +65,7 @@
   border-right: 1px solid hsla(0, 0%, 84%, 0.1);
   animation: circle-to-square 1.5s both;
   animation-timing-function: ease-in;
+  will-change: transform;
 }
 
 .arrow-right {
@@ -110,10 +112,6 @@ select option {
 }
 @keyframes moveInSpring {
   0% {
-    transform: scale3d(0.96, 0.96, 1);
-  }
-
-  60% {
     transform: scale3d(1.14, 1.14, 1);
   }
 
