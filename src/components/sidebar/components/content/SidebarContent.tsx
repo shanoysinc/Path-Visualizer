@@ -1,4 +1,4 @@
-import React, { useState, memo } from "react";
+import React, { useState } from "react";
 import {
   Flex,
   Button,
@@ -20,65 +20,58 @@ import { END_INDEX, START_INDEX } from "../../../grid/hooks/useInitialGrid";
 import { useRemoveGridWalls } from "../../../grid/hooks/useRemoveWalls";
 import { SettingsIcon } from "@chakra-ui/icons";
 import { useResetGrid } from "../../../grid/hooks/useInitialGrid";
-import {
-  DrawerStateProps,
-  useDrawerState,
-} from "../../../../state/UI/useDrawerDisplay";
 import { useRecoilState } from "recoil";
-import { RoutePosAtom } from "../../../../state/pathFinder/atoms";
+import {
+  RoutePosAtom,
+  visitedNodeAtom,
+} from "../../../../state/pathFinder/atoms";
 import { useRandomWalls } from "../../../grid/hooks/ueRandomWalls";
 
-const drawerSelector = (state: DrawerStateProps) => ({
-  isOpen: state.isOpen,
-  setIsOpen: state.setIsOpen,
-});
+interface Props {
+  isOpen?: boolean;
+  setIsOpen?: (val: boolean) => void;
+}
 
-export const SidebarContent = memo(() => {
+export const SidebarContent = ({ isOpen: isDrawerOpen, setIsOpen }: Props) => {
   const resetGrid = useResetGrid();
   const updatedGrid = useUpdateGrid();
   const placeRandomWalls = useRandomWalls();
   const removeGridWalls = useRemoveGridWalls();
   const [routePos, setRoutePos] = useRecoilState(RoutePosAtom);
+  const [visitedNodes, setVisitedNodes] = useRecoilState(visitedNodeAtom);
   const [isAlgoVisualizing, setisAlgoVisualizing] = useState(false);
   const [animateVisitedNode, setAnimateVisitedNode] = useState(true);
   const [animateRoute, setAnimateRoute] = useState(true);
   const [visualizeSpeed, setVisualizeSpeed] = useState(20);
-  const { setIsOpen, isOpen: isDrawerOpen } = useDrawerState(drawerSelector);
-  const [visitedOrder, setVisitedOrder] = useState<string[]>([]);
-  const [updatingGid, setUpdatingGrid] = useState(false);
   const toast = useToast();
 
   const traverseGridHandler = () => {
-    removeNodeClasses(visitedOrder);
+    removeNodeClasses(visitedNodes);
 
     if (isDrawerOpen) {
       setIsOpen(false);
-      setUpdatingGrid(true);
     }
     setisAlgoVisualizing(true);
 
-    if (!updatingGid) {
-      const updatedGridData = updatedGrid();
+    const updatedGridData = updatedGrid();
 
-      const { visitedOrderArr, previous, hasRoute } = dijkstra(
-        updatedGridData,
-        routePos.sourceIndex,
-        routePos.destinationIndex
-      );
-      createVisitedNodeAnimation({
-        animateVisitedNode,
-        visitedOrderArr,
-        visualizeSpeed,
-      });
+    const { visitedOrderArr, previous, hasRoute } = dijkstra(
+      updatedGridData,
+      routePos.sourceIndex,
+      routePos.destinationIndex
+    );
+    createVisitedNodeAnimation({
+      animateVisitedNode,
+      visitedOrderArr,
+      visualizeSpeed,
+    });
 
-      createRouteAnimation({
-        hasRoute,
-        previous,
-        visitedOrderArrLength: visitedOrderArr.length,
-      });
-      setVisitedOrder(visitedOrderArr);
-      setUpdatingGrid(false);
-    }
+    createRouteAnimation({
+      hasRoute,
+      previous,
+      visitedOrderArrLength: visitedOrderArr.length,
+    });
+    setVisitedNodes(visitedOrderArr);
   };
 
   const createRouteAnimation = (setUp: {
@@ -132,14 +125,14 @@ export const SidebarContent = memo(() => {
   };
 
   const resetHandler = () => {
-    removeNodeClasses(visitedOrder);
+    removeNodeClasses(visitedNodes);
     setRoutePos({ destinationIndex: END_INDEX, sourceIndex: START_INDEX });
     resetGrid();
   };
 
   const clearGridWallsHandler = async () => {
+    removeNodeClasses(visitedNodes);
     removeGridWalls();
-    removeNodeClasses(visitedOrder);
   };
 
   const visualizeSpeedHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -299,7 +292,7 @@ export const SidebarContent = memo(() => {
       </Flex>
     </>
   );
-});
+};
 
 function createVisitedNodeAnimation(setUp: {
   visitedOrderArr: string[];

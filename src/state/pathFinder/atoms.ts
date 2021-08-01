@@ -12,6 +12,11 @@ export const SelectNodeAtom = atom<null | SelectedType>({
   default: null,
 });
 
+export const visitedNodeAtom = atom<string[]>({
+  key: "visitedNodes",
+  default: [],
+});
+
 export const RoutePosAtom = atom<RoutePosState>({
   key: "RoutePos",
   default: {
