@@ -5,20 +5,14 @@ import {
   DrawerContent,
 } from "@chakra-ui/react";
 import { SidebarContent } from "../sidebar/components";
-import {
-  DrawerStateProps,
-  useDrawerState,
-} from "../../state/UI/useDrawerDisplay";
 
-const drawerSelector = (state: DrawerStateProps) => ({
-  isOpen: state.isOpen,
-  setIsOpen: state.setIsOpen,
-});
+interface Props {
+  isOpen: boolean;
+  setIsOpen: (val: boolean) => void;
+}
 
-export const Drawer = () => {
-  const { setIsOpen, isOpen } = useDrawerState(drawerSelector);
-
-  const close = () => {
+export const Drawer = ({ isOpen, setIsOpen }: Props) => {
+  const onClose = () => {
     setIsOpen(false);
   };
   return (
@@ -26,13 +20,13 @@ export const Drawer = () => {
       <LeftSideDrawer
         isOpen={isOpen}
         placement="left"
-        onClose={close}
+        onClose={onClose}
         size="xs"
       >
         <DrawerContent bg="#111827">
           <DrawerCloseButton color="white" />
 
-          <SidebarContent />
+          <SidebarContent isOpen={isOpen} setIsOpen={setIsOpen} />
         </DrawerContent>
       </LeftSideDrawer>
     </>
