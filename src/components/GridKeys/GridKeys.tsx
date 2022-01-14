@@ -90,7 +90,7 @@ export const GridKeys = memo(() => {
             </Text>
           </Center>
         </Flex>
-        <Flex justify="center" direction="column" align="center" marginTop={10}>
+        <Flex justify="center" direction="column" align="center" marginTop={14}>
           <Text
             fontWeight="semibold"
             paddingLeft={2}
