@@ -42,7 +42,7 @@ export const SidebarContent = ({ isOpen: isDrawerOpen, setIsOpen }: Props) => {
   const [isAlgoVisualizing, setisAlgoVisualizing] = useState(false);
   const [animateVisitedNode, setAnimateVisitedNode] = useState(true);
   const [animateRoute, setAnimateRoute] = useState(true);
-  const [visualizeSpeed, setVisualizeSpeed] = useState(20);
+  const [visualizeSpeed, setVisualizeSpeed] = useState(17);
   const toast = useToast();
 
   const traverseGridHandler = () => {
@@ -140,10 +140,10 @@ export const SidebarContent = ({ isOpen: isDrawerOpen, setIsOpen }: Props) => {
 
     switch (speedType) {
       case "SLOW":
-        setVisualizeSpeed(25);
+        setVisualizeSpeed(20);
         break;
       default:
-        setVisualizeSpeed(20);
+        setVisualizeSpeed(17);
         break;
     }
   };

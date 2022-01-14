@@ -57,11 +57,11 @@ function App() {
           <LeftSideBar />
         </GridItem>
 
-        <GridItem colSpan={[2, 2, 2, 2, 3]} mr="5">
+        <GridItem colSpan={[2, 2, 2, 2, 3]}>
           <GridKeys />
         </GridItem>
 
-        <GridItem rowSpan={[5, 5]} colSpan={[2, 2, 2, 3, 3]} mt="8">
+        <GridItem rowSpan={[5, 5]} colSpan={[2]} mt="8">
           <VisualizerGrid />
         </GridItem>
       </Grid>
