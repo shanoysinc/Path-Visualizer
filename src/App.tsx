@@ -61,7 +61,15 @@ function App() {
           <GridKeys />
         </GridItem>
 
-        <GridItem rowSpan={[5, 5]} colSpan={[2]} mt="8">
+        <GridItem
+          rowSpan={[5]}
+          colSpan={[3]}
+          // mt="11.5"
+          marginTop={"2.93em"}
+          borderLeft={"1px solid rgba(17, 24, 39, 0.379)"}
+          borderBottom={"1px solid rgba(17, 24, 39, 0.379)"}
+          // backgroundColor={"red"}
+        >
           <VisualizerGrid />
         </GridItem>
       </Grid>

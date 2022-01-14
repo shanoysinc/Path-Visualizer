@@ -10,6 +10,7 @@
 .grid__node {
   height: 30px;
   width: 30px;
+  /* padding-left: -1em; */
   border: 1px solid rgba(17, 24, 39, 0.479);
   /* border-top: 1px solid hsla(172, 97%, 38%, 0.1);
   border-left: 1px solid rgba(5, 199, 157, 0.744);
@@ -19,8 +20,9 @@
 
   border-top-width: 1px;
   border-bottom: 1px;
-  border-right-width: 0.01em;
+  /* border-right-width: 0.01em; */
   border-left: 1px;
+
   /* border-top-width: 1px;
   border-bottom: 0.1em;
   border-right-width: 0.01em;
