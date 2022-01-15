@@ -4,8 +4,6 @@ import { Grid as ChakraUIGrid } from "@chakra-ui/react";
 import { grid } from "./hooks/useInitialGrid";
 
 export const Grid = () => {
-  console.log("grid");
-
   return (
     <>
       {grid.map((row, rowIndex) => (

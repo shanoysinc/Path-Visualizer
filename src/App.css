@@ -58,8 +58,8 @@
   background-color: hsl(208, 97%, 55%);
   border: 1px solid rgba(255, 255, 255, 0.144);
 
-  animation: circle-to-square 1.1s both;
-  animation-timing-function: ease-in;
+  animation: circle-to-square 600ms linear;
+  /* animation-timing-function: ease-in; */
   /* will-change: transform; */
 }
 

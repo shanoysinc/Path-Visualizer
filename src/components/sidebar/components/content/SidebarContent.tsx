@@ -140,7 +140,7 @@ export const SidebarContent = ({ isOpen: isDrawerOpen, setIsOpen }: Props) => {
 
     switch (speedType) {
       case "SLOW":
-        setVisualizeSpeed(20);
+        setVisualizeSpeed(25);
         break;
       default:
         setVisualizeSpeed(17);

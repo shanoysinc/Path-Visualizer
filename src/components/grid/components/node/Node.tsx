@@ -6,10 +6,10 @@ import {
   SelectNodeAtom,
   mouseDownAtom,
 } from "../../../../state/pathFinder/atoms";
-import {
-  GridFuncProps,
-  useGridFunc,
-} from "../../../../state/pathFinder/useGridFunc";
+// import {
+//   GridFuncProps,
+//   useGridFunc,
+// } from "../../../../state/pathFinder/useGridFunc";
 
 import { SelectedType } from "../../../../state/types";
 
