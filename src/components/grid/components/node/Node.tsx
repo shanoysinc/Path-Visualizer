@@ -1,9 +1,10 @@
-import React, { memo } from "react";
+import React from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   NodeAtom,
   RoutePosAtom,
   SelectNodeAtom,
+  mouseDownAtom,
 } from "../../../../state/pathFinder/atoms";
 import {
   GridFuncProps,
@@ -17,16 +18,18 @@ interface Props {
   col: number;
 }
 
-const gridFuncSelector = (state: GridFuncProps) => ({
-  isMouseDown: state.isMouseDown,
-  gridFunc: state.updateFunc,
-});
+// const gridFuncSelector = (state: GridFuncProps) => ({
+//   isMouseDown: state.isMouseDown,
+//   gridFunc: state.updateFunc,
+// });
 
-export const Node = memo(({ col, row }: Props) => {
+export const Node = ({ col, row }: Props) => {
   const [currentNode, setCurrentNode] = useRecoilState(NodeAtom({ row, col }));
   const [selectedNode, setSelectedNode] = useRecoilState(SelectNodeAtom);
+  const [mouseDown, setMouseDown] = useRecoilState(mouseDownAtom);
   const setRoutePos = useSetRecoilState(RoutePosAtom);
-  const { isMouseDown, gridFunc } = useGridFunc(gridFuncSelector);
+  // const { isMouseDown, gridFunc } = useGridFunc(gridFuncSelector);
+  // console.log("node", col, row);
 
   const nodeIndex = `${row}-${col}`;
 
@@ -46,7 +49,9 @@ export const Node = memo(({ col, row }: Props) => {
 
   const mouseDownHandler = () => {
     if (notStartNodeOrEndNode) {
-      return gridFunc({ isMouseDown: true });
+      setMouseDown(true);
+
+      return;
     }
     if (isSelectedNodeStartNode && currentNode.endNode) return;
     if (isSelectedNodeEndNode && currentNode.startNode) return;
@@ -60,8 +65,9 @@ export const Node = memo(({ col, row }: Props) => {
   };
 
   const mouseUpHandler = () => {
-    if (isMouseDown) {
-      gridFunc({ isMouseDown: false });
+    if (mouseDown) {
+      setMouseDown(false);
+      // gridFunc({ isMouseDown: false });
       return;
     }
     if (isSelectedNodeStartNode && currentNode.endNode) return;
@@ -78,7 +84,7 @@ export const Node = memo(({ col, row }: Props) => {
   };
 
   const onMouseEnter = () => {
-    if (isMouseDown && notStartNodeOrEndNode) {
+    if (mouseDown && notStartNodeOrEndNode) {
       if (currentNode.isWall) {
         setCurrentNode((node) => ({ ...node, isWall: false }));
       }
@@ -96,7 +102,7 @@ export const Node = memo(({ col, row }: Props) => {
   };
 
   const onMouseOut = () => {
-    if (isMouseDown) return;
+    if (mouseDown) return;
     if (isSelectedNodeStartNode) {
       setCurrentNode((node) => ({
         ...node,
@@ -127,4 +133,4 @@ export const Node = memo(({ col, row }: Props) => {
       {isEndNode && <div className="star">⭐</div>}
     </div>
   );
-});
+};

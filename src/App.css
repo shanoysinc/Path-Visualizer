@@ -10,23 +10,11 @@
 .grid__node {
   height: 30px;
   width: 30px;
-  /* padding-left: -1em; */
   border: 1px solid rgba(17, 24, 39, 0.479);
-  /* border-top: 1px solid hsla(172, 97%, 38%, 0.1);
-  border-left: 1px solid rgba(5, 199, 157, 0.744);
-  border-top: 1px solid hsla(172, 97%, 38%, 0.1);
-  border-bottom: 1px solid hsla(172, 97%, 38%, 0.644);
-  border-right: 1px solid hsla(172, 97%, 38%, 0.1); */
 
   border-top-width: 1px;
   border-bottom: 1px;
-  /* border-right-width: 0.01em; */
   border-left: 1px;
-
-  /* border-top-width: 1px;
-  border-bottom: 0.1em;
-  border-right-width: 0.01em;
-  border-left: 1px; */
   display: flex;
   align-items: center;
   -webkit-user-select: none; /* Chrome all / Safari all */
@@ -149,7 +137,7 @@ select option {
   0% {
     transform: scale(0.6);
     background-color: rgba(4, 251, 119, 0.509);
-    /* border-radius: 50%; */
+    border-radius: 70%;
     /* opacity: 1; */
   }
 
@@ -159,6 +147,6 @@ select option {
   }
   100% {
     transform: scale(1);
-    /* border-radius: 0; */
+    border-radius: 0;
   }
 }

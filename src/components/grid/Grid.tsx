@@ -1,9 +1,11 @@
-import React, { memo } from "react";
+import React from "react";
 import { Node } from "./components";
 import { Grid as ChakraUIGrid } from "@chakra-ui/react";
 import { grid } from "./hooks/useInitialGrid";
 
-export const Grid = memo(() => {
+export const Grid = () => {
+  console.log("grid");
+
   return (
     <>
       {grid.map((row, rowIndex) => (
@@ -19,4 +21,4 @@ export const Grid = memo(() => {
       ))}
     </>
   );
-});
+};

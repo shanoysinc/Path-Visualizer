@@ -24,6 +24,10 @@ export const RoutePosAtom = atom<RoutePosState>({
     sourceIndex: START_INDEX,
   },
 });
+export const mouseDownAtom = atom<boolean>({
+  key: "MouseDown",
+  default: false,
+});
 
 export const NodeAtom = atomFamily<GridNode, { row: number; col: number }>({
   key: "NodeAtom",
