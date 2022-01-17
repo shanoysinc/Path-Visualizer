@@ -202,7 +202,7 @@ export const SidebarContent = ({ isOpen: isDrawerOpen, setIsOpen }: Props) => {
             <div>
               <SettingsIcon mt="-1" w={4} h={4} color="teal.300" />
             </div>
-            <Text color="teal.300" fontWeight="medium">
+            <Text color="teal.200" fontWeight="medium">
               Grid Functionalities :
             </Text>
           </Flex>
