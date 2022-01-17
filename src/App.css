@@ -1,5 +1,6 @@
 .App {
-  background-color: #ede9fe;
+  background-color: hsl(0, 0%, 98%);
+  /* background-color: #ede9fe; */
 }
 
 .algo-logo {
@@ -31,7 +32,7 @@
 }
 
 .wall {
-  background-color: hsl(208, 97%, 10%);
+  background-color: hsl(208, 96%, 10%);
   border: 1px dotted hsl(208, 97%, 10%);
   animation: moveInSpring 300ms linear;
   /* will-change: transform; */
