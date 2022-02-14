@@ -7,7 +7,7 @@ export const Grid = () => {
   return (
     <>
       {grid.map((row, rowIndex) => (
-        <ChakraUIGrid templateColumns="repeat(34, 1fr)" key={`${rowIndex}`}>
+        <ChakraUIGrid templateColumns="repeat(36, 1fr)" key={`${rowIndex}`}>
           {row.map((_node, colIndex) => (
             <Node
               key={`${rowIndex}-${colIndex}`}
