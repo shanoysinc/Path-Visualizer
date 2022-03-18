@@ -65,7 +65,7 @@ function App() {
           rowSpan={[5]}
           colSpan={[3]}
           // mt="11.5"
-          marginTop={"2.93em"}
+          marginTop={"3.6em"}
           borderLeft={"1px solid rgba(17, 24, 39, 0.379)"}
           borderBottom={"1px solid rgba(17, 24, 39, 0.379)"}
           // backgroundColor={"red"}
